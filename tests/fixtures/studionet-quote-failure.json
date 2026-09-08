@@ -1,0 +1,50 @@
+{
+  "hash": "0xd88b471e270ace6368237ad80cf2bc24207f2407fa74b90ba91c0f6896667dff",
+  "status": 7,
+  "statusName": "FINALIZED",
+  "result": 7,
+  "result_name": "MAJORITY_DISAGREE",
+  "recipient": "0x803AB5eaD893057e48823a89F956Bfe89F4ffAc2",
+  "consensus_data": {
+    "leader_receipt": [
+      {
+        "mode": "leader",
+        "vote": null,
+        "result": {
+          "raw": "AVFVT1RFX05PVF9JTl9FVklERU5DRQ==",
+          "status": "rollback",
+          "payload": "QUOTE_NOT_IN_EVIDENCE"
+        },
+        "execution_result": "ERROR",
+        "genvm_result": {
+          "stderr": "/py/libs/genlayer/gl/_internal/storage.py:21: UserWarning: Detected pickling storage class. Reading storage in nondet mode is not supported\n  warnings.warn(\n",
+          "stdout": "",
+          "raw_error": null,
+          "error_code": null,
+          "error_description": null
+        }
+      },
+      {
+        "mode": "validator",
+        "vote": "idle",
+        "result": {
+          "raw": "AmlkbGU=",
+          "status": "contract_error",
+          "payload": "idle"
+        },
+        "execution_result": "ERROR",
+        "genvm_result": {
+          "stderr": "Validator execution cancelled after quorum",
+          "stdout": "",
+          "raw_error": {
+            "fatal": false,
+            "causes": [
+              "VALIDATOR_QUORUM_REACHED"
+            ]
+          },
+          "error_code": "CONSENSUS_VALIDATOR_QUORUM_REACHED"
+        }
+      }
+    ]
+  }
+}

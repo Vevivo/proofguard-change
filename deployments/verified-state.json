@@ -1,0 +1,41 @@
+{
+  "observedAt": "2026-09-08T07:29:59.907Z",
+  "readState": "LATEST_FINAL",
+  "contract": "0x91883d4829E5b5bD7BED6eBd0EceF927A71942d6",
+  "chainId": 61999,
+  "codeMatches": true,
+  "policy": "proofguard-change/2.0",
+  "integrityChecksPassed": true,
+  "reviewTransaction": {
+    "hash": "0xa511ea667f93b7b46e55e8473470e458e78318e7c85c2c321886920dc424461e",
+    "status": "FINALIZED",
+    "outcome": "success"
+  },
+  "source": {
+    "id": "COPILOT-BUSINESS-01",
+    "revision": 1
+  },
+  "workflows": [
+    {
+      "id": "COPILOT-REVIEW-01",
+      "reviewedRevision": 1,
+      "jobs": [
+        {
+          "id": "NO-TRAINING",
+          "gate": "ALREADY_EXECUTED",
+          "permits": 1,
+          "output": {
+            "id": "5471ba7182975ad5a7bdf297a477767341f6170cdd4c1d0b80f475434dd57fc3",
+            "sha256": "3aaba81cc6d8c4804dfae0a10c1ea760d0f43880aa71730c315753b7b19aa283"
+          }
+        },
+        {
+          "id": "ZERO-RETENTION",
+          "gate": "INSUFFICIENT_EVIDENCE",
+          "permits": 0,
+          "output": null
+        }
+      ]
+    }
+  ]
+}

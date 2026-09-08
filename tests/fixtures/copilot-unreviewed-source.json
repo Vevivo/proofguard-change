@@ -1,0 +1,70 @@
+{
+  "schema": "proofguard-change/2.0",
+  "source": {
+    "approved_owners": [
+      "0xa2ae6f0b2e8cc472c66905622ba244e58cb9813d"
+    ],
+    "id": "COPILOT-BUSINESS-01",
+    "publisher": "0xa2ae6f0b2e8cc472c66905622ba244e58cb9813d",
+    "review_batches": [],
+    "revision": 1,
+    "title": "GitHub Copilot Business pricing and data use",
+    "versions": [
+      {
+        "revision": 1,
+        "sha256": "08643dc22bf35219bff4b9247e956d69a3eedb90742e035d093cb9414aec2355",
+        "text": "Summary of GitHub's published information, checked on 8 September 2026:\n\nGitHub Copilot Business has a base subscription price of USD 19 per user per month. Additional usage charges are separate from the base subscription.\n\nGitHub states that it does not use Copilot Business or Copilot Enterprise customer data to train AI models.\n\nThis statement concerns model training. It does not establish that customer data is never processed or retained."
+      }
+    ],
+    "workflow_ids": [
+      "COPILOT-REVIEW-01"
+    ]
+  },
+  "workflows": [
+    {
+      "actions": [
+        {
+          "active_permit": null,
+          "condition": "GitHub does not use Copilot Business customer data to train AI models, and the base subscription price is USD 19 per user per month.",
+          "execution": null,
+          "gate": "AWAITING_REVIEW",
+          "id": "NO-TRAINING",
+          "intent_hash": "66836807c8d44a8b8bc884f3d5776dc74c2ce5a7b77e4d24bfc1463dce2f1c5b",
+          "intent_json": "{\"payload\":{\"currency\":\"USD\",\"unit_price\":19},\"target\":\"github-copilot-business-user-month\",\"tool\":\"prepare_price_report\"}",
+          "label": "Price report under no-training policy",
+          "permits": []
+        },
+        {
+          "active_permit": null,
+          "condition": "GitHub Copilot Business customer data is never stored or retained, and the base subscription price is USD 19 per user per month.",
+          "execution": null,
+          "gate": "AWAITING_REVIEW",
+          "id": "ZERO-RETENTION",
+          "intent_hash": "66836807c8d44a8b8bc884f3d5776dc74c2ce5a7b77e4d24bfc1463dce2f1c5b",
+          "intent_json": "{\"payload\":{\"currency\":\"USD\",\"unit_price\":19},\"target\":\"github-copilot-business-user-month\",\"tool\":\"prepare_price_report\"}",
+          "label": "Price report under zero-retention policy",
+          "permits": []
+        }
+      ],
+      "attempts": [],
+      "baseline_revision": 1,
+      "executor": "0xa2ae6f0b2e8cc472c66905622ba244e58cb9813d",
+      "id": "COPILOT-REVIEW-01",
+      "owner": "0xa2ae6f0b2e8cc472c66905622ba244e58cb9813d",
+      "publisher": "0xa2ae6f0b2e8cc472c66905622ba244e58cb9813d",
+      "reviewed_revision": 0,
+      "reviews": [],
+      "revision": 1,
+      "schema": "proofguard-change/2.0",
+      "source_id": "COPILOT-BUSINESS-01",
+      "sources": [
+        {
+          "revision": 1,
+          "sha256": "08643dc22bf35219bff4b9247e956d69a3eedb90742e035d093cb9414aec2355",
+          "text": "Summary of GitHub's published information, checked on 8 September 2026:\n\nGitHub Copilot Business has a base subscription price of USD 19 per user per month. Additional usage charges are separate from the base subscription.\n\nGitHub states that it does not use Copilot Business or Copilot Enterprise customer data to train AI models.\n\nThis statement concerns model training. It does not establish that customer data is never processed or retained."
+        }
+      ],
+      "title": "Copilot Business data policy checks"
+    }
+  ]
+}

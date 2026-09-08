@@ -1,0 +1,12 @@
+{
+  "network": "GenLayer Studionet",
+  "chainId": 61999,
+  "contract": "0x91883d4829E5b5bD7BED6eBd0EceF927A71942d6",
+  "policy": "proofguard-change/2.0",
+  "contractSourceSha256": "beca7648cac048399221260c92f55bdc053301fe7eaa4611c3e6eecfc3c8e060",
+  "sourceId": "COPILOT-BUSINESS-01",
+  "workflowId": "COPILOT-REVIEW-01",
+  "reviewTransaction": "0xa511ea667f93b7b46e55e8473470e458e78318e7c85c2c321886920dc424461e",
+  "explorer": "https://explorer-studio.genlayer.com",
+  "application": "https://genlayer_vevivo.ar.io"
+}

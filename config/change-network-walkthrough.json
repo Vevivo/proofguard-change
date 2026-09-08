@@ -1,0 +1,3345 @@
+{
+  "material": {
+    "title": "Delivery becomes dispatch",
+    "mode": "SIMULATED_CONTRACT_WALKTHROUGH",
+    "stages": [
+      {
+        "schema": "proofguard-change/2.0",
+        "source": {
+          "approved_owners": [
+            "0x1111111111111111111111111111111111111111",
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333"
+          ],
+          "id": "SRC-1",
+          "publisher": "0x1111111111111111111111111111111111111111",
+          "review_batches": [
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 1,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            }
+          ],
+          "revision": 1,
+          "title": "Northline supplier terms",
+          "versions": [
+            {
+              "revision": 1,
+              "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+              "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            }
+          ],
+          "workflow_ids": [
+            "WF-1",
+            "WF-2"
+          ]
+        },
+        "workflows": [
+          {
+            "actions": [
+              {
+                "active_permit": {
+                  "authorized_by": "0x2222222222222222222222222222222222222222",
+                  "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                  "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                  "revision": 1,
+                  "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                },
+                "condition": "Express delivery on 10 September 2026 is required.",
+                "execution": null,
+                "gate": "READY",
+                "id": "urgent",
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":10,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"event\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Event order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              },
+              {
+                "active_permit": {
+                  "authorized_by": "0x2222222222222222222222222222222222222222",
+                  "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                  "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                  "revision": 1,
+                  "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                },
+                "condition": "Standard delivery by 14 September 2026 is required.",
+                "execution": null,
+                "gate": "READY",
+                "id": "stock",
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":20,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Stock order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 2,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-1",
+            "owner": "0x2222222222222222222222222222222222222222",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 1,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express delivery on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The source supports express delivery on 10 September.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              }
+            ],
+            "revision": 1,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Supply operations"
+          },
+          {
+            "actions": [
+              {
+                "active_permit": {
+                  "authorized_by": "0x3333333333333333333333333333333333333333",
+                  "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                  "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                  "revision": 1,
+                  "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                },
+                "condition": "Unit price is EUR 240.",
+                "execution": null,
+                "gate": "READY",
+                "id": "price",
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"unit_price\":240},\"target\":\"pricing\",\"tool\":\"prepare_price_report\"}",
+                "label": "Price report",
+                "permits": [
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-2",
+            "owner": "0x3333333333333333333333333333333333333333",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 1,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              }
+            ],
+            "revision": 1,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Market intelligence"
+          }
+        ]
+      },
+      {
+        "schema": "proofguard-change/2.0",
+        "source": {
+          "approved_owners": [
+            "0x1111111111111111111111111111111111111111",
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333"
+          ],
+          "id": "SRC-1",
+          "publisher": "0x1111111111111111111111111111111111111111",
+          "review_batches": [
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 1,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            }
+          ],
+          "revision": 2,
+          "title": "Northline supplier terms",
+          "versions": [
+            {
+              "revision": 1,
+              "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+              "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            },
+            {
+              "revision": 2,
+              "sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb",
+              "text": "Express dispatch on 10 September 2026; arrival is not guaranteed. Standard delivery by 14 September 2026. Unit price EUR 240."
+            }
+          ],
+          "workflow_ids": [
+            "WF-1",
+            "WF-2"
+          ]
+        },
+        "workflows": [
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Express delivery on 10 September 2026 is required.",
+                "execution": null,
+                "gate": "AWAITING_REVIEW",
+                "id": "urgent",
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":10,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"event\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Event order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              },
+              {
+                "active_permit": null,
+                "condition": "Standard delivery by 14 September 2026 is required.",
+                "execution": null,
+                "gate": "AWAITING_REVIEW",
+                "id": "stock",
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":20,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Stock order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 2,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-1",
+            "owner": "0x2222222222222222222222222222222222222222",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 1,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express delivery on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The source supports express delivery on 10 September.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb",
+                "text": "Express dispatch on 10 September 2026; arrival is not guaranteed. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Supply operations"
+          },
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Unit price is EUR 240.",
+                "execution": null,
+                "gate": "AWAITING_REVIEW",
+                "id": "price",
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"unit_price\":240},\"target\":\"pricing\",\"tool\":\"prepare_price_report\"}",
+                "label": "Price report",
+                "permits": [
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-2",
+            "owner": "0x3333333333333333333333333333333333333333",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 1,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb",
+                "text": "Express dispatch on 10 September 2026; arrival is not guaranteed. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Market intelligence"
+          }
+        ]
+      },
+      {
+        "schema": "proofguard-change/2.0",
+        "source": {
+          "approved_owners": [
+            "0x1111111111111111111111111111111111111111",
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333"
+          ],
+          "id": "SRC-1",
+          "publisher": "0x1111111111111111111111111111111111111111",
+          "review_batches": [
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 1,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            },
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 2,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            }
+          ],
+          "revision": 2,
+          "title": "Northline supplier terms",
+          "versions": [
+            {
+              "revision": 1,
+              "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+              "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            },
+            {
+              "revision": 2,
+              "sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb",
+              "text": "Express dispatch on 10 September 2026; arrival is not guaranteed. Standard delivery by 14 September 2026. Unit price EUR 240."
+            }
+          ],
+          "workflow_ids": [
+            "WF-1",
+            "WF-2"
+          ]
+        },
+        "workflows": [
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Express delivery on 10 September 2026 is required.",
+                "execution": null,
+                "gate": "MATERIAL_CHANGE",
+                "id": "urgent",
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":10,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"event\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Event order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              },
+              {
+                "active_permit": null,
+                "condition": "Standard delivery by 14 September 2026 is required.",
+                "execution": null,
+                "gate": "READY",
+                "id": "stock",
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":20,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Stock order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 2,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-1",
+            "owner": "0x2222222222222222222222222222222222222222",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 2,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express delivery on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The source supports express delivery on 10 September.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              },
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express dispatch on 10 September 2026; arrival is not guaranteed.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "Arrival on 10 September is no longer guaranteed. Dispatch does not establish arrival.",
+                    "verdict": "MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 2,
+                "source_sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb",
+                "text": "Express dispatch on 10 September 2026; arrival is not guaranteed. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Supply operations"
+          },
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Unit price is EUR 240.",
+                "execution": null,
+                "gate": "READY",
+                "id": "price",
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"unit_price\":240},\"target\":\"pricing\",\"tool\":\"prepare_price_report\"}",
+                "label": "Price report",
+                "permits": [
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-2",
+            "owner": "0x3333333333333333333333333333333333333333",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 2,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              },
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 2,
+                "source_sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb",
+                "text": "Express dispatch on 10 September 2026; arrival is not guaranteed. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Market intelligence"
+          }
+        ]
+      },
+      {
+        "schema": "proofguard-change/2.0",
+        "source": {
+          "approved_owners": [
+            "0x1111111111111111111111111111111111111111",
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333"
+          ],
+          "id": "SRC-1",
+          "publisher": "0x1111111111111111111111111111111111111111",
+          "review_batches": [
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 1,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            },
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 2,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            }
+          ],
+          "revision": 2,
+          "title": "Northline supplier terms",
+          "versions": [
+            {
+              "revision": 1,
+              "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+              "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            },
+            {
+              "revision": 2,
+              "sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb",
+              "text": "Express dispatch on 10 September 2026; arrival is not guaranteed. Standard delivery by 14 September 2026. Unit price EUR 240."
+            }
+          ],
+          "workflow_ids": [
+            "WF-1",
+            "WF-2"
+          ]
+        },
+        "workflows": [
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Express delivery on 10 September 2026 is required.",
+                "execution": null,
+                "gate": "MATERIAL_CHANGE",
+                "id": "urgent",
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":10,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"event\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Event order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              },
+              {
+                "active_permit": null,
+                "condition": "Standard delivery by 14 September 2026 is required.",
+                "execution": {
+                  "effect": "ARTIFACT_CREATED",
+                  "executor": "0x4444444444444444444444444444444444444444",
+                  "external_order": "NOT_SUBMITTED",
+                  "external_payment": "NOT_SUBMITTED",
+                  "id": "9a6261398d49c433275c85f7503465ede149f1598c9693e891893a70239805c5",
+                  "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                  "output_json": "{\"currency\":\"EUR\",\"intent_hash\":\"ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575\",\"job_id\":\"stock\",\"kind\":\"PURCHASE_ORDER_DRAFT\",\"notice\":\"Draft only. No supplier order submitted and no payment made.\",\"permit_id\":\"9ab6ac90e88a14c343aa6f0be6b188733c13ea764d67928261e735e51ee7790c\",\"quantity\":20,\"schema\":\"proofguard-tool-output/1.0\",\"shipping\":\"standard\",\"source_id\":\"SRC-1\",\"source_revision\":2,\"source_sha256\":\"094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb\",\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\",\"total\":4800,\"unit_price\":240,\"workflow_id\":\"WF-1\"}",
+                  "output_sha256": "2cf49ebc2f85eb09d418293ee6fe7be87f8be3f03ced13dda688abfeb10397b9",
+                  "permit_id": "9ab6ac90e88a14c343aa6f0be6b188733c13ea764d67928261e735e51ee7790c",
+                  "revision": 2
+                },
+                "gate": "ALREADY_EXECUTED",
+                "id": "stock",
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":20,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Stock order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  },
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "9ab6ac90e88a14c343aa6f0be6b188733c13ea764d67928261e735e51ee7790c",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 2,
+                    "source_sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 2,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 3,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 2
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x4444444444444444444444444444444444444444",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 4,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "EXECUTE",
+                "requested_revision": 2
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-1",
+            "owner": "0x2222222222222222222222222222222222222222",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 2,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express delivery on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The source supports express delivery on 10 September.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              },
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express dispatch on 10 September 2026; arrival is not guaranteed.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "Arrival on 10 September is no longer guaranteed. Dispatch does not establish arrival.",
+                    "verdict": "MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 2,
+                "source_sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb",
+                "text": "Express dispatch on 10 September 2026; arrival is not guaranteed. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Supply operations"
+          },
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Unit price is EUR 240.",
+                "execution": {
+                  "effect": "ARTIFACT_CREATED",
+                  "executor": "0x4444444444444444444444444444444444444444",
+                  "external_order": "NOT_SUBMITTED",
+                  "external_payment": "NOT_SUBMITTED",
+                  "id": "c296cd790fdb22b13bf4022888a84383085ca434da0d89562f2b7cc205e15f92",
+                  "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                  "output_json": "{\"currency\":\"EUR\",\"intent_hash\":\"cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a\",\"job_id\":\"price\",\"kind\":\"PRICE_REPORT\",\"notice\":\"Report generated from registered source evidence. No purchase or delivery is implied.\",\"permit_id\":\"c5ce6689523f8229232b879091e71d6638fa02d0dccef23ee399a13ad6aba362\",\"schema\":\"proofguard-tool-output/1.0\",\"source_id\":\"SRC-1\",\"source_revision\":2,\"source_sha256\":\"094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb\",\"target\":\"pricing\",\"tool\":\"prepare_price_report\",\"unit_price\":240,\"workflow_id\":\"WF-2\"}",
+                  "output_sha256": "3ad5e0c35af04a0f37c39bd94bea2ad8bc549855f40e22b12e0991db4bcf75f7",
+                  "permit_id": "c5ce6689523f8229232b879091e71d6638fa02d0dccef23ee399a13ad6aba362",
+                  "revision": 2
+                },
+                "gate": "ALREADY_EXECUTED",
+                "id": "price",
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"unit_price\":240},\"target\":\"pricing\",\"tool\":\"prepare_price_report\"}",
+                "label": "Price report",
+                "permits": [
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  },
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "c5ce6689523f8229232b879091e71d6638fa02d0dccef23ee399a13ad6aba362",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 2,
+                    "source_sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 2,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 2
+              },
+              {
+                "action_id": "price",
+                "actor": "0x4444444444444444444444444444444444444444",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 3,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "EXECUTE",
+                "requested_revision": 2
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-2",
+            "owner": "0x3333333333333333333333333333333333333333",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 2,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              },
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 2,
+                "source_sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "094dce1fc7fb83c7409a65e0055201f35201bd2b1d8c5e8897652c6f2a9c92bb",
+                "text": "Express dispatch on 10 September 2026; arrival is not guaranteed. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Market intelligence"
+          }
+        ]
+      }
+    ]
+  },
+  "wording": {
+    "title": "Different words, same promise",
+    "mode": "SIMULATED_CONTRACT_WALKTHROUGH",
+    "stages": [
+      {
+        "schema": "proofguard-change/2.0",
+        "source": {
+          "approved_owners": [
+            "0x1111111111111111111111111111111111111111",
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333"
+          ],
+          "id": "SRC-1",
+          "publisher": "0x1111111111111111111111111111111111111111",
+          "review_batches": [
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 1,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            }
+          ],
+          "revision": 1,
+          "title": "Northline supplier terms",
+          "versions": [
+            {
+              "revision": 1,
+              "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+              "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            }
+          ],
+          "workflow_ids": [
+            "WF-1",
+            "WF-2"
+          ]
+        },
+        "workflows": [
+          {
+            "actions": [
+              {
+                "active_permit": {
+                  "authorized_by": "0x2222222222222222222222222222222222222222",
+                  "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                  "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                  "revision": 1,
+                  "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                },
+                "condition": "Express delivery on 10 September 2026 is required.",
+                "execution": null,
+                "gate": "READY",
+                "id": "urgent",
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":10,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"event\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Event order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              },
+              {
+                "active_permit": {
+                  "authorized_by": "0x2222222222222222222222222222222222222222",
+                  "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                  "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                  "revision": 1,
+                  "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                },
+                "condition": "Standard delivery by 14 September 2026 is required.",
+                "execution": null,
+                "gate": "READY",
+                "id": "stock",
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":20,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Stock order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 2,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-1",
+            "owner": "0x2222222222222222222222222222222222222222",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 1,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express delivery on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The source supports express delivery on 10 September.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              }
+            ],
+            "revision": 1,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Supply operations"
+          },
+          {
+            "actions": [
+              {
+                "active_permit": {
+                  "authorized_by": "0x3333333333333333333333333333333333333333",
+                  "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                  "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                  "revision": 1,
+                  "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                },
+                "condition": "Unit price is EUR 240.",
+                "execution": null,
+                "gate": "READY",
+                "id": "price",
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"unit_price\":240},\"target\":\"pricing\",\"tool\":\"prepare_price_report\"}",
+                "label": "Price report",
+                "permits": [
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-2",
+            "owner": "0x3333333333333333333333333333333333333333",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 1,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              }
+            ],
+            "revision": 1,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Market intelligence"
+          }
+        ]
+      },
+      {
+        "schema": "proofguard-change/2.0",
+        "source": {
+          "approved_owners": [
+            "0x1111111111111111111111111111111111111111",
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333"
+          ],
+          "id": "SRC-1",
+          "publisher": "0x1111111111111111111111111111111111111111",
+          "review_batches": [
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 1,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            }
+          ],
+          "revision": 2,
+          "title": "Northline supplier terms",
+          "versions": [
+            {
+              "revision": 1,
+              "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+              "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            },
+            {
+              "revision": 2,
+              "sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231",
+              "text": "Express arrival on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            }
+          ],
+          "workflow_ids": [
+            "WF-1",
+            "WF-2"
+          ]
+        },
+        "workflows": [
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Express delivery on 10 September 2026 is required.",
+                "execution": null,
+                "gate": "AWAITING_REVIEW",
+                "id": "urgent",
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":10,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"event\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Event order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              },
+              {
+                "active_permit": null,
+                "condition": "Standard delivery by 14 September 2026 is required.",
+                "execution": null,
+                "gate": "AWAITING_REVIEW",
+                "id": "stock",
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":20,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Stock order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 2,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-1",
+            "owner": "0x2222222222222222222222222222222222222222",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 1,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express delivery on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The source supports express delivery on 10 September.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231",
+                "text": "Express arrival on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Supply operations"
+          },
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Unit price is EUR 240.",
+                "execution": null,
+                "gate": "AWAITING_REVIEW",
+                "id": "price",
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"unit_price\":240},\"target\":\"pricing\",\"tool\":\"prepare_price_report\"}",
+                "label": "Price report",
+                "permits": [
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-2",
+            "owner": "0x3333333333333333333333333333333333333333",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 1,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231",
+                "text": "Express arrival on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Market intelligence"
+          }
+        ]
+      },
+      {
+        "schema": "proofguard-change/2.0",
+        "source": {
+          "approved_owners": [
+            "0x1111111111111111111111111111111111111111",
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333"
+          ],
+          "id": "SRC-1",
+          "publisher": "0x1111111111111111111111111111111111111111",
+          "review_batches": [
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 1,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            },
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 2,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            }
+          ],
+          "revision": 2,
+          "title": "Northline supplier terms",
+          "versions": [
+            {
+              "revision": 1,
+              "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+              "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            },
+            {
+              "revision": 2,
+              "sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231",
+              "text": "Express arrival on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            }
+          ],
+          "workflow_ids": [
+            "WF-1",
+            "WF-2"
+          ]
+        },
+        "workflows": [
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Express delivery on 10 September 2026 is required.",
+                "execution": null,
+                "gate": "READY",
+                "id": "urgent",
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":10,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"event\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Event order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              },
+              {
+                "active_permit": null,
+                "condition": "Standard delivery by 14 September 2026 is required.",
+                "execution": null,
+                "gate": "READY",
+                "id": "stock",
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":20,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Stock order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 2,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-1",
+            "owner": "0x2222222222222222222222222222222222222222",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 2,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express delivery on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The source supports express delivery on 10 September.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              },
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express arrival on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "Arrival on 10 September remains supported; only the wording changed.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 2,
+                "source_sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231",
+                "text": "Express arrival on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Supply operations"
+          },
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Unit price is EUR 240.",
+                "execution": null,
+                "gate": "READY",
+                "id": "price",
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"unit_price\":240},\"target\":\"pricing\",\"tool\":\"prepare_price_report\"}",
+                "label": "Price report",
+                "permits": [
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-2",
+            "owner": "0x3333333333333333333333333333333333333333",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 2,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              },
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 2,
+                "source_sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231",
+                "text": "Express arrival on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Market intelligence"
+          }
+        ]
+      },
+      {
+        "schema": "proofguard-change/2.0",
+        "source": {
+          "approved_owners": [
+            "0x1111111111111111111111111111111111111111",
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333"
+          ],
+          "id": "SRC-1",
+          "publisher": "0x1111111111111111111111111111111111111111",
+          "review_batches": [
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 1,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            },
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 2,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            }
+          ],
+          "revision": 2,
+          "title": "Northline supplier terms",
+          "versions": [
+            {
+              "revision": 1,
+              "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+              "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            },
+            {
+              "revision": 2,
+              "sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231",
+              "text": "Express arrival on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            }
+          ],
+          "workflow_ids": [
+            "WF-1",
+            "WF-2"
+          ]
+        },
+        "workflows": [
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Express delivery on 10 September 2026 is required.",
+                "execution": {
+                  "effect": "ARTIFACT_CREATED",
+                  "executor": "0x4444444444444444444444444444444444444444",
+                  "external_order": "NOT_SUBMITTED",
+                  "external_payment": "NOT_SUBMITTED",
+                  "id": "66ab5f53d87de8110314d436037b1a262f63aad41831e462174de8d87a2f4478",
+                  "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                  "output_json": "{\"currency\":\"EUR\",\"intent_hash\":\"55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94\",\"job_id\":\"urgent\",\"kind\":\"PURCHASE_ORDER_DRAFT\",\"notice\":\"Draft only. No supplier order submitted and no payment made.\",\"permit_id\":\"ffef963f76184eda22d52eb45615a8b8f83ba24bae9a42210dedcb89118b5c98\",\"quantity\":10,\"schema\":\"proofguard-tool-output/1.0\",\"shipping\":\"express\",\"source_id\":\"SRC-1\",\"source_revision\":2,\"source_sha256\":\"1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231\",\"target\":\"event\",\"tool\":\"prepare_purchase_order\",\"total\":2400,\"unit_price\":240,\"workflow_id\":\"WF-1\"}",
+                  "output_sha256": "48d621c3d3028b92109a11cc34989912fbd37677b10f7ed27de8a3e082e72c85",
+                  "permit_id": "ffef963f76184eda22d52eb45615a8b8f83ba24bae9a42210dedcb89118b5c98",
+                  "revision": 2
+                },
+                "gate": "ALREADY_EXECUTED",
+                "id": "urgent",
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":10,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"event\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Event order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  },
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "ffef963f76184eda22d52eb45615a8b8f83ba24bae9a42210dedcb89118b5c98",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 2,
+                    "source_sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231"
+                  }
+                ]
+              },
+              {
+                "active_permit": null,
+                "condition": "Standard delivery by 14 September 2026 is required.",
+                "execution": {
+                  "effect": "ARTIFACT_CREATED",
+                  "executor": "0x4444444444444444444444444444444444444444",
+                  "external_order": "NOT_SUBMITTED",
+                  "external_payment": "NOT_SUBMITTED",
+                  "id": "9a6261398d49c433275c85f7503465ede149f1598c9693e891893a70239805c5",
+                  "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                  "output_json": "{\"currency\":\"EUR\",\"intent_hash\":\"ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575\",\"job_id\":\"stock\",\"kind\":\"PURCHASE_ORDER_DRAFT\",\"notice\":\"Draft only. No supplier order submitted and no payment made.\",\"permit_id\":\"9ab6ac90e88a14c343aa6f0be6b188733c13ea764d67928261e735e51ee7790c\",\"quantity\":20,\"schema\":\"proofguard-tool-output/1.0\",\"shipping\":\"standard\",\"source_id\":\"SRC-1\",\"source_revision\":2,\"source_sha256\":\"1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231\",\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\",\"total\":4800,\"unit_price\":240,\"workflow_id\":\"WF-1\"}",
+                  "output_sha256": "705f6269ae99cf8c2cd4c3cb3304e0f830d896ffc56fe2e997dba2798c3e6e41",
+                  "permit_id": "9ab6ac90e88a14c343aa6f0be6b188733c13ea764d67928261e735e51ee7790c",
+                  "revision": 2
+                },
+                "gate": "ALREADY_EXECUTED",
+                "id": "stock",
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":20,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Stock order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  },
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "9ab6ac90e88a14c343aa6f0be6b188733c13ea764d67928261e735e51ee7790c",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 2,
+                    "source_sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 2,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 3,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 2
+              },
+              {
+                "action_id": "urgent",
+                "actor": "0x4444444444444444444444444444444444444444",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 4,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "EXECUTE",
+                "requested_revision": 2
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 5,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 2
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x4444444444444444444444444444444444444444",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 6,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "EXECUTE",
+                "requested_revision": 2
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-1",
+            "owner": "0x2222222222222222222222222222222222222222",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 2,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express delivery on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The source supports express delivery on 10 September.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              },
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express arrival on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "Arrival on 10 September remains supported; only the wording changed.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 2,
+                "source_sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231",
+                "text": "Express arrival on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Supply operations"
+          },
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Unit price is EUR 240.",
+                "execution": {
+                  "effect": "ARTIFACT_CREATED",
+                  "executor": "0x4444444444444444444444444444444444444444",
+                  "external_order": "NOT_SUBMITTED",
+                  "external_payment": "NOT_SUBMITTED",
+                  "id": "c296cd790fdb22b13bf4022888a84383085ca434da0d89562f2b7cc205e15f92",
+                  "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                  "output_json": "{\"currency\":\"EUR\",\"intent_hash\":\"cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a\",\"job_id\":\"price\",\"kind\":\"PRICE_REPORT\",\"notice\":\"Report generated from registered source evidence. No purchase or delivery is implied.\",\"permit_id\":\"c5ce6689523f8229232b879091e71d6638fa02d0dccef23ee399a13ad6aba362\",\"schema\":\"proofguard-tool-output/1.0\",\"source_id\":\"SRC-1\",\"source_revision\":2,\"source_sha256\":\"1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231\",\"target\":\"pricing\",\"tool\":\"prepare_price_report\",\"unit_price\":240,\"workflow_id\":\"WF-2\"}",
+                  "output_sha256": "e257acf41c0fb299159edbc073e9d7f5bcf38d20ede088fe58eed98d2e33d6c8",
+                  "permit_id": "c5ce6689523f8229232b879091e71d6638fa02d0dccef23ee399a13ad6aba362",
+                  "revision": 2
+                },
+                "gate": "ALREADY_EXECUTED",
+                "id": "price",
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"unit_price\":240},\"target\":\"pricing\",\"tool\":\"prepare_price_report\"}",
+                "label": "Price report",
+                "permits": [
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  },
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "c5ce6689523f8229232b879091e71d6638fa02d0dccef23ee399a13ad6aba362",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 2,
+                    "source_sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 2,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 2
+              },
+              {
+                "action_id": "price",
+                "actor": "0x4444444444444444444444444444444444444444",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 3,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "EXECUTE",
+                "requested_revision": 2
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-2",
+            "owner": "0x3333333333333333333333333333333333333333",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 2,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              },
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 2,
+                "source_sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "1c040810b3da48e2ce8209c1dbe920d198a4642ae7cc936e2adbdc9aec4c4231",
+                "text": "Express arrival on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Market intelligence"
+          }
+        ]
+      }
+    ]
+  },
+  "missing": {
+    "title": "The key clause disappears",
+    "mode": "SIMULATED_CONTRACT_WALKTHROUGH",
+    "stages": [
+      {
+        "schema": "proofguard-change/2.0",
+        "source": {
+          "approved_owners": [
+            "0x1111111111111111111111111111111111111111",
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333"
+          ],
+          "id": "SRC-1",
+          "publisher": "0x1111111111111111111111111111111111111111",
+          "review_batches": [
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 1,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            }
+          ],
+          "revision": 1,
+          "title": "Northline supplier terms",
+          "versions": [
+            {
+              "revision": 1,
+              "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+              "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            }
+          ],
+          "workflow_ids": [
+            "WF-1",
+            "WF-2"
+          ]
+        },
+        "workflows": [
+          {
+            "actions": [
+              {
+                "active_permit": {
+                  "authorized_by": "0x2222222222222222222222222222222222222222",
+                  "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                  "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                  "revision": 1,
+                  "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                },
+                "condition": "Express delivery on 10 September 2026 is required.",
+                "execution": null,
+                "gate": "READY",
+                "id": "urgent",
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":10,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"event\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Event order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              },
+              {
+                "active_permit": {
+                  "authorized_by": "0x2222222222222222222222222222222222222222",
+                  "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                  "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                  "revision": 1,
+                  "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                },
+                "condition": "Standard delivery by 14 September 2026 is required.",
+                "execution": null,
+                "gate": "READY",
+                "id": "stock",
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":20,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Stock order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 2,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-1",
+            "owner": "0x2222222222222222222222222222222222222222",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 1,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express delivery on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The source supports express delivery on 10 September.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              }
+            ],
+            "revision": 1,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Supply operations"
+          },
+          {
+            "actions": [
+              {
+                "active_permit": {
+                  "authorized_by": "0x3333333333333333333333333333333333333333",
+                  "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                  "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                  "revision": 1,
+                  "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                },
+                "condition": "Unit price is EUR 240.",
+                "execution": null,
+                "gate": "READY",
+                "id": "price",
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"unit_price\":240},\"target\":\"pricing\",\"tool\":\"prepare_price_report\"}",
+                "label": "Price report",
+                "permits": [
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-2",
+            "owner": "0x3333333333333333333333333333333333333333",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 1,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              }
+            ],
+            "revision": 1,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Market intelligence"
+          }
+        ]
+      },
+      {
+        "schema": "proofguard-change/2.0",
+        "source": {
+          "approved_owners": [
+            "0x1111111111111111111111111111111111111111",
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333"
+          ],
+          "id": "SRC-1",
+          "publisher": "0x1111111111111111111111111111111111111111",
+          "review_batches": [
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 1,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            }
+          ],
+          "revision": 2,
+          "title": "Northline supplier terms",
+          "versions": [
+            {
+              "revision": 1,
+              "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+              "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            },
+            {
+              "revision": 2,
+              "sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81",
+              "text": "Express service is available; scheduling details are pending confirmation. Standard delivery by 14 September 2026. Unit price EUR 240."
+            }
+          ],
+          "workflow_ids": [
+            "WF-1",
+            "WF-2"
+          ]
+        },
+        "workflows": [
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Express delivery on 10 September 2026 is required.",
+                "execution": null,
+                "gate": "AWAITING_REVIEW",
+                "id": "urgent",
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":10,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"event\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Event order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              },
+              {
+                "active_permit": null,
+                "condition": "Standard delivery by 14 September 2026 is required.",
+                "execution": null,
+                "gate": "AWAITING_REVIEW",
+                "id": "stock",
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":20,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Stock order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 2,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-1",
+            "owner": "0x2222222222222222222222222222222222222222",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 1,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express delivery on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The source supports express delivery on 10 September.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81",
+                "text": "Express service is available; scheduling details are pending confirmation. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Supply operations"
+          },
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Unit price is EUR 240.",
+                "execution": null,
+                "gate": "AWAITING_REVIEW",
+                "id": "price",
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"unit_price\":240},\"target\":\"pricing\",\"tool\":\"prepare_price_report\"}",
+                "label": "Price report",
+                "permits": [
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-2",
+            "owner": "0x3333333333333333333333333333333333333333",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 1,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81",
+                "text": "Express service is available; scheduling details are pending confirmation. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Market intelligence"
+          }
+        ]
+      },
+      {
+        "schema": "proofguard-change/2.0",
+        "source": {
+          "approved_owners": [
+            "0x1111111111111111111111111111111111111111",
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333"
+          ],
+          "id": "SRC-1",
+          "publisher": "0x1111111111111111111111111111111111111111",
+          "review_batches": [
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 1,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            },
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 2,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            }
+          ],
+          "revision": 2,
+          "title": "Northline supplier terms",
+          "versions": [
+            {
+              "revision": 1,
+              "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+              "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            },
+            {
+              "revision": 2,
+              "sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81",
+              "text": "Express service is available; scheduling details are pending confirmation. Standard delivery by 14 September 2026. Unit price EUR 240."
+            }
+          ],
+          "workflow_ids": [
+            "WF-1",
+            "WF-2"
+          ]
+        },
+        "workflows": [
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Express delivery on 10 September 2026 is required.",
+                "execution": null,
+                "gate": "INSUFFICIENT_EVIDENCE",
+                "id": "urgent",
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":10,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"event\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Event order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              },
+              {
+                "active_permit": null,
+                "condition": "Standard delivery by 14 September 2026 is required.",
+                "execution": null,
+                "gate": "READY",
+                "id": "stock",
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":20,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Stock order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 2,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-1",
+            "owner": "0x2222222222222222222222222222222222222222",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 2,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express delivery on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The source supports express delivery on 10 September.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              },
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express service is available; scheduling details are pending confirmation.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The revised source gives no firm express arrival or dispatch date. More evidence is needed.",
+                    "verdict": "INSUFFICIENT_EVIDENCE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 2,
+                "source_sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81",
+                "text": "Express service is available; scheduling details are pending confirmation. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Supply operations"
+          },
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Unit price is EUR 240.",
+                "execution": null,
+                "gate": "READY",
+                "id": "price",
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"unit_price\":240},\"target\":\"pricing\",\"tool\":\"prepare_price_report\"}",
+                "label": "Price report",
+                "permits": [
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-2",
+            "owner": "0x3333333333333333333333333333333333333333",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 2,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              },
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 2,
+                "source_sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81",
+                "text": "Express service is available; scheduling details are pending confirmation. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Market intelligence"
+          }
+        ]
+      },
+      {
+        "schema": "proofguard-change/2.0",
+        "source": {
+          "approved_owners": [
+            "0x1111111111111111111111111111111111111111",
+            "0x2222222222222222222222222222222222222222",
+            "0x3333333333333333333333333333333333333333"
+          ],
+          "id": "SRC-1",
+          "publisher": "0x1111111111111111111111111111111111111111",
+          "review_batches": [
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 1,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            },
+            {
+              "requested_by": "0x5555555555555555555555555555555555555555",
+              "revision": 2,
+              "workflow_ids": [
+                "WF-1",
+                "WF-2"
+              ]
+            }
+          ],
+          "revision": 2,
+          "title": "Northline supplier terms",
+          "versions": [
+            {
+              "revision": 1,
+              "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+              "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+            },
+            {
+              "revision": 2,
+              "sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81",
+              "text": "Express service is available; scheduling details are pending confirmation. Standard delivery by 14 September 2026. Unit price EUR 240."
+            }
+          ],
+          "workflow_ids": [
+            "WF-1",
+            "WF-2"
+          ]
+        },
+        "workflows": [
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Express delivery on 10 September 2026 is required.",
+                "execution": null,
+                "gate": "INSUFFICIENT_EVIDENCE",
+                "id": "urgent",
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":10,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"event\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Event order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "a4372bf997417adf2b03e75ac2a840b761695272863c657e9d9df8ad70c6966e",
+                    "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  }
+                ]
+              },
+              {
+                "active_permit": null,
+                "condition": "Standard delivery by 14 September 2026 is required.",
+                "execution": {
+                  "effect": "ARTIFACT_CREATED",
+                  "executor": "0x4444444444444444444444444444444444444444",
+                  "external_order": "NOT_SUBMITTED",
+                  "external_payment": "NOT_SUBMITTED",
+                  "id": "9a6261398d49c433275c85f7503465ede149f1598c9693e891893a70239805c5",
+                  "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                  "output_json": "{\"currency\":\"EUR\",\"intent_hash\":\"ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575\",\"job_id\":\"stock\",\"kind\":\"PURCHASE_ORDER_DRAFT\",\"notice\":\"Draft only. No supplier order submitted and no payment made.\",\"permit_id\":\"9ab6ac90e88a14c343aa6f0be6b188733c13ea764d67928261e735e51ee7790c\",\"quantity\":20,\"schema\":\"proofguard-tool-output/1.0\",\"shipping\":\"standard\",\"source_id\":\"SRC-1\",\"source_revision\":2,\"source_sha256\":\"46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81\",\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\",\"total\":4800,\"unit_price\":240,\"workflow_id\":\"WF-1\"}",
+                  "output_sha256": "dfc68c5afea82df6466d2e4ed8d49c494f94ca4048324eed803a112918e33c5c",
+                  "permit_id": "9ab6ac90e88a14c343aa6f0be6b188733c13ea764d67928261e735e51ee7790c",
+                  "revision": 2
+                },
+                "gate": "ALREADY_EXECUTED",
+                "id": "stock",
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":20,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"warehouse\",\"tool\":\"prepare_purchase_order\"}",
+                "label": "Stock order",
+                "permits": [
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "256f68fb8cd53ea1a06337acc307a4bffd3d24732e33282689887fbc7fbbd1e9",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  },
+                  {
+                    "authorized_by": "0x2222222222222222222222222222222222222222",
+                    "id": "9ab6ac90e88a14c343aa6f0be6b188733c13ea764d67928261e735e51ee7790c",
+                    "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                    "revision": 2,
+                    "source_sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "urgent",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "55cef79a6b853f83db993005cd9d3e5acc7e49718a41eb57065e1f052a761b94",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 2,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x2222222222222222222222222222222222222222",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 3,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "AUTHORIZE",
+                "requested_revision": 2
+              },
+              {
+                "action_id": "stock",
+                "actor": "0x4444444444444444444444444444444444444444",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 4,
+                "intent_hash": "ca39ad8d42e10d5e7cde7faf671ae9f73f7d6585e841b4dae72ef28b279d4575",
+                "operation": "EXECUTE",
+                "requested_revision": 2
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-1",
+            "owner": "0x2222222222222222222222222222222222222222",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 2,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express delivery on 10 September 2026.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The source supports express delivery on 10 September.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              },
+              {
+                "actions": [
+                  {
+                    "id": "urgent",
+                    "new_quote": "Express service is available; scheduling details are pending confirmation.",
+                    "old_quote": "Express delivery on 10 September 2026.",
+                    "reason": "The revised source gives no firm express arrival or dispatch date. More evidence is needed.",
+                    "verdict": "INSUFFICIENT_EVIDENCE",
+                    "workflow_id": "WF-1"
+                  },
+                  {
+                    "id": "stock",
+                    "new_quote": "Standard delivery by 14 September 2026.",
+                    "old_quote": "Standard delivery by 14 September 2026.",
+                    "reason": "Standard delivery by 14 September and the EUR 240 unit price remain supported.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-1"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 2,
+                "source_sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81",
+                "text": "Express service is available; scheduling details are pending confirmation. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Supply operations"
+          },
+          {
+            "actions": [
+              {
+                "active_permit": null,
+                "condition": "Unit price is EUR 240.",
+                "execution": {
+                  "effect": "ARTIFACT_CREATED",
+                  "executor": "0x4444444444444444444444444444444444444444",
+                  "external_order": "NOT_SUBMITTED",
+                  "external_payment": "NOT_SUBMITTED",
+                  "id": "c296cd790fdb22b13bf4022888a84383085ca434da0d89562f2b7cc205e15f92",
+                  "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                  "output_json": "{\"currency\":\"EUR\",\"intent_hash\":\"cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a\",\"job_id\":\"price\",\"kind\":\"PRICE_REPORT\",\"notice\":\"Report generated from registered source evidence. No purchase or delivery is implied.\",\"permit_id\":\"c5ce6689523f8229232b879091e71d6638fa02d0dccef23ee399a13ad6aba362\",\"schema\":\"proofguard-tool-output/1.0\",\"source_id\":\"SRC-1\",\"source_revision\":2,\"source_sha256\":\"46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81\",\"target\":\"pricing\",\"tool\":\"prepare_price_report\",\"unit_price\":240,\"workflow_id\":\"WF-2\"}",
+                  "output_sha256": "d59e549c006a5268e860036206ac31b7348877d40e7f7a3f63ce205c7d56e57b",
+                  "permit_id": "c5ce6689523f8229232b879091e71d6638fa02d0dccef23ee399a13ad6aba362",
+                  "revision": 2
+                },
+                "gate": "ALREADY_EXECUTED",
+                "id": "price",
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"unit_price\":240},\"target\":\"pricing\",\"tool\":\"prepare_price_report\"}",
+                "label": "Price report",
+                "permits": [
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "4643226d54fdd848668db10eb1248143898d4a4935f61ba5d32954758464f2e8",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 1,
+                    "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+                  },
+                  {
+                    "authorized_by": "0x3333333333333333333333333333333333333333",
+                    "id": "c5ce6689523f8229232b879091e71d6638fa02d0dccef23ee399a13ad6aba362",
+                    "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                    "revision": 2,
+                    "source_sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81"
+                  }
+                ]
+              }
+            ],
+            "attempts": [
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 1,
+                "index": 1,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 1
+              },
+              {
+                "action_id": "price",
+                "actor": "0x3333333333333333333333333333333333333333",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 2,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "AUTHORIZE",
+                "requested_revision": 2
+              },
+              {
+                "action_id": "price",
+                "actor": "0x4444444444444444444444444444444444444444",
+                "allowed": true,
+                "code": "READY",
+                "current_revision": 2,
+                "index": 3,
+                "intent_hash": "cf874756967fbb852b7a80647182cd2725a28d329f2f341b171a5a8884e8e58a",
+                "operation": "EXECUTE",
+                "requested_revision": 2
+              }
+            ],
+            "baseline_revision": 1,
+            "executor": "0x4444444444444444444444444444444444444444",
+            "id": "WF-2",
+            "owner": "0x3333333333333333333333333333333333333333",
+            "publisher": "0x1111111111111111111111111111111111111111",
+            "reviewed_revision": 2,
+            "reviews": [
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 1,
+                "source_sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6"
+              },
+              {
+                "actions": [
+                  {
+                    "id": "price",
+                    "new_quote": "Unit price EUR 240.",
+                    "old_quote": "Unit price EUR 240.",
+                    "reason": "The unit price remains EUR 240; the delivery change does not affect the price report.",
+                    "verdict": "NO_MATERIAL_CHANGE",
+                    "workflow_id": "WF-2"
+                  }
+                ],
+                "policy": "proofguard-change/2.0",
+                "revision": 2,
+                "source_sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81"
+              }
+            ],
+            "revision": 2,
+            "schema": "proofguard-change/2.0",
+            "source_id": "SRC-1",
+            "sources": [
+              {
+                "revision": 1,
+                "sha256": "56ffbf6f1fc5bc736474110523ec203c295c2227be1bddae180a94a8fef292e6",
+                "text": "Express delivery on 10 September 2026. Standard delivery by 14 September 2026. Unit price EUR 240."
+              },
+              {
+                "revision": 2,
+                "sha256": "46efe97e8f97700009acbfd8a93b24a6f8cbe2c765bf8c60fe873bf39e427c81",
+                "text": "Express service is available; scheduling details are pending confirmation. Standard delivery by 14 September 2026. Unit price EUR 240."
+              }
+            ],
+            "title": "Market intelligence"
+          }
+        ]
+      }
+    ]
+  }
+}

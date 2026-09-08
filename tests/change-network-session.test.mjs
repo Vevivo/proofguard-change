@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readNetworkPending,rememberNetworkPending,readNetworkArchive,rememberNetworkArchive} from '../genlayer/change-network-session.mjs';
+function storage(){const m=new Map();return {getItem:k=>m.get(k)||null,setItem:(k,v)=>m.set(k,v),removeItem:k=>m.delete(k)};}
+test('pending pointer survives reload but successful finality clears it',()=>{const s=storage(),p={hash:'0x'+'1'.repeat(64),contract:'0x'+'2'.repeat(40),method:'execute_action',caseId:'WF'};rememberNetworkPending(s,p);assert.deepEqual(readNetworkPending(s),p);rememberNetworkPending(s,{...p,finalized:true});assert.equal(readNetworkPending(s),null);});
+test('v1 pointer is not a v2 recovery authority',()=>{const s=storage();s.setItem('proofguard-change/1:pending',JSON.stringify({hash:'0x'+'1'.repeat(64)}));assert.equal(readNetworkPending(s),null);});
+test('archives are scoped to contract source revision and reset retrieval',()=>{const s=storage(),p={contract:'0x'+'2'.repeat(40),caseId:'SRC',revision:2,recordId:'a'.repeat(43),sha256:'b'.repeat(64),bytes:45,retrieval:'VERIFIED',url:'https://attacker.invalid'};rememberNetworkArchive(s,p);assert.equal(readNetworkArchive(s,p.contract,'SRC',2).url,'https://turbo-gateway.com/'+'a'.repeat(43));assert.equal(readNetworkArchive(s,p.contract,'SRC',2).retrieval,'NOT_CHECKED');assert.equal(readNetworkArchive(s,p.contract,'SRC',3),null);});

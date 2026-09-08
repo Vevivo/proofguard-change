@@ -1,0 +1,12 @@
+node_modules/
+arns-dist/
+dist/
+.env
+.env.*
+!.env.example
+outputs/
+work/
+*.log
+*.tsbuildinfo
+__pycache__/
+.DS_Store

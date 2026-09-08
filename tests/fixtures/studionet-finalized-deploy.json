@@ -1,0 +1,57 @@
+{
+  "hash": "0xc8d53caa2175146270c18af2eadfc569303eb032abb2967371dec4c2bdacc858",
+  "status": 7,
+  "statusName": "FINALIZED",
+  "result": 6,
+  "result_name": "MAJORITY_AGREE",
+  "recipient": "0xda8686423E4e03f55b0590d2AFdC0a463750A3B1",
+  "to_address": "0xda8686423E4e03f55b0590d2AFdC0a463750A3B1",
+  "consensus_data": {
+    "leader_receipt": [
+      {
+        "mode": "leader",
+        "vote": null,
+        "execution_result": "SUCCESS",
+        "genvm_result": {
+          "stderr": "",
+          "stdout": "",
+          "raw_error": null,
+          "error_code": null,
+          "error_description": null
+        },
+        "result": {
+          "raw": "AAA=",
+          "status": "return",
+          "payload": {
+            "raw": [
+              0
+            ],
+            "readable": "null"
+          }
+        }
+      },
+      {
+        "mode": "validator",
+        "vote": "agree",
+        "execution_result": "SUCCESS",
+        "genvm_result": {
+          "stderr": "",
+          "stdout": "",
+          "raw_error": null,
+          "error_code": null,
+          "error_description": null
+        },
+        "result": {
+          "raw": "AAA=",
+          "status": "return",
+          "payload": {
+            "raw": [
+              0
+            ],
+            "readable": "null"
+          }
+        }
+      }
+    ]
+  }
+}
