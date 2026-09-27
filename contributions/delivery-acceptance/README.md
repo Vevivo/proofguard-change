@@ -128,9 +128,28 @@ verification, or claim that a model cannot be manipulated. A buyer can decline t
 accept; a party can exhaust the revision budget. The contract deliberately holds
 no funds, so these liveness limits cannot trap a deposit.
 
+## Live Studionet deployment
+
+Contract: [0xCf1c40b19514B27D961a23e6D65619707bEE75eE](https://explorer-studio.genlayer.com/address/0xCf1c40b19514B27D961a23e6D65619707bEE75eE)
+
+[Open in Studio](https://studio.genlayer.com/?import-contract=0xCf1c40b19514B27D961a23e6D65619707bEE75eE) · [Deployment transaction](https://explorer-studio.genlayer.com/tx/0x1d9e6631f1160e469257b5f2a4a73c6d8b53b7c6cc6262f61d84e9ecb991b6db)
+
+Verified on 27 September 2026 UTC (28 September in Istanbul), chain 61999.
+The deployed source was retrieved and compared byte for byte with `contract.py`.
+All four documented sample writes reached `FINALIZED`, `MAJORITY_AGREE`, and
+`SUCCESS` with full consensus. Separate disposable test accounts and fictional
+inputs were used; no user wallet or real funds were used.
+
+Observed result: `API-DOCS-01` has two supported criteria, score 100, an
+`ACCEPTABLE` review, and an immutable acceptance certificate for revision 1.
+
+Exact transaction IDs, inputs and final state are in [live-evidence.json](../live-evidence.json).
+To try writes yourself, deploy a fresh instance under your own buyer account.
+The shared instance is a public reference, not an account delegation.
+
 ## Verification
 
-[22 Direct Mode tests](tests/test_delivery.py) cover mandatory vetoes, insufficient
+[25 Direct Mode tests](tests/test_delivery.py) cover mandatory vetoes, insufficient
 evidence, exact quotations, role separation, conflicting validator verdicts,
 stale acceptance, challenge preservation, terminal states, and bounds.
 See [verification details](../VERIFICATION.md) for executed commands and limits.

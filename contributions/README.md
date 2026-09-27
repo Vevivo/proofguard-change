@@ -13,6 +13,9 @@ These are reference primitives, not audited production systems. The included
 fixtures are synthetic. Neither contract moves funds or establishes physical
 delivery. Read each contract's trust boundaries before using it.
 
+Both contracts have verified Studionet deployments and completed live sample flows.
+See [live evidence](live-evidence.json) and each contract README for addresses.
+
 ## Reproduce verification
 
 Python 3.12 or newer:

@@ -1,0 +1,345 @@
+{
+  "network": "GenLayer Studionet",
+  "chainId": 61999,
+  "accounts": {
+    "buyer": "0xd04935e1Db146529bF7CA91D31b74F8Ee6bBADA3",
+    "supplier": "0xBfE2c3610e8c0c5AE1daC772459a76088523Ce8D"
+  },
+  "contracts": {
+    "invoice-match": {
+      "sourceSha256": "8f04cd8c60cbaa04d72e456d76d4adc5f4bb3c01341dcdcb348f3c3960754247",
+      "deployHash": "0x5d46d777ff074788d586e4740db7d39526bad51768ec01ac6dfb8b7c48591b0f",
+      "address": "0x1a1C897efBCd0BA6a51222947001180d461278a3",
+      "sourceVerified": true,
+      "state": {
+        "invoices": {
+          "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d/INV-DOCS-01": {
+            "currency": "USD",
+            "invoice_id": "INV-DOCS-01",
+            "lines": [
+              {
+                "description": "September API documentation editorial review",
+                "id": "I1",
+                "quantity": 2,
+                "unit": "hour",
+                "unit_price_minor": 5000
+              }
+            ],
+            "mapping": [
+              {
+                "invoice_line": "I1",
+                "order_line": "P1",
+                "reason": "The service identity (API documentation editorial review) and billing period (September) match exactly."
+              }
+            ],
+            "order_id": "PO-DOCS-01",
+            "problems": [],
+            "record_hash": "01d819081417f89a12ec56088b03482fdf07e5507c8f5fe97361d1872d232425",
+            "status": "BOOKED",
+            "supplier": "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d",
+            "total_minor": 10000
+          }
+        },
+        "orders": {
+          "PO-DOCS-01": {
+            "booked": {
+              "P1": 2
+            },
+            "currency": "USD",
+            "lines": [
+              {
+                "description": "Editorial review of API documentation, September",
+                "id": "P1",
+                "quantity": 3,
+                "unit": "hour",
+                "unit_price_minor": 5000
+              }
+            ],
+            "supplier": "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d"
+          }
+        }
+      },
+      "observedAt": "2026-09-27T21:25:28.371Z",
+      "transactions": {
+        "create_order": {
+          "method": "create_order",
+          "args": [
+            "PO-DOCS-01",
+            "0xBfE2c3610e8c0c5AE1daC772459a76088523Ce8D",
+            "USD",
+            "[{\"id\":\"P1\",\"description\":\"Editorial review of API documentation, September\",\"unit\":\"hour\",\"quantity\":3,\"unit_price_minor\":5000}]"
+          ],
+          "role": "buyer",
+          "hash": "0x7a818b268548b606aeb113fcb9f9f13b1d19abcab69acf883fe20354a6ebd2c8",
+          "success": true,
+          "observedAt": "2026-09-27T21:27:08.009Z",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "votes": {
+            "0x76c25AFC12c75485703cCFfd0083AA6201455B25": "agree",
+            "0x9ea87b28DcA2F79fe108CF06a4c13B4c876AC23d": "agree",
+            "0xE6BD8050758CB15fC88387223E31Ae2708B119dC": "agree",
+            "0xcE1d6bBB36B744536153966B4DD42276f5ADd0F8": "agree",
+            "0xec2Fb79cd12255Eb34886CEd7332f27B98DEe658": "agree"
+          },
+          "execution": "SUCCESS"
+        },
+        "submit_invoice": {
+          "method": "submit_invoice",
+          "args": [
+            "PO-DOCS-01",
+            "INV-DOCS-01",
+            "USD",
+            10000,
+            "[{\"id\":\"I1\",\"description\":\"September API documentation editorial review\",\"unit\":\"hour\",\"quantity\":2,\"unit_price_minor\":5000}]"
+          ],
+          "role": "supplier",
+          "hash": "0x044fac7e4fc7519176ddbc8228ac1e347139de1f908792c3e32c2d8a5cfaa538",
+          "success": true,
+          "observedAt": "2026-09-27T21:27:49.327Z",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "votes": {
+            "0x14402D49f317CE1a2F35BAE01b1804A2A9703dCb": "idle",
+            "0x36728d2a123aB444E603EE5b2ad17d18Bb193557": "agree",
+            "0x4aba638Cf0Cf5249437AaD968fC69dde46ae6BAC": "agree",
+            "0x9ea87b28DcA2F79fe108CF06a4c13B4c876AC23d": "agree",
+            "0xec2Fb79cd12255Eb34886CEd7332f27B98DEe658": "agree"
+          },
+          "execution": "SUCCESS"
+        },
+        "review_invoice": {
+          "method": "review_invoice",
+          "args": [
+            "0xBfE2c3610e8c0c5AE1daC772459a76088523Ce8D",
+            "INV-DOCS-01"
+          ],
+          "role": "buyer",
+          "hash": "0x36d7326e04e803c9bbcec067867c2758b28c847cf1fbabcf27d5f9026f1c12f1",
+          "success": true,
+          "observedAt": "2026-09-27T21:28:30.587Z",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "votes": {
+            "0x03D58A4DeF6fDFc032A56374785a5F571D07Bc11": "agree",
+            "0x36728d2a123aB444E603EE5b2ad17d18Bb193557": "idle",
+            "0x76c25AFC12c75485703cCFfd0083AA6201455B25": "agree",
+            "0x772ffCd1dF6Cc566eC4b8d3f4F4f8eBbb6B36C84": "idle",
+            "0xec2Fb79cd12255Eb34886CEd7332f27B98DEe658": "agree"
+          },
+          "execution": "SUCCESS"
+        },
+        "book_invoice": {
+          "method": "book_invoice",
+          "args": [
+            "0xBfE2c3610e8c0c5AE1daC772459a76088523Ce8D",
+            "INV-DOCS-01"
+          ],
+          "role": "buyer",
+          "hash": "0x8c385acd95ec25535fb328f84846cdd303f990310e31e916a6431c4b1d17a954",
+          "success": true,
+          "observedAt": "2026-09-27T21:29:08.272Z",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "votes": {
+            "0x36728d2a123aB444E603EE5b2ad17d18Bb193557": "idle",
+            "0x3D83ab507785b95ca5C208bEc80CCe3D5ca98100": "agree",
+            "0x5310dcF075E0BD47d29B8ec6581F736C767f54D2": "agree",
+            "0xBBb165E4c9d73a1493D363280f7067Cd07891dBE": "agree",
+            "0xacc2459F341D7a887bcA8FAA62F1EC9378d4Bc67": "idle"
+          },
+          "execution": "SUCCESS"
+        }
+      },
+      "smokeTest": "PASS",
+      "explorer": "https://explorer-studio.genlayer.com/address/0x1a1C897efBCd0BA6a51222947001180d461278a3",
+      "studio": "https://studio.genlayer.com/?import-contract=0x1a1C897efBCd0BA6a51222947001180d461278a3",
+      "deploymentResult": {
+        "status": "FINALIZED",
+        "execution": "SUCCESS",
+        "consensus": "MAJORITY_AGREE"
+      }
+    },
+    "delivery-acceptance": {
+      "sourceSha256": "2acfe8a915a2bce06084ec22d3fda2168f6980bf8fb529315ca34167fb47f158",
+      "deployHash": "0x1d9e6631f1160e469257b5f2a4a73c6d8b53b7c6cc6262f61d84e9ecb991b6db",
+      "address": "0xCf1c40b19514B27D961a23e6D65619707bEE75eE",
+      "sourceVerified": true,
+      "state": {
+        "cases": {
+          "API-DOCS-01": {
+            "accepted": {
+              "accepted_by": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+              "case_id": "API-DOCS-01",
+              "certificate_hash": "f776243d09353c1411831e70532e31b56d1c68970d4f4add1cbe25f4e4e7d5b2",
+              "contractor": "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d",
+              "evidence_hash": "ca6d8eda18a2fd236b858aa3496467b10c56423072a7e755efef7dc309df2a07",
+              "review_hash": "ec468959e51edbbeddc9edd60236221d039274f4848a7c9608cd040a06d040e1",
+              "revision": 1,
+              "rubric_hash": "189b2ee58ce190442a2c62164a10ba579eb909b1374bc48fd5914d9ef8ba8c0f"
+            },
+            "contractor": "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d",
+            "criteria": [
+              {
+                "id": "health",
+                "mandatory": true,
+                "requirement": "Document the health endpoint path and success status.",
+                "weight": 40
+              },
+              {
+                "id": "errors",
+                "mandatory": false,
+                "requirement": "Document a request_id field in error responses.",
+                "weight": 60
+              }
+            ],
+            "rubric_hash": "189b2ee58ce190442a2c62164a10ba579eb909b1374bc48fd5914d9ef8ba8c0f",
+            "threshold": 80,
+            "versions": [
+              {
+                "challenged": false,
+                "evidence": [
+                  {
+                    "author": "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d",
+                    "id": "delivery",
+                    "text": "Endpoint GET /health returns 200. Error responses include a request_id field."
+                  }
+                ],
+                "review": {
+                  "decision": {
+                    "mandatory_failures": [],
+                    "mandatory_unknowns": [],
+                    "score": 100,
+                    "status": "ACCEPTABLE"
+                  },
+                  "rows": [
+                    {
+                      "criterion": "health",
+                      "evidence_id": "delivery",
+                      "quote": "Endpoint GET /health returns 200",
+                      "reason": "The evidence explicitly documents the health endpoint path (/health) and its success status (200).",
+                      "verdict": "SUPPORTED"
+                    },
+                    {
+                      "criterion": "errors",
+                      "evidence_id": "delivery",
+                      "quote": "Error responses include a request_id field",
+                      "reason": "The evidence confirms that error responses contain a request_id field, satisfying the documentation requirement.",
+                      "verdict": "SUPPORTED"
+                    }
+                  ]
+                },
+                "revision": 1
+              }
+            ]
+          }
+        }
+      },
+      "observedAt": "2026-09-27T21:26:06.227Z",
+      "transactions": {
+        "create_case": {
+          "method": "create_case",
+          "args": [
+            "API-DOCS-01",
+            "0xBfE2c3610e8c0c5AE1daC772459a76088523Ce8D",
+            80,
+            "[{\"id\":\"health\",\"requirement\":\"Document the health endpoint path and success status.\",\"weight\":40,\"mandatory\":true},{\"id\":\"errors\",\"requirement\":\"Document a request_id field in error responses.\",\"weight\":60,\"mandatory\":false}]"
+          ],
+          "role": "buyer",
+          "hash": "0x5a9621c2d5753f07dcd1cd3a960699256f0ed523e75df15e24bb3cff3037bf4a",
+          "success": true,
+          "observedAt": "2026-09-27T21:30:17.124Z",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "votes": {
+            "0x3D83ab507785b95ca5C208bEc80CCe3D5ca98100": "agree",
+            "0x4404Fb70d490c935758146f42A73DC850FF95C71": "agree",
+            "0x772ffCd1dF6Cc566eC4b8d3f4F4f8eBbb6B36C84": "agree",
+            "0xDB1c35c1f05d885999b8f13e5735307BcC16Be88": "agree",
+            "0xcE1d6bBB36B744536153966B4DD42276f5ADd0F8": "agree"
+          },
+          "execution": "SUCCESS"
+        },
+        "submit_delivery": {
+          "method": "submit_delivery",
+          "args": [
+            "API-DOCS-01",
+            "Endpoint GET /health returns 200. Error responses include a request_id field."
+          ],
+          "role": "supplier",
+          "hash": "0x4fc3b39d6afd87d6736440e63e7827bef88f5f91a9828683c0b445eb39f3b32d",
+          "success": true,
+          "observedAt": "2026-09-27T21:30:54.828Z",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "votes": {
+            "0x4EDbE1FC9EAeC7b0EBA849b0C76AE73Eb0ad5C47": "agree",
+            "0x4aba638Cf0Cf5249437AaD968fC69dde46ae6BAC": "idle",
+            "0x772ffCd1dF6Cc566eC4b8d3f4F4f8eBbb6B36C84": "idle",
+            "0x90402341F0B0e97b23023c0a87de957FB7148E0F": "agree",
+            "0x9ea87b28DcA2F79fe108CF06a4c13B4c876AC23d": "agree"
+          },
+          "execution": "SUCCESS"
+        },
+        "review_delivery": {
+          "method": "review_delivery",
+          "args": [
+            "API-DOCS-01",
+            1
+          ],
+          "role": "buyer",
+          "hash": "0x801095f281a965b4cfe66905ef940e40519eb5e35221f1c35cbe899cbd8f67cf",
+          "success": true,
+          "observedAt": "2026-09-27T21:31:43.329Z",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "votes": {
+            "0x14402D49f317CE1a2F35BAE01b1804A2A9703dCb": "idle",
+            "0x76c25AFC12c75485703cCFfd0083AA6201455B25": "agree",
+            "0xBBb165E4c9d73a1493D363280f7067Cd07891dBE": "agree",
+            "0xE6BD8050758CB15fC88387223E31Ae2708B119dC": "agree",
+            "0xacc2459F341D7a887bcA8FAA62F1EC9378d4Bc67": "idle"
+          },
+          "execution": "SUCCESS"
+        },
+        "accept_delivery": {
+          "method": "accept_delivery",
+          "args": [
+            "API-DOCS-01",
+            1
+          ],
+          "role": "buyer",
+          "hash": "0x6a92d2de0483665329bc7275e3c9d2b6eb9013c9b6edf00ed2465eea06b41817",
+          "success": true,
+          "observedAt": "2026-09-27T21:32:21.252Z",
+          "status": "FINALIZED",
+          "consensus": "MAJORITY_AGREE",
+          "votes": {
+            "0x03D58A4DeF6fDFc032A56374785a5F571D07Bc11": "agree",
+            "0x36728d2a123aB444E603EE5b2ad17d18Bb193557": "agree",
+            "0x5310dcF075E0BD47d29B8ec6581F736C767f54D2": "agree",
+            "0xacc2459F341D7a887bcA8FAA62F1EC9378d4Bc67": "agree",
+            "0xcE1d6bBB36B744536153966B4DD42276f5ADd0F8": "agree"
+          },
+          "execution": "SUCCESS"
+        }
+      },
+      "smokeTest": "PASS",
+      "explorer": "https://explorer-studio.genlayer.com/address/0xCf1c40b19514B27D961a23e6D65619707bEE75eE",
+      "studio": "https://studio.genlayer.com/?import-contract=0xCf1c40b19514B27D961a23e6D65619707bEE75eE",
+      "deploymentResult": {
+        "status": "FINALIZED",
+        "execution": "SUCCESS",
+        "consensus": "MAJORITY_AGREE"
+      }
+    }
+  },
+  "previousAttempt": {
+    "invoiceDeploy": "0x7ef50e0bee1df0d87db4f2c39f197bd7a4616702f365330cf7191e760f1ee51c",
+    "deliveryDeploy": "0x6fb596d487cbb4563b37daff544306f0741969d17482706dfc843ae1b2b7dedb",
+    "reviewHash": "0x9182df3213315b38a69648363ddfb247911a8ed0f14a8a18590d7436b85b847a",
+    "result": "UNDETERMINED",
+    "error": "INCOMPLETE_MATCH",
+    "fix": "Explicit JSON object envelopes for JSON-mode model providers"
+  }
+}

@@ -124,9 +124,28 @@ a service occurred, pay a supplier, or post to external accounting software.
 The record hash is a content digest; it is not a separate signature or proof of
 payment. Reasons are explanatory text, not exact-agreement consensus fields.
 
+## Live Studionet deployment
+
+Contract: [0x1a1C897efBCd0BA6a51222947001180d461278a3](https://explorer-studio.genlayer.com/address/0x1a1C897efBCd0BA6a51222947001180d461278a3)
+
+[Open in Studio](https://studio.genlayer.com/?import-contract=0x1a1C897efBCd0BA6a51222947001180d461278a3) · [Deployment transaction](https://explorer-studio.genlayer.com/tx/0x5d46d777ff074788d586e4740db7d39526bad51768ec01ac6dfb8b7c48591b0f)
+
+Verified on 27 September 2026 UTC (28 September in Istanbul), chain 61999.
+The deployed source was retrieved and compared byte for byte with `contract.py`.
+All four documented sample writes reached `FINALIZED`, `MAJORITY_AGREE`, and
+`SUCCESS` with full consensus. Separate disposable test accounts and fictional
+inputs were used; no user wallet or real funds were used.
+
+Observed result: `INV-DOCS-01` is `BOOKED`, with two of three ordered hours consumed
+and a stored record hash.
+
+Exact transaction IDs, inputs and final state are in [live-evidence.json](../live-evidence.json).
+To try writes yourself, deploy a fresh instance under your own buyer account.
+The shared instance is a public reference, not an account delegation.
+
 ## Verification
 
-[23 Direct Mode tests](tests/test_invoice.py) cover booking races, replay across
+[25 Direct Mode tests](tests/test_invoice.py) cover booking races, replay across
 orders, aggregate quantities, arithmetic mismatches, role boundaries, malformed
 model results, numeric bounds, and independent validator disagreement.
 See [verification details](../VERIFICATION.md) for executed commands and limits.

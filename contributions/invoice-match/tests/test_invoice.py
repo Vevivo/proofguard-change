@@ -31,7 +31,7 @@ def submit(vm, setup, id="INV1", rows=None, currency="USD", total=None, order="P
 
 def review(vm, setup, id="INV1", rows=None):
     vm.clear_mocks()
-    vm.mock_llm(r"Match invoice descriptions", json.dumps(rows or [answer()]))
+    vm.mock_llm(r"Match invoice descriptions", json.dumps({"matches": rows or [answer()]}))
     setup[0].review_invoice(setup[1], id)
 
 
@@ -105,7 +105,7 @@ def test_validator_independently_disagrees(direct_vm, setup):
     submit(direct_vm, setup)
     review(direct_vm, setup)
     direct_vm.clear_mocks()
-    direct_vm.mock_llm(r"Match invoice descriptions", json.dumps([answer(target="")]))
+    direct_vm.mock_llm(r"Match invoice descriptions", json.dumps({"matches": [answer(target="")]}))
     assert direct_vm.run_validator() is False
 
 
@@ -113,13 +113,13 @@ def test_validator_allows_different_reason_not_mapping(direct_vm, setup):
     submit(direct_vm, setup)
     review(direct_vm, setup)
     direct_vm.clear_mocks()
-    direct_vm.mock_llm(r"Match invoice descriptions", json.dumps([answer(reason="The scope and period are equivalent.")]))
+    direct_vm.mock_llm(r"Match invoice descriptions", json.dumps({"matches": [answer(reason="The scope and period are equivalent.")]}))
     assert direct_vm.run_validator() is True
     assert direct_vm.run_validator(leader_error=ValueError("no result")) is False
     assert direct_vm.run_validator(leader_result=[answer(target="unknown")]) is False
 
 
-@pytest.mark.parametrize("response", ["not json", "{}", "[]", '[{"invoice_line":"I1","order_line":"P1","reason":""}]'])
+@pytest.mark.parametrize("response", ["not json", "{}", "[]", '{"matches":[]}', '{"matches":{},"extra":1}', '{"matches":[{"invoice_line":"I1","order_line":"P1","reason":""}]}'])
 def test_bad_model_output_does_not_write(direct_vm, setup, response):
     submit(direct_vm, setup)
     before = setup[0].get_state()

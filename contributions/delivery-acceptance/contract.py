@@ -81,7 +81,8 @@ If evidence conflicts on the same fact and cannot be resolved from the packet,
 use UNPROVEN. SUPPORTED means the full criterion is established; CONTRADICTED
 requires explicit opposing evidence. Distinguish a proposed plan from completed
 work. Do not open URLs or assume linked documents were read.
-Return a JSON array with one row per criterion, using exactly criterion, verdict
+Return a JSON object with exactly one key, "reviews", containing an array.
+Include one row per criterion, using exactly criterion, verdict
 (SUPPORTED/CONTRADICTED/UNPROVEN), evidence_id, quote, reason. Quotes must be exact
 nonempty substrings from the named evidence item for SUPPORTED or CONTRADICTED.
 UNPROVEN may use empty evidence_id and quote. Criteria weights do not affect the
@@ -89,7 +90,9 @@ semantic verdict. DATA: """ + pack({"criteria": criteria, "evidence": packet})
 
     def leader():
         response = gl.nondet.exec_prompt(prompt, response_format="json")
-        return normalize_review(json.loads(response) if isinstance(response, str) else response, criteria, packet)
+        answer = json.loads(response) if isinstance(response, str) else response
+        require(isinstance(answer, dict) and set(answer) == {"reviews"}, "INVALID_REVIEW_ENVELOPE")
+        return normalize_review(answer["reviews"], criteria, packet)
 
     def validator(proposed):
         if not isinstance(proposed, gl.vm.Return):

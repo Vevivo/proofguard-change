@@ -34,7 +34,7 @@ def read(setup):
 
 def review(vm, setup, answer=None, revision=1):
     vm.clear_mocks()
-    vm.mock_llm(r"Evaluate a delivery", json.dumps(answer if answer is not None else rows()))
+    vm.mock_llm(r"Evaluate a delivery", json.dumps({"reviews": answer if answer is not None else rows()}))
     setup[0].review_delivery("DOCS", revision)
 
 
@@ -124,7 +124,7 @@ def test_distinct_roles(direct_vm, setup, direct_bob):
 def test_validator_checks_every_criterion(direct_vm, setup):
     review(direct_vm, setup)
     direct_vm.clear_mocks()
-    direct_vm.mock_llm(r"Evaluate a delivery", json.dumps([row("health", "UNPROVEN", "", ""), rows()[1]]))
+    direct_vm.mock_llm(r"Evaluate a delivery", json.dumps({"reviews": [row("health", "UNPROVEN", "", ""), rows()[1]]}))
     assert direct_vm.run_validator() is False
     assert direct_vm.run_validator(leader_error=ValueError("failed")) is False
 
@@ -134,7 +134,7 @@ def test_validator_tolerates_prose_difference(direct_vm, setup):
     direct_vm.clear_mocks()
     independent = rows()
     independent[0]["reason"] = "Different wording for the same supported criterion."
-    direct_vm.mock_llm(r"Evaluate a delivery", json.dumps(independent))
+    direct_vm.mock_llm(r"Evaluate a delivery", json.dumps({"reviews": independent}))
     assert direct_vm.run_validator() is True
 
 
@@ -166,3 +166,12 @@ def test_invalid_rubric(direct_vm, setup, change):
     criteria[0].update(change)
     with direct_vm.expect_revert():
         setup[0].create_case("BAD", ("0x" + bytes(setup[2]).hex()), 60, json.dumps(criteria))
+
+
+@pytest.mark.parametrize("response", ["[]", "{}", '{"reviews": [], "extra": 1}'])
+def test_invalid_model_envelope_reverts(direct_vm, setup, response):
+    before = setup[0].get_state()
+    direct_vm.mock_llm(r"Evaluate a delivery", response)
+    with direct_vm.expect_revert("INVALID_REVIEW_ENVELOPE"):
+        setup[0].review_delivery("DOCS", 1)
+    assert setup[0].get_state() == before
