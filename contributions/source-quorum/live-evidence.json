@@ -1,0 +1,205 @@
+{
+  "sourceSha256": "73b04425c23a9aa3dc63b488e5dc866c2e4551e3f93a20704f4471ecadc59e5f",
+  "deployHash": "0xfe2ca148294091ee3ce121792328757c7d0132ba546410ee0539d7c842484c1c",
+  "address": "0x7580B8500D9296dC08b177f0f7E3Dd89822b86D0",
+  "sourceVerified": true,
+  "transactions": {
+    "policy": {
+      "method": "create_policy",
+      "args": [
+        "HTTP429",
+        2,
+        "[{\"id\":\"rfc6585\",\"publisher\":\"rfc-editor\",\"url\":\"https://www.rfc-editor.org/rfc/rfc6585.txt\",\"sha256\":\"f6d55d1b491cd515c35827cf9181753b23b2a68c4df14e56d83dc445b3876e58\"},{\"id\":\"mdn429\",\"publisher\":\"mdn\",\"url\":\"https://raw.githubusercontent.com/mdn/content/87ca9db1ebe56eb20c1f20b91fca43955d8f0e26/files/en-us/web/http/reference/status/429/index.md\",\"sha256\":\"9d00420fcbd41b38a4016031ec5df0c13f8a495295d38b4c0b3487c60c5bbe8b\"}]"
+      ],
+      "role": "owner",
+      "hash": "0xdcf9d6ccbd12c51e03f28de3a319f44fb311fff712e031ba139ae35a196c8e9a",
+      "success": true,
+      "observedAt": "2026-09-29T22:46:37.329Z"
+    },
+    "RATE_LIMIT-open": {
+      "method": "open_case",
+      "args": [
+        "RATE_LIMIT",
+        "HTTP429",
+        "HTTP status code 429 indicates that the client has sent too many requests within a given period of time."
+      ],
+      "role": "owner",
+      "hash": "0xe4f46da83375878a42590c10d779fe8f768388c054f22b6c1b65e7aff99a4288",
+      "success": true,
+      "observedAt": "2026-09-29T22:47:15.592Z"
+    },
+    "RATE_LIMIT-review": {
+      "method": "review_case",
+      "args": [
+        "RATE_LIMIT"
+      ],
+      "role": "reviewer",
+      "hash": "0x52e69356fa57b792add8f8598f78db96ee5c1665b6cc3978ef72cd98c5e00a76",
+      "success": true,
+      "observedAt": "2026-09-29T22:48:11.820Z"
+    },
+    "HEADER_REQUIRED-open": {
+      "method": "open_case",
+      "args": [
+        "HEADER_REQUIRED",
+        "HTTP429",
+        "Every HTTP 429 response is required to include a Retry-After header."
+      ],
+      "role": "owner",
+      "hash": "0x082b357aab787e5fd01f8204dec80d89ad3466278b01e252707ffbe1495604eb",
+      "success": true,
+      "observedAt": "2026-09-29T22:48:53.549Z"
+    },
+    "HEADER_REQUIRED-review": {
+      "method": "review_case",
+      "args": [
+        "HEADER_REQUIRED"
+      ],
+      "role": "reviewer",
+      "hash": "0x733c6f8196470f59c2839aaca85873cbc8798fe2ec3b9352da0971254b72bbc4",
+      "success": true,
+      "observedAt": "2026-09-29T22:50:11.436Z"
+    },
+    "DAILY_CAP-open": {
+      "method": "open_case",
+      "args": [
+        "DAILY_CAP",
+        "HTTP429",
+        "HTTP 429 limits every client to exactly 100 requests per day."
+      ],
+      "role": "owner",
+      "hash": "0xbe16303d7c1b5e9df4c2b036904de3388df66995648ce916ced6b0ed6533b385",
+      "success": true,
+      "observedAt": "2026-09-29T22:50:53.052Z"
+    },
+    "DAILY_CAP-review": {
+      "method": "review_case",
+      "args": [
+        "DAILY_CAP"
+      ],
+      "role": "reviewer",
+      "hash": "0x01354f80d00c9d02011ab671686f730b3b19fe5280157af70adfbe0aba26997b",
+      "success": false,
+      "status": "FINALIZED",
+      "result": "MAJORITY_DISAGREE",
+      "observedAt": "2026-09-29T22:54:27.264Z"
+    },
+    "SUPPORT_SLA-open": {
+      "method": "open_case",
+      "args": [
+        "SUPPORT_SLA",
+        "HTTP429",
+        "A service named Example Cloud guarantees a 15-minute support response time for HTTP 429 errors."
+      ],
+      "role": "owner",
+      "hash": "0x47e2bed7cd26811409606034c98484a6eaf7e03b8d92522f8f79299072c56e6a",
+      "success": true,
+      "observedAt": "2026-09-29T22:55:05.360Z"
+    },
+    "SUPPORT_SLA-review": {
+      "method": "review_case",
+      "args": [
+        "SUPPORT_SLA"
+      ],
+      "role": "reviewer",
+      "hash": "0xbc021902e09452d22eb6f87cde43e3e34f4af3c1f2a568c47bcb5d16ee1a88a4",
+      "success": true,
+      "observedAt": "2026-09-29T22:55:50.796Z"
+    }
+  },
+  "state": {
+    "policies": {
+      "HTTP429": {
+        "id": "HTTP429",
+        "owner": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+        "policy_hash": "30d25e696b65292f94a5336b24ff6573ece9cfb1239a90da348b7a6c54f3fa41",
+        "sources": [
+          {
+            "id": "mdn429",
+            "publisher": "mdn",
+            "sha256": "9d00420fcbd41b38a4016031ec5df0c13f8a495295d38b4c0b3487c60c5bbe8b",
+            "url": "https://raw.githubusercontent.com/mdn/content/87ca9db1ebe56eb20c1f20b91fca43955d8f0e26/files/en-us/web/http/reference/status/429/index.md"
+          },
+          {
+            "id": "rfc6585",
+            "publisher": "rfc-editor",
+            "sha256": "f6d55d1b491cd515c35827cf9181753b23b2a68c4df14e56d83dc445b3876e58",
+            "url": "https://www.rfc-editor.org/rfc/rfc6585.txt"
+          }
+        ],
+        "threshold": 2
+      }
+    },
+    "cases": {
+      "DAILY_CAP": {
+        "claim": "HTTP 429 limits every client to exactly 100 requests per day.",
+        "id": "DAILY_CAP",
+        "policy_id": "HTTP429",
+        "receipt": null,
+        "status": "OPEN"
+      },
+      "HEADER_REQUIRED": {
+        "claim": "Every HTTP 429 response is required to include a Retry-After header.",
+        "id": "HEADER_REQUIRED",
+        "policy_id": "HTTP429",
+        "receipt": {
+          "receipt_hash": "cd2b8388423ab6c5049d3aa206d2531be211e8277a9bfb911e5df40686d55a93",
+          "decision": {
+            "contradicting_sources": [
+              "mdn429",
+              "rfc6585"
+            ],
+            "counted_sources": [],
+            "status": "CONFLICT",
+            "support_count": 0,
+            "threshold": 2
+          }
+        },
+        "status": "CONFLICT"
+      },
+      "RATE_LIMIT": {
+        "claim": "HTTP status code 429 indicates that the client has sent too many requests within a given period of time.",
+        "id": "RATE_LIMIT",
+        "policy_id": "HTTP429",
+        "receipt": {
+          "receipt_hash": "b3c1dcf622e604f1873535901255d837b9f1eb35e4856b84a4d61e501fcfb203",
+          "decision": {
+            "contradicting_sources": [],
+            "counted_sources": [
+              "mdn429",
+              "rfc6585"
+            ],
+            "status": "CORROBORATED",
+            "support_count": 2,
+            "threshold": 2
+          }
+        },
+        "status": "CORROBORATED"
+      },
+      "SUPPORT_SLA": {
+        "claim": "A service named Example Cloud guarantees a 15-minute support response time for HTTP 429 errors.",
+        "id": "SUPPORT_SLA",
+        "policy_id": "HTTP429",
+        "receipt": {
+          "receipt_hash": "450a657ad6b763f07ac9e4bc12f2910bdb16f970df0378cbe77b324e657998ad",
+          "decision": {
+            "contradicting_sources": [],
+            "counted_sources": [],
+            "status": "INSUFFICIENT",
+            "support_count": 0,
+            "threshold": 2
+          }
+        },
+        "status": "INSUFFICIENT"
+      }
+    }
+  },
+  "observedAt": "2026-09-29T22:55:51.979Z",
+  "network": "GenLayer Studionet",
+  "chainId": 61999,
+  "accounts": {
+    "owner": "0xd04935e1Db146529bF7CA91D31b74F8Ee6bBADA3",
+    "reviewer": "0xBfE2c3610e8c0c5AE1daC772459a76088523Ce8D"
+  },
+  "note": "Public verification summary. Quotes and explanations remain readable from contract state. One unsuccessful consensus attempt is retained, not counted as a completed decision."
+}

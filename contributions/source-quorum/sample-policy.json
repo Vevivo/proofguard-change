@@ -1,0 +1,14 @@
+[
+  {
+    "id": "rfc6585",
+    "publisher": "rfc-editor",
+    "url": "https://www.rfc-editor.org/rfc/rfc6585.txt",
+    "sha256": "f6d55d1b491cd515c35827cf9181753b23b2a68c4df14e56d83dc445b3876e58"
+  },
+  {
+    "id": "mdn429",
+    "publisher": "mdn",
+    "url": "https://raw.githubusercontent.com/mdn/content/87ca9db1ebe56eb20c1f20b91fca43955d8f0e26/files/en-us/web/http/reference/status/429/index.md",
+    "sha256": "9d00420fcbd41b38a4016031ec5df0c13f8a495295d38b4c0b3487c60c5bbe8b"
+  }
+]
