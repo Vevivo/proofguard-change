@@ -19,11 +19,14 @@
     "agent:change": "node agents/change-network-runner.mjs",
     "verify:live": "node scripts/verify-live.mjs",
     "verify:correction": "node scripts/verify-correction.mjs",
-    "reproduce:correction": "node scripts/reproduce-correction.mjs"
+    "reproduce:correction": "node scripts/reproduce-correction.mjs",
+    "agent:mcp": "node agents/mcp-server.mjs",
+    "verify:agent": "node scripts/probe-agent-connector.mjs"
   },
   "dependencies": {
     "@ardrive/turbo-sdk": "^1.42.0",
     "@dha-team/arbundles": "1.0.4",
+    "@modelcontextprotocol/sdk": "1.31.0",
     "buffer": "6.0.3",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
@@ -35,7 +38,8 @@
     "react": "19.2.6",
     "react-dom": "19.2.6",
     "tailwind-merge": "3.6.0",
-    "viem": "^2.29.0"
+    "viem": "^2.29.0",
+    "zod": "3.25.76"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.2.1",

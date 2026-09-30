@@ -1,0 +1,18 @@
+{
+  "schema": "proofguard-agent-connector-probe/1",
+  "observedAt": "2026-09-30T11:53:20.815Z",
+  "mode": "LIVE_MCP_STDIO_RPC_READ",
+  "contract": "0x8a93A27747D0a007cfD525D5456B1017ca5bF50e",
+  "chainId": 61997,
+  "toolCount": 3,
+  "checks": [
+    "current jobs read",
+    "output digest and bindings checked",
+    "held job has no output",
+    "stale revision rejected"
+  ],
+  "outputSha256": "9796fd13049b0b392b07813275dcb55d8b62354a62a27407658b68332aafc5e7",
+  "elapsedMs": 25323,
+  "transactionsSubmitted": 0,
+  "limitation": "One controlled fixture read through a standard MCP client. Not independent adoption, an autonomous LLM agent trial, an external-action guard or a light-client proof."
+}

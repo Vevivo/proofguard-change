@@ -94,6 +94,16 @@ For an instance you operate, supply `GENLAYER_EXECUTOR_KEY` through your local e
 
 The reusable consumer is [public/proofguard-change-network-consumer.mjs](public/proofguard-change-network-consumer.mjs).
 
+## Agent connector (experimental)
+
+An MCP-compatible agent can inspect finalized workflow decisions and retrieve existing integrity-checked artifacts without operating the website. The [read-only connector](docs/AGENT_CONNECTOR.md) exposes workflow listing, per-job inspection and artifact retrieval. It pins the chain and contract source, detects stale expected revisions, and reports RPC failures as unknown rather than approval. No wallet or signing key is required.
+
+```sh
+npm run verify:agent
+```
+
+This command launches a standard MCP client/server pair and checks the existing Studio Next record. It submits no transactions. The connector does not enforce external API calls or turn a read result into execution permission. The [pilot criteria](docs/PILOT.md) describe the independent-use and enforcement milestones still needed.
+
 ## Audit archives — powered by AR.IO
 
 The Audit trail places **Archive on Arweave** beside **Readable report** and **JSON package**. Its dialog prepares an exact snapshot and upload quote, asks for public-publication consent, then signs and uploads through Turbo using existing credits. The application can retrieve the record through the gateway and compare its bytes and SHA-256.
