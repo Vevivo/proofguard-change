@@ -1,5 +1,5 @@
 """State and authorization tests with an explicit mocked GenVM/LLM.
-Live-network evidence is produced separately by scripts/validate-change-network.mjs.
+Live-network evidence is produced separately by scripts/reproduce-correction.mjs.
 """
 import hashlib
 import importlib.util

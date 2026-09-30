@@ -1,0 +1,276 @@
+{
+  "schema": "proofguard-change/2.0",
+  "source": {
+    "approved_owners": [
+      "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3"
+    ],
+    "id": "CORRECTION-REGRESSION-01",
+    "publisher": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+    "review_batches": [
+      {
+        "requested_by": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+        "revision": 1,
+        "workflow_ids": [
+          "DELIVERY-REGRESSION-01"
+        ]
+      },
+      {
+        "requested_by": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+        "revision": 2,
+        "workflow_ids": [
+          "DELIVERY-REGRESSION-01"
+        ]
+      }
+    ],
+    "revision": 2,
+    "title": "Controlled test fixture: supplier delivery correction",
+    "versions": [
+      {
+        "revision": 1,
+        "sha256": "f6f22c93234331eaded2f2071d7fd448a493a1451085cf151311589672a758d5",
+        "text": "Controlled test fixture, not a real supplier offer. Unit price is EUR 240. Standard delivery is guaranteed by 14 October 2026. Express delivery is guaranteed by 10 October 2026."
+      },
+      {
+        "revision": 2,
+        "sha256": "0f4b32e257536421366c220b6c6cb97c3098445572bdb8256ea92346325cb7bd",
+        "text": "Controlled test fixture, not a real supplier offer. Unit price is EUR 240. Standard delivery is guaranteed by 14 October 2026. Express dispatch is scheduled for 10 October 2026; express delivery by that date is not guaranteed."
+      }
+    ],
+    "workflow_ids": [
+      "DELIVERY-REGRESSION-01"
+    ]
+  },
+  "workflows": [
+    {
+      "actions": [
+        {
+          "active_permit": null,
+          "condition": "Standard delivery is guaranteed by 14 October 2026 and unit price is EUR 240.",
+          "execution": {
+            "effect": "ARTIFACT_CREATED",
+            "executor": "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d",
+            "external_order": "NOT_SUBMITTED",
+            "external_payment": "NOT_SUBMITTED",
+            "id": "370b19155c76454ee8faf36d2af6078debc5db013a782ff36a3c44a07f816cec",
+            "intent_hash": "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86",
+            "output_json": "{\"currency\":\"EUR\",\"intent_hash\":\"e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86\",\"job_id\":\"STANDARD\",\"kind\":\"PURCHASE_ORDER_DRAFT\",\"notice\":\"Draft only. No supplier order submitted and no payment made.\",\"permit_id\":\"0fd654159716950cdaac5c2972c168286877d56af8d81a1160f230ed7ba543ba\",\"quantity\":2,\"schema\":\"proofguard-tool-output/1.0\",\"shipping\":\"standard\",\"source_id\":\"CORRECTION-REGRESSION-01\",\"source_revision\":2,\"source_sha256\":\"0f4b32e257536421366c220b6c6cb97c3098445572bdb8256ea92346325cb7bd\",\"target\":\"test-standard-stock\",\"tool\":\"prepare_purchase_order\",\"total\":480,\"unit_price\":240,\"workflow_id\":\"DELIVERY-REGRESSION-01\"}",
+            "output_sha256": "9796fd13049b0b392b07813275dcb55d8b62354a62a27407658b68332aafc5e7",
+            "permit_id": "0fd654159716950cdaac5c2972c168286877d56af8d81a1160f230ed7ba543ba",
+            "revision": 2
+          },
+          "gate": "ALREADY_EXECUTED",
+          "id": "STANDARD",
+          "intent_hash": "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86",
+          "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":2,\"shipping\":\"standard\",\"unit_price\":240},\"target\":\"test-standard-stock\",\"tool\":\"prepare_purchase_order\"}",
+          "label": "Standard replenishment draft",
+          "permits": [
+            {
+              "authorized_by": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+              "id": "d7df66f2cdbe4d0df773429ea923c8083f312194157d4b7b4d681d375622f429",
+              "intent_hash": "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86",
+              "revision": 1,
+              "source_sha256": "f6f22c93234331eaded2f2071d7fd448a493a1451085cf151311589672a758d5"
+            },
+            {
+              "authorized_by": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+              "id": "0fd654159716950cdaac5c2972c168286877d56af8d81a1160f230ed7ba543ba",
+              "intent_hash": "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86",
+              "revision": 2,
+              "source_sha256": "0f4b32e257536421366c220b6c6cb97c3098445572bdb8256ea92346325cb7bd"
+            }
+          ]
+        },
+        {
+          "active_permit": null,
+          "condition": "Express delivery is guaranteed by 10 October 2026 and unit price is EUR 240.",
+          "execution": null,
+          "gate": "MATERIAL_CHANGE",
+          "id": "EXPRESS",
+          "intent_hash": "5abcd7f2e1884e5c9d127ca30b02c75feba21a4d85137383c34c32ac807ccb4a",
+          "intent_json": "{\"payload\":{\"currency\":\"EUR\",\"quantity\":2,\"shipping\":\"express\",\"unit_price\":240},\"target\":\"test-event-stock\",\"tool\":\"prepare_purchase_order\"}",
+          "label": "Time-sensitive event draft",
+          "permits": [
+            {
+              "authorized_by": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+              "id": "ce82aeea5e8559f8adad0757ac2a75003060b8211c6aeba7533ac85301c776eb",
+              "intent_hash": "5abcd7f2e1884e5c9d127ca30b02c75feba21a4d85137383c34c32ac807ccb4a",
+              "revision": 1,
+              "source_sha256": "f6f22c93234331eaded2f2071d7fd448a493a1451085cf151311589672a758d5"
+            }
+          ]
+        }
+      ],
+      "attempts": [
+        {
+          "action_id": "STANDARD",
+          "actor": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+          "allowed": true,
+          "code": "READY",
+          "current_revision": 1,
+          "index": 1,
+          "intent_hash": "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86",
+          "operation": "AUTHORIZE",
+          "requested_revision": 1
+        },
+        {
+          "action_id": "EXPRESS",
+          "actor": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+          "allowed": true,
+          "code": "READY",
+          "current_revision": 1,
+          "index": 2,
+          "intent_hash": "5abcd7f2e1884e5c9d127ca30b02c75feba21a4d85137383c34c32ac807ccb4a",
+          "operation": "AUTHORIZE",
+          "requested_revision": 1
+        },
+        {
+          "action_id": "STANDARD",
+          "actor": "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d",
+          "allowed": false,
+          "code": "STALE_SOURCE_REVISION",
+          "current_revision": 2,
+          "index": 3,
+          "intent_hash": "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86",
+          "operation": "EXECUTE",
+          "requested_revision": 1
+        },
+        {
+          "action_id": "EXPRESS",
+          "actor": "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d",
+          "allowed": false,
+          "code": "STALE_SOURCE_REVISION",
+          "current_revision": 2,
+          "index": 4,
+          "intent_hash": "5abcd7f2e1884e5c9d127ca30b02c75feba21a4d85137383c34c32ac807ccb4a",
+          "operation": "EXECUTE",
+          "requested_revision": 1
+        },
+        {
+          "action_id": "EXPRESS",
+          "actor": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+          "allowed": false,
+          "code": "MATERIAL_CHANGE",
+          "current_revision": 2,
+          "index": 5,
+          "intent_hash": "5abcd7f2e1884e5c9d127ca30b02c75feba21a4d85137383c34c32ac807ccb4a",
+          "operation": "AUTHORIZE",
+          "requested_revision": 2
+        },
+        {
+          "action_id": "STANDARD",
+          "actor": "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d",
+          "allowed": false,
+          "code": "AUTHORIZATION_REQUIRED",
+          "current_revision": 2,
+          "index": 6,
+          "intent_hash": "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86",
+          "operation": "EXECUTE",
+          "requested_revision": 2
+        },
+        {
+          "action_id": "STANDARD",
+          "actor": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+          "allowed": true,
+          "code": "READY",
+          "current_revision": 2,
+          "index": 7,
+          "intent_hash": "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86",
+          "operation": "AUTHORIZE",
+          "requested_revision": 2
+        },
+        {
+          "action_id": "STANDARD",
+          "actor": "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d",
+          "allowed": true,
+          "code": "READY",
+          "current_revision": 2,
+          "index": 8,
+          "intent_hash": "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86",
+          "operation": "EXECUTE",
+          "requested_revision": 2
+        },
+        {
+          "action_id": "STANDARD",
+          "actor": "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d",
+          "allowed": false,
+          "code": "ALREADY_EXECUTED",
+          "current_revision": 2,
+          "index": 9,
+          "intent_hash": "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86",
+          "operation": "EXECUTE",
+          "requested_revision": 2
+        }
+      ],
+      "baseline_revision": 1,
+      "executor": "0xbfe2c3610e8c0c5ae1dac772459a76088523ce8d",
+      "id": "DELIVERY-REGRESSION-01",
+      "owner": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+      "publisher": "0xd04935e1db146529bf7ca91d31b74f8ee6bbada3",
+      "reviewed_revision": 2,
+      "reviews": [
+        {
+          "actions": [
+            {
+              "id": "STANDARD",
+              "new_quote": "Standard delivery is guaranteed by 14 October 2026.",
+              "old_quote": "Standard delivery is guaranteed by 14 October 2026.",
+              "reason": "Baseline and current sources are identical; both explicitly support the standard delivery date and unit price.",
+              "verdict": "NO_MATERIAL_CHANGE",
+              "workflow_id": "DELIVERY-REGRESSION-01"
+            },
+            {
+              "id": "EXPRESS",
+              "new_quote": "Express delivery is guaranteed by 10 October 2026.",
+              "old_quote": "Express delivery is guaranteed by 10 October 2026.",
+              "reason": "Baseline and current sources are identical; both explicitly support the express delivery date and unit price.",
+              "verdict": "NO_MATERIAL_CHANGE",
+              "workflow_id": "DELIVERY-REGRESSION-01"
+            }
+          ],
+          "policy": "proofguard-change/2.0",
+          "revision": 1,
+          "source_sha256": "f6f22c93234331eaded2f2071d7fd448a493a1451085cf151311589672a758d5"
+        },
+        {
+          "actions": [
+            {
+              "id": "STANDARD",
+              "new_quote": "Standard delivery is guaranteed by 14 October 2026.",
+              "old_quote": "Standard delivery is guaranteed by 14 October 2026.",
+              "reason": "Baseline and current source both explicitly guarantee standard delivery by 14 October 2026 and state the unit price is EUR 240, matching the job condition.",
+              "verdict": "NO_MATERIAL_CHANGE",
+              "workflow_id": "DELIVERY-REGRESSION-01"
+            },
+            {
+              "id": "EXPRESS",
+              "new_quote": "Express dispatch is scheduled for 10 October 2026; express delivery by that date is not guaranteed.",
+              "old_quote": "Express delivery is guaranteed by 10 October 2026.",
+              "reason": "Current source withdraws the guarantee for express delivery by 10 October 2026, only guaranteeing dispatch, which contradicts the baseline's explicit delivery guarantee required by the job.",
+              "verdict": "MATERIAL_CHANGE",
+              "workflow_id": "DELIVERY-REGRESSION-01"
+            }
+          ],
+          "policy": "proofguard-change/2.0",
+          "revision": 2,
+          "source_sha256": "0f4b32e257536421366c220b6c6cb97c3098445572bdb8256ea92346325cb7bd"
+        }
+      ],
+      "revision": 2,
+      "schema": "proofguard-change/2.0",
+      "source_id": "CORRECTION-REGRESSION-01",
+      "sources": [
+        {
+          "revision": 1,
+          "sha256": "f6f22c93234331eaded2f2071d7fd448a493a1451085cf151311589672a758d5",
+          "text": "Controlled test fixture, not a real supplier offer. Unit price is EUR 240. Standard delivery is guaranteed by 14 October 2026. Express delivery is guaranteed by 10 October 2026."
+        },
+        {
+          "revision": 2,
+          "sha256": "0f4b32e257536421366c220b6c6cb97c3098445572bdb8256ea92346325cb7bd",
+          "text": "Controlled test fixture, not a real supplier offer. Unit price is EUR 240. Standard delivery is guaranteed by 14 October 2026. Express dispatch is scheduled for 10 October 2026; express delivery by that date is not guaranteed."
+        }
+      ],
+      "title": "Independent executor after a source correction"
+    }
+  ]
+}

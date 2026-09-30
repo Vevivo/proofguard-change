@@ -1,5 +1,7 @@
 # Walkthrough
 
+For the separate live Studio Next correction regression and no-wallet verification, see the [reviewer guide](REVIEWER_GUIDE.md). The browser instructions below use Studionet (61999).
+
 ## Guided Demo
 
 Open `?mode=demo` and start the walkthrough. It progresses through evidence, registered jobs, a source correction, selective review and outputs. These are deterministic sample fixtures with mocked reviewer responses, clearly separated from Live. No wallet or network transaction is needed.

@@ -1,0 +1,264 @@
+{
+  "schema": "proofguard-correction-evidence/1",
+  "chainId": 61997,
+  "network": "GenLayer Studio Devnet",
+  "contractSourceSha256": "beca7648cac048399221260c92f55bdc053301fe7eaa4611c3e6eecfc3c8e060",
+  "fixtureSha256": "37e7b0f4b0cedf9f9ff4311776a4b01b89d2a62bdfcdf44f123abbaf7331501a",
+  "accounts": {
+    "owner": "0xd04935e1Db146529bF7CA91D31b74F8Ee6bBADA3",
+    "executor": "0xBfE2c3610e8c0c5AE1daC772459a76088523Ce8D"
+  },
+  "transactions": [
+    {
+      "name": "deploy",
+      "role": "owner",
+      "method": "deploy",
+      "args": [],
+      "hash": "0x2543f881b73124d6999ab8fdb719322cbbdc0603358a97a7c63e4999f16b2c20",
+      "submittedAt": "2026-09-30T11:07:14.365Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:15:09.709Z"
+    },
+    {
+      "name": "publish-v1",
+      "role": "owner",
+      "method": "publish_source",
+      "args": [
+        "CORRECTION-REGRESSION-01",
+        "Controlled test fixture: supplier delivery correction",
+        "Controlled test fixture, not a real supplier offer. Unit price is EUR 240. Standard delivery is guaranteed by 14 October 2026. Express delivery is guaranteed by 10 October 2026."
+      ],
+      "hash": "0xd123ffba19b3875415dc2611b69e98383b458a0cda71d8d0cbbe16d65367c4b2",
+      "submittedAt": "2026-09-30T11:08:13.302Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:15:10.093Z"
+    },
+    {
+      "name": "register",
+      "role": "owner",
+      "method": "register_workflow",
+      "args": [
+        "DELIVERY-REGRESSION-01",
+        "Independent executor after a source correction",
+        "CORRECTION-REGRESSION-01",
+        1,
+        "0xBfE2c3610e8c0c5AE1daC772459a76088523Ce8D",
+        "[{\"id\":\"STANDARD\",\"label\":\"Standard replenishment draft\",\"condition\":\"Standard delivery is guaranteed by 14 October 2026 and unit price is EUR 240.\",\"tool\":\"prepare_purchase_order\",\"target\":\"test-standard-stock\",\"payload\":{\"unit_price\":240,\"currency\":\"EUR\",\"quantity\":2,\"shipping\":\"standard\"}},{\"id\":\"EXPRESS\",\"label\":\"Time-sensitive event draft\",\"condition\":\"Express delivery is guaranteed by 10 October 2026 and unit price is EUR 240.\",\"tool\":\"prepare_purchase_order\",\"target\":\"test-event-stock\",\"payload\":{\"unit_price\":240,\"currency\":\"EUR\",\"quantity\":2,\"shipping\":\"express\"}}]"
+      ],
+      "hash": "0x1ab8399a9a33b7d4b3f6ab326aa6ab0f67d329782be69ec10b6d6074cd563c77",
+      "submittedAt": "2026-09-30T11:08:50.790Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:15:10.301Z"
+    },
+    {
+      "name": "review-v1",
+      "role": "owner",
+      "method": "review_source",
+      "args": [
+        "CORRECTION-REGRESSION-01",
+        1
+      ],
+      "hash": "0xcd96848561684cd4f3a32935720c00407c540c455a5ff2fce48c0c6ae0d4185c",
+      "submittedAt": "2026-09-30T11:09:36.790Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:15:10.560Z"
+    },
+    {
+      "name": "permit-v1-STANDARD",
+      "role": "owner",
+      "method": "authorize_action",
+      "args": [
+        "DELIVERY-REGRESSION-01",
+        "STANDARD",
+        1,
+        "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86"
+      ],
+      "hash": "0x6704f3f22e45209f6d5df5d09ed0e78b2275a234d14120668da2fb178487dfd4",
+      "submittedAt": "2026-09-30T11:10:33.378Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:15:10.765Z"
+    },
+    {
+      "name": "permit-v1-EXPRESS",
+      "role": "owner",
+      "method": "authorize_action",
+      "args": [
+        "DELIVERY-REGRESSION-01",
+        "EXPRESS",
+        1,
+        "5abcd7f2e1884e5c9d127ca30b02c75feba21a4d85137383c34c32ac807ccb4a"
+      ],
+      "hash": "0x71657014276bdd2a1c9d38e7ab6974c2de6259c6a196b28ec51dfc08b503dbc3",
+      "submittedAt": "2026-09-30T11:11:13.886Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:15:10.988Z"
+    },
+    {
+      "name": "revise-v2",
+      "role": "owner",
+      "method": "revise_source",
+      "args": [
+        "CORRECTION-REGRESSION-01",
+        1,
+        "Controlled test fixture, not a real supplier offer. Unit price is EUR 240. Standard delivery is guaranteed by 14 October 2026. Express dispatch is scheduled for 10 October 2026; express delivery by that date is not guaranteed."
+      ],
+      "hash": "0x6271d1961a003f6916c55392aa490e6a19b75168838a26504654c05955427f56",
+      "submittedAt": "2026-09-30T11:11:54.506Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:15:11.192Z"
+    },
+    {
+      "name": "stale-STANDARD",
+      "role": "executor",
+      "method": "execute_action",
+      "args": [
+        "DELIVERY-REGRESSION-01",
+        "STANDARD",
+        1,
+        "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86"
+      ],
+      "hash": "0xe38c8e3c8e1e56017902f3556e1196de5cab762cbfd27868de5fe22fdd904f7a",
+      "submittedAt": "2026-09-30T11:12:29.566Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:15:11.404Z"
+    },
+    {
+      "name": "stale-EXPRESS",
+      "role": "executor",
+      "method": "execute_action",
+      "args": [
+        "DELIVERY-REGRESSION-01",
+        "EXPRESS",
+        1,
+        "5abcd7f2e1884e5c9d127ca30b02c75feba21a4d85137383c34c32ac807ccb4a"
+      ],
+      "hash": "0x414d048ad6d0803a9dc40ac845f92d56b129051517235fc385485287dce5a5ce",
+      "submittedAt": "2026-09-30T11:13:20.546Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:15:11.617Z"
+    },
+    {
+      "name": "review-v2",
+      "role": "owner",
+      "method": "review_source",
+      "args": [
+        "CORRECTION-REGRESSION-01",
+        2
+      ],
+      "hash": "0xd673f05b2818e400d103160420a9fe4bef6286cce713fe5bc6cfd5288eaa7e69",
+      "submittedAt": "2026-09-30T11:15:32.546Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:16:34.572Z"
+    },
+    {
+      "name": "held-EXPRESS",
+      "role": "owner",
+      "method": "authorize_action",
+      "args": [
+        "DELIVERY-REGRESSION-01",
+        "EXPRESS",
+        2,
+        "5abcd7f2e1884e5c9d127ca30b02c75feba21a4d85137383c34c32ac807ccb4a"
+      ],
+      "hash": "0x12afdc014d0c214206a9c9616c859ba174d5a3312cd7c0c69938745167c3d0be",
+      "submittedAt": "2026-09-30T11:16:44.806Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:17:25.139Z"
+    },
+    {
+      "name": "missing-current-permit",
+      "role": "executor",
+      "method": "execute_action",
+      "args": [
+        "DELIVERY-REGRESSION-01",
+        "STANDARD",
+        2,
+        "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86"
+      ],
+      "hash": "0x4964461835f1f75cb3dcb9ecb9403f6cc025ffccb9461b1cac66847722c49bf3",
+      "submittedAt": "2026-09-30T11:17:27.874Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:18:05.956Z"
+    },
+    {
+      "name": "permit-v2-STANDARD",
+      "role": "owner",
+      "method": "authorize_action",
+      "args": [
+        "DELIVERY-REGRESSION-01",
+        "STANDARD",
+        2,
+        "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86"
+      ],
+      "hash": "0x3b6156d019e6300302e576db0e22ccbc9ccc5e3907013d4997ef39f609cb7ea9",
+      "submittedAt": "2026-09-30T11:18:08.558Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:18:49.140Z"
+    },
+    {
+      "name": "execute-STANDARD",
+      "role": "executor",
+      "method": "execute_action",
+      "args": [
+        "DELIVERY-REGRESSION-01",
+        "STANDARD",
+        2,
+        "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86"
+      ],
+      "hash": "0x4c1e71c24129901599cd9bdea5ea0267289a389b0c8cd5f44c7789d8055737ef",
+      "submittedAt": "2026-09-30T11:18:59.782Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:19:37.481Z"
+    },
+    {
+      "name": "replay-STANDARD",
+      "role": "executor",
+      "method": "execute_action",
+      "args": [
+        "DELIVERY-REGRESSION-01",
+        "STANDARD",
+        2,
+        "e688ea8160577d7eaeaab90f2e6fbd79ce50937d62a1d1f70993383073499d86"
+      ],
+      "hash": "0x0c34b5d5e6025cff6737cfbec4c64c3cfc19255380ba08746d7229c3887d41ef",
+      "submittedAt": "2026-09-30T11:19:47.602Z",
+      "status": "FINALIZED",
+      "executionResult": "FINISHED_WITH_RETURN",
+      "success": true,
+      "observedAt": "2026-09-30T11:20:22.492Z"
+    }
+  ],
+  "contract": "0x8a93A27747D0a007cfD525D5456B1017ca5bF50e",
+  "completedAt": "2026-09-30T11:20:23.036Z",
+  "result": "PASS",
+  "sourceId": "CORRECTION-REGRESSION-01",
+  "workflowId": "DELIVERY-REGRESSION-01"
+}

@@ -17,7 +17,9 @@
     "test:contracts": "python3 tests/change_network_unit.py && python3 tests/change_network_evidence.py && python3 tests/change_contract_unit.py",
     "test:client": "node --test tests/*.test.mjs",
     "agent:change": "node agents/change-network-runner.mjs",
-    "verify:live": "node scripts/verify-live.mjs"
+    "verify:live": "node scripts/verify-live.mjs",
+    "verify:correction": "node scripts/verify-correction.mjs",
+    "reproduce:correction": "node scripts/reproduce-correction.mjs"
   },
   "dependencies": {
     "@ardrive/turbo-sdk": "^1.42.0",
@@ -56,5 +58,5 @@
     "ar-io"
   ],
   "license": "MIT",
-  "homepage": "https://genlayer_vevivo.ar.io"
+  "homepage": "https://proofguardchange.ar.io"
 }

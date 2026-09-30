@@ -1,0 +1,12 @@
+{
+  "sourceId": "CORRECTION-REGRESSION-01",
+  "title": "Controlled test fixture: supplier delivery correction",
+  "workflowId": "DELIVERY-REGRESSION-01",
+  "workflowTitle": "Independent executor after a source correction",
+  "before": "Controlled test fixture, not a real supplier offer. Unit price is EUR 240. Standard delivery is guaranteed by 14 October 2026. Express delivery is guaranteed by 10 October 2026.",
+  "after": "Controlled test fixture, not a real supplier offer. Unit price is EUR 240. Standard delivery is guaranteed by 14 October 2026. Express dispatch is scheduled for 10 October 2026; express delivery by that date is not guaranteed.",
+  "jobs": [
+    {"id":"STANDARD","label":"Standard replenishment draft","condition":"Standard delivery is guaranteed by 14 October 2026 and unit price is EUR 240.","tool":"prepare_purchase_order","target":"test-standard-stock","payload":{"unit_price":240,"currency":"EUR","quantity":2,"shipping":"standard"}},
+    {"id":"EXPRESS","label":"Time-sensitive event draft","condition":"Express delivery is guaranteed by 10 October 2026 and unit price is EUR 240.","tool":"prepare_purchase_order","target":"test-event-stock","payload":{"unit_price":240,"currency":"EUR","quantity":2,"shipping":"express"}}
+  ]
+}

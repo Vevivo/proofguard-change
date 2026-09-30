@@ -4,7 +4,9 @@
 
 ProofGuard Change connects agent workflows to shared, versioned evidence. When a publisher corrects a source, existing unused permissions stop working. GenLayer evaluates each job's condition separately; supported jobs can receive a new permission and generate a protected output.
 
-[Open the application](https://genlayer_vevivo.ar.io) · [Demo](https://genlayer_vevivo.ar.io/?mode=demo) · [Live workspace](https://genlayer_vevivo.ar.io/?mode=live) · [Recorded review transaction](https://explorer-studio.genlayer.com/tx/0xa511ea667f93b7b46e55e8473470e458e78318e7c85c2c321886920dc424461e)
+[Open the application](https://proofguardchange.ar.io) · [Demo](https://proofguardchange.ar.io/?mode=demo) · [Live workspace](https://proofguardchange.ar.io/?mode=live) · [Recorded review transaction](https://explorer-studio.genlayer.com/tx/0xa511ea667f93b7b46e55e8473470e458e78318e7c85c2c321886920dc424461e)
+
+**Reviewing this project?** Start with the [reviewer guide](docs/REVIEWER_GUIDE.md). It separates the browser demo, original Studionet example and live Studio Next correction regression. `npm run verify:correction` checks old-permit rejection, selective reauthorization and replay prevention without a wallet. [Watch the product walkthrough](https://www.youtube.com/watch?v=27-_cac4LQk).
 
 ## The problem
 
@@ -68,6 +70,8 @@ npm run verify:live
 ```
 
 See [live evidence](docs/LIVE_EVIDENCE.md) for the inspection result and its limits. To create your own instance, use **Live → Need a new contract?** and inspect the contract source before signing deployment. The [walkthrough](docs/WALKTHROUGH.md) explains the remaining steps.
+
+The additional correction regression runs on **Studio Next, chain 61997**, at [`0x8a93A27747D0a007cfD525D5456B1017ca5bF50e`](https://explorer-studio-dev.genlayer.com/address/0x8a93A27747D0a007cfD525D5456B1017ca5bF50e). It uses the exact same v2 contract and separate owner/executor accounts. The existing browser app remains on Studionet; use the [reviewer guide](docs/REVIEWER_GUIDE.md) and read-only verification command for the Next record.
 
 ## Protected outputs
 
