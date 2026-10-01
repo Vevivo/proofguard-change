@@ -1,8 +1,8 @@
 # Connect an agent to ProofGuard
 
-The experimental connector lets an MCP-compatible agent inspect a configured ProofGuard workspace and retrieve an existing, integrity-checked artifact without operating the browser. It uses the standard MCP stdio transport and exposes three read-only tools. It needs no wallet, signing key or model API key.
+The connector lets an MCP-compatible agent inspect a configured workspace, prepare exact job requests for human approval and retrieve integrity-checked artifacts. Standard MCP stdio exposes six tools by default, without a signing key or network writes. An explicitly enabled local executor adds one write tool for already permitted contract artifacts.
 
-This is the first integration slice, not an external-action firewall. It does not create sources, judge evidence, issue permissions or execute jobs. Those remain explicit operations in the existing application and contract.
+The default configuration does not create sources, judge evidence, issue permissions or execute jobs. Owners register requests, request GenLayer review and authorize supported jobs in the website. See [the request and execution guide](AGENT_REQUESTS.md) for that handoff and the opt-in local executor. This is not an external-action firewall.
 
 ## Install and connect
 
@@ -47,8 +47,11 @@ To inspect the original browser example, use `--network studionet`, contract `0x
 | `proofguard_list_workflows` | Current source revision, workflow identifiers and job states. |
 | `proofguard_inspect_workflow` | Exact registered intents, conditions, current review excerpts, owner/executor, permit and output status. |
 | `proofguard_get_output` | One existing draft/report, its exact JSON and SHA-256, checked against source, intent, permit and executor bindings. |
+| `proofguard_get_source` | Source text/history, approved owners and registered workflows. |
+| `proofguard_prepare_workflow` | A revision-bound unsigned Studionet request and owner review link. |
+| `proofguard_get_request_status` | Fresh comparison of a request with registered jobs and their states. |
 
-The last two accept `expectedRevision`. If a source has changed since the caller's last observation, an old expected revision produces `STALE_SOURCE_REVISION`. Every call rereads finalized state; the connector does not cache a successful response or silently use an archived snapshot.
+`proofguard_inspect_workflow` and `proofguard_get_output` accept `expectedRevision`. If a source has changed since the caller's last observation, an old expected revision produces `STALE_SOURCE_REVISION`. Every call rereads finalized state; the connector does not cache a successful response or silently use an archived snapshot.
 
 `AUTHORIZATION_REQUIRED` and `READY_FOR_CONTRACT_EXECUTION` are different. A favorable review alone does not establish an owner permit. Neither state is authority to send a payment, supplier order, deployment or other external effect. The contract must recheck its current state when an executor consumes a permit.
 
@@ -60,9 +63,9 @@ An older output may still be retrieved as history. Its `outputRevision` and `isC
 - An RPC error or timeout returns `isError: true` and `state: UNKNOWN`. It never becomes approval. Calls have a 20-second response deadline; already-started underlying SDK reads may finish later, but cannot produce a late successful tool response.
 - The connector trusts the configured RPC to report chain state honestly. Code hashes and content checks are not a light-client proof of consensus or evidence that a publisher's real-world claims are true.
 - Registered source text, job conditions and review explanations are untrusted content. The connector does not fetch URLs found in them or execute their instructions. A connected model must also treat them as data.
-- No signing account or transaction method is exposed. The server uses local stdio, not a public HTTP port. Source content is returned to the connected client/model; configure that client's privacy settings accordingly.
+- The default configuration exposes no signing account or write method. The separately enabled executor can only consume existing permits, never issue them. The server uses local stdio, not a public HTTP port. Source content is returned to the connected client/model; configure that client's privacy settings accordingly.
 
-The existing executor runner remains a separate opt-in write path. Combining an external tool with these read tools alone would introduce a gap between observation and action; this connector intentionally makes no guarantee about such an integration.
+The CLI runner and optional MCP executor are explicit opt-in write paths for contract artifacts. Combining arbitrary external tools with a read check alone introduces a gap between observation and action; no atomic guarantee is made for that integration.
 
 ## Developer use without MCP
 

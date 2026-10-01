@@ -1,3 +1,4 @@
+import { getAddress } from 'viem';
 export const POLICY = 'proofguard-change/2.0';
 const id = /^[A-Za-z0-9_.-]{2,80}$/;
 const fail = code => { throw new Error(code); };
@@ -17,6 +18,9 @@ export function createInspectorCore({ client, chainId, contract, sourceId, expec
   requireThat([61997, 61999].includes(chainId), 'UNSUPPORTED_CHAIN');
   requireThat(typeof contract === 'string' && /^0x[0-9a-f]{40}$/i.test(contract) && typeof sourceId === 'string' && id.test(sourceId), 'INVALID_CONFIGURATION');
   requireThat(/^[0-9a-f]{64}$/.test(expectedCodeSha256), 'INVALID_CODE_DIGEST');
+  // Studio contract-code lookup is case-sensitive. Use EIP-55 at RPC boundaries
+  // while identity comparisons remain case-insensitive.
+  contract = getAddress(contract.toLowerCase());
 
   async function read() {
     let timer;

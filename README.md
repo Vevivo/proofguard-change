@@ -98,10 +98,11 @@ The reusable consumer is [public/proofguard-change-network-consumer.mjs](public/
 
 ## Agent connector (experimental)
 
-An MCP-compatible agent can inspect finalized workflow decisions and retrieve existing integrity-checked artifacts without operating the website. The [read-only connector](docs/AGENT_CONNECTOR.md) exposes workflow listing, per-job inspection and artifact retrieval. It pins the chain and contract source, detects stale expected revisions, and reports RPC failures as unknown rather than approval. No wallet or signing key is required.
+An MCP-compatible agent can inspect finalized workflow decisions and retrieve existing integrity-checked artifacts without operating the website. The [MCP connector](docs/AGENT_CONNECTOR.md) exposes source/workflow inspection, artifact retrieval, unsigned workflow preparation and request status. The [Agent requests](docs/AGENT_REQUESTS.md) screen lets the named owner verify and register exact jobs. An explicitly enabled local executor can consume existing owner permits; it cannot grant its own approval. It pins the chain and contract source, detects stale expected revisions, and reports RPC failures as unknown rather than approval. Default reads and request preparation need no wallet or signing key.
 
 ```sh
 npm run verify:agent
+npm run verify:agent:requests
 ```
 
 This command launches a standard MCP client/server pair and checks the existing Studio Next record. It submits no transactions. The connector does not enforce external API calls or turn a read result into execution permission. The [pilot criteria](docs/PILOT.md) describe the independent-use and enforcement milestones still needed.

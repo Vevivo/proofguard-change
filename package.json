@@ -21,7 +21,8 @@
     "verify:correction": "node scripts/verify-correction.mjs",
     "reproduce:correction": "node scripts/reproduce-correction.mjs",
     "agent:mcp": "node agents/mcp-server.mjs",
-    "verify:agent": "node scripts/probe-agent-connector.mjs"
+    "verify:agent": "node scripts/probe-agent-connector.mjs",
+    "verify:agent:requests": "node scripts/probe-agent-requests.mjs"
   },
   "dependencies": {
     "@ardrive/turbo-sdk": "^1.42.0",

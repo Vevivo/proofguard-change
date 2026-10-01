@@ -10,3 +10,4 @@ work/
 *.tsbuildinfo
 __pycache__/
 .DS_Store
+execution-state/

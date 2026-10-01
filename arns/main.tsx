@@ -7,6 +7,7 @@ import "../app/change-experience.css";
 import "../app/reference-fonts.css";
 import "../app/change-reference.css";
 import "../app/evidence-desk.css";
+import "../app/agent-requests.css";
 import { ChangeEntry } from "@/components/change-entry";
 import { ApplicationBoundary } from "@/components/application-boundary";
 import { PUBLIC_API_ORIGIN } from "@/config/public-site";

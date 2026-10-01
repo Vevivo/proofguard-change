@@ -55,6 +55,13 @@ test('a fresh read detects revision changes; no stale cache fallback', async () 
   assert.equal(output.outputRevision, 2);
   assert.equal(output.source.revision, 3);
 });
+test('lowercase contract links use EIP-55 in both code and state RPC reads', async () => {
+  const s = setup(), expected = '0x91883d4829E5b5bD7BED6eBd0EceF927A71942d6';
+  s.client.getContractCode = async address => { assert.equal(address, expected); return 'pinned source'; };
+  const inspector = createInspector({ ...s.args, contract: expected.toLowerCase() });
+  await inspector.listWorkflows();
+  assert(s.reads.every(call => call.address === expected));
+});
 test('READY without an active permit requires owner authorization', async () => {
   const s = setup(), a = s.bundle.workflows[0].actions[0];
   a.execution = null; a.gate = 'READY';
@@ -90,7 +97,7 @@ test('MCP discovery, tools/call, structured responses and fail-closed errors', a
   try {
     await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);
     const listed = await client.listTools();
-    assert.equal(listed.tools.length, 3);
+    assert.equal(listed.tools.length, 6);
     assert(listed.tools.every(t => t.annotations.readOnlyHint));
     const result = await client.callTool({ name: 'proofguard_inspect_workflow', arguments: { workflowId } });
     assert.equal(result.structuredContent.workflow.jobs[1].state, 'CONDITION_CHANGED');
