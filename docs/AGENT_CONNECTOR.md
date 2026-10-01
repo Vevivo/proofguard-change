@@ -2,7 +2,7 @@
 
 The connector lets an MCP-compatible agent inspect a configured workspace, prepare exact job requests for human approval and retrieve integrity-checked artifacts. Standard MCP stdio exposes six tools by default, without a signing key or network writes. An explicitly enabled local executor adds one write tool for already permitted contract artifacts.
 
-The default configuration does not create sources, judge evidence, issue permissions or execute jobs. Owners register requests, request GenLayer review and authorize supported jobs in the website. See [the request and execution guide](AGENT_REQUESTS.md) for that handoff and the opt-in local executor. This is not an external-action firewall.
+The default configuration does not create sources, judge evidence, issue permissions or execute jobs. Owners register requests, request GenLayer review and authorize supported jobs in the website. See [the request and execution guide](AGENT_REQUESTS.md) for that handoff and the opt-in local executor. An operator can additionally enable named [management capabilities](AGENT_OPERATIONS.md), including owner authorization when explicitly delegated, and [report delivery](REPORT_VAULT.md). The report vault protects its own intake and download routes; this is not a general external-action firewall.
 
 ## Install and connect
 

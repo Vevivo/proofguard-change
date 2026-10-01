@@ -125,6 +125,22 @@ export function createInspectorCore({ client, chainId, contract, sourceId, expec
   }
 
   return {
+    async inspectContract() {
+      // This read also works before the configured source is published.
+      let timer;
+      try {
+        return await Promise.race([(async () => {
+          requireThat(BigInt(await client.request({ method: 'eth_chainId', params: [] })) === BigInt(chainId), 'CHAIN_MISMATCH');
+          const code = await client.getContractCode(contract);
+          requireThat(typeof code === 'string' && sha256(code) === expectedCodeSha256, 'CONTRACT_CODE_MISMATCH');
+          const call = functionName => client.readContract({ address: contract, functionName, args: [], transactionHashVariant: 'latest-final' });
+          requireThat(await call('get_policy') === POLICY, 'POLICY_MISMATCH');
+          const sourceIds = await call('list_sources');
+          requireThat(Array.isArray(sourceIds) && sourceIds.length <= 128 && sourceIds.every(value => typeof value === 'string' && id.test(value)), 'INVALID_SOURCE_LIST');
+          return { chainId, contract, sourceId, sourceIds, contractCodeSha256: expectedCodeSha256 };
+        })(), new Promise((_, reject) => { timer = setTimeout(() => reject(Error('READ_TIMEOUT')), timeoutMs); })]);
+      } finally { clearTimeout(timer); }
+    },
     async inspectSource() {
       const { bundle, meta } = await read();
       return { ...meta, bundle };

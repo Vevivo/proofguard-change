@@ -96,7 +96,7 @@ For an instance you operate, supply `GENLAYER_EXECUTOR_KEY` through your local e
 
 The reusable consumer is [public/proofguard-change-network-consumer.mjs](public/proofguard-change-network-consumer.mjs).
 
-## Agent connector (experimental)
+## Agent operations (experimental)
 
 An MCP-compatible agent can inspect finalized workflow decisions and retrieve existing integrity-checked artifacts without operating the website. The [MCP connector](docs/AGENT_CONNECTOR.md) exposes source/workflow inspection, artifact retrieval, unsigned workflow preparation and request status. The [Agent requests](docs/AGENT_REQUESTS.md) screen lets the named owner verify and register exact jobs. An explicitly enabled local executor can consume existing owner permits; it cannot grant its own approval. It pins the chain and contract source, detects stale expected revisions, and reports RPC failures as unknown rather than approval. Default reads and request preparation need no wallet or signing key.
 
@@ -105,7 +105,9 @@ npm run verify:agent
 npm run verify:agent:requests
 ```
 
-This command launches a standard MCP client/server pair and checks the existing Studio Next record. It submits no transactions. The connector does not enforce external API calls or turn a read result into execution permission. The [pilot criteria](docs/PILOT.md) describe the independent-use and enforcement milestones still needed.
+This command launches a standard MCP client/server pair and checks the existing Studio Next record. It submits no transactions. Optional [delegated management](docs/AGENT_OPERATIONS.md) adds explicitly selected source, workflow, review and owner-authorization operations. A separate [HTTP report vault](docs/REPORT_VAULT.md) enforces current-output checks on its own artifact imports and downloads; it does not guard arbitrary external APIs. The [pilot criteria](docs/PILOT.md) describe the independent-use milestone still needed. Default read mode, delegated management, execution and report delivery are separate capabilities; do not give an executor owner authority when personal approval is required.
+
+Evidence Desk includes an Operations queue with attention, ready-to-run and current-output filters, job search, responsible roles and exact copyable next actions. It never treats copying a tool call as execution.
 
 ## Audit archives — powered by AR.IO
 

@@ -32,7 +32,13 @@ Measure these before and during the pilot:
 
 These targets are proposed decision criteria, not achieved metrics or a universal benchmark.
 
-## Only then expand enforcement
+## Available pilot components
+
+The opt-in [delegated manager](AGENT_OPERATIONS.md) now exposes source publication/correction, owner approval, exact workflow registration, GenLayer review and owner authorization. These new signed client paths still require a new live lifecycle validation.
+
+The [report vault](REPORT_VAULT.md) is a separately running HTTP service with a fixed workspace, workflow allowlist and private storage. A developer-run live probe has imported the existing Studionet output through real MCP/HTTP, verified downloaded bytes, deduplicated repeat delivery and rejected a held job. Controlled HTTP tests cover corrections blocking old downloads. It has not been deployed in an independent developer's application.
+
+## Expand enforcement only for a real requirement
 
 If the pilot earns repeat use, implement **one** narrowly scoped real tool adapter requested by that developer. Put the external credentials behind its enforcement boundary, bind the exact tool payload and source revision, and make retries safe with persistent idempotency records. Define the ordering between source updates and external dispatch explicitly. A last-second RPC check alone cannot make an external API call atomic with a blockchain update.
 

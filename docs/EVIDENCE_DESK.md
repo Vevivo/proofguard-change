@@ -29,6 +29,10 @@ Choose the network and enter the deployed ProofGuard v2 contract address and Sou
 
 The current web signing workspace supports Studionet. Evidence Desk supports both Studionet and Studio Next. Opening a record does not submit a transaction. Demo needs no wallet and starts only when the visitor selects **Start demo**.
 
+## Follow the next step
+
+The **Operations** view groups jobs into **Needs attention**, **Ready to run** and **Current outputs**. Search by workflow or job name. Each selected job identifies the next step and responsible role. On Studionet, **Open Live controls** continues in the signing workspace. **Copy agent action** copies exact revision and intent/output bindings for an explicitly configured MCP capability; it never submits a transaction. Historical artifacts remain inspectable but are not listed as current outputs.
+
 ## Connect an MCP client
 
 After cloning and installing the branch above, enter its absolute local path under **Connect an agent**. Copy the generated `mcpServers` configuration into a compatible local MCP client. The server provides:
@@ -38,6 +42,9 @@ After cloning and installing the branch above, enter its absolute local path und
 | `proofguard_list_workflows` | Current source revision and workflow/job states |
 | `proofguard_inspect_workflow` | Conditions, exact intents, reasons and permission/output status |
 | `proofguard_get_output` | An existing artifact after checking its digest and bindings |
+| `proofguard_get_source` | Current evidence, approved owners and source history |
+| `proofguard_prepare_workflow` | An unsigned Studionet workflow request for the owner's review |
+| `proofguard_get_request_status` | A request's current registration, permission and output states |
 
 Use `expectedRevision` when a consumer depends on an earlier observation. The browser's read check calls the shared inspector directly over RPC; it does not create an MCP session or run an AI agent. See [Agent connector](AGENT_CONNECTOR.md) for protocol setup and the read-only integration test.
 
@@ -52,3 +59,5 @@ Test networks may reset or become unavailable. Example records are conveniences,
 ## Deployment
 
 Run `npm run typecheck`, `npm test`, and `npm run build`. Upload the contents of `arns-dist/` to the static host. Preserve the directory layout: `index.html`, `assets/`, icons and other public files. `config/public-site.ts` supplies the canonical host used for copied record links. Keep older content-addressed deployments available if existing sessions still use their assets.
+
+This deploys the website only. The local MCP connector, optional delegated manager and [report vault](REPORT_VAULT.md) run as separate Node.js processes. A static upload does not start or host them.

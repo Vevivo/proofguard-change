@@ -160,3 +160,23 @@
  .ed-output-actions .ed-button{min-height:44px}
  .ed-intro{margin-bottom:20px}
 }
+
+/* Compact operational queue: one current decision and one next action. */
+.ed-queue-toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:0 0 16px}
+.ed-queue-filters{display:flex;flex-wrap:wrap;gap:7px}
+.ed-queue-filters button{display:inline-flex;gap:9px;align-items:center;padding:9px 12px;border:1px solid #c4cbb5;background:#f5f4e9;border-radius:9px;font-size:.72rem;color:#57654b}
+.ed-queue-filters button[aria-pressed=true]{color:#edf4dc;background:#2e3c25;border-color:#506541;box-shadow:inset 0 1px 0 #9dad7766,0 2px 0 #b5bea5}
+.ed-queue-filters b{font:500 .7rem "JetBrains Mono",monospace;opacity:.8}
+.ed-job-search{display:flex!important;align-items:center;gap:8px;border:1px solid #c4cbb5;border-radius:9px;padding:0 10px;background:#fffdf4;color:#647655}
+.ed-job-search input{background:transparent!important;border:0!important;border-radius:0!important;min-height:39px!important;padding:7px 0!important;width:185px!important;font-size:.76rem!important}
+.ed-action-card{display:grid;gap:12px;border:1px solid #c4cdb5;border-radius:12px;background:#edf0e1;padding:15px;margin-bottom:18px}
+.ed-action-card strong{display:block;font-size:.93rem;letter-spacing:-.02em;margin:7px 0}
+.ed-action-card p{font-size:.77rem;color:#59664d;line-height:1.7}
+.ed-action-card small{font-size:.65rem;color:#627057}
+.ed-action-buttons{display:flex;flex-wrap:wrap;gap:8px}
+.ed-action-buttons .ed-button{font-size:.73rem;min-height:38px;padding:8px 12px}
+.ed-queue-empty{padding:34px}.ed-queue-empty p{font-size:.83rem;color:#5d6c50;margin:12px 0 20px}
+.ed-queue-filters button:focus-visible,.ed-job-search:focus-within{outline:2px solid #708a51;outline-offset:3px}
+@media(max-width:760px){.ed-queue-toolbar{display:block}.ed-queue-filters{display:grid;grid-template-columns:1fr 1fr}.ed-queue-filters button{justify-content:space-between;min-height:42px}.ed-job-search{margin-top:12px}.ed-job-search input{width:100%!important;font-size:16px!important}.ed-action-buttons .ed-button{min-height:44px}}
+
+.ed-copy-fallback{position:fixed;z-index:80;bottom:20px;right:20px;width:min(520px,calc(100vw - 40px));padding:20px;border:1px solid #a8b898;border-radius:17px;background:#fffdf5;box-shadow:0 12px 50px #243a2733}.ed-copy-fallback>div{display:flex;align-items:center;justify-content:space-between;gap:12px}.ed-copy-fallback>div>button{font-size:24px;width:32px;height:32px}.ed-copy-fallback p{font-size:.8rem;line-height:1.6;margin:10px 0;color:#536447}.ed-copy-fallback textarea{width:100%;padding:12px;border:1px solid #b8c3a9;border-radius:10px;background:#f2f4e9;font:12px/1.6 monospace;resize:vertical}.ed-copy-fallback .ed-button{margin-top:12px}

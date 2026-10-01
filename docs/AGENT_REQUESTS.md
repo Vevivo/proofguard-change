@@ -11,7 +11,7 @@ The website remains static. There is no hosted inbox, background agent, public w
 3. Call `proofguard_prepare_workflow` with the current revision and exact workflow. The owner must already be approved by the source publisher.
 4. Give the owner the returned `approvalUrl`, or save the exact `requestJson` as `request.proofguard.json`. The link carries the unsigned request in its fragment, cleared by the app after loading. It is not a credential or permission.
 5. The owner opens the request, selects **Check request & source**, inspects every condition, parameter and executor, connects the named wallet, acknowledges the details and selects **Register with my wallet**. The app rereads finalized state before signing. The contract checks the expected revision when registering. A stale request must be prepared again.
-6. Follow **Review & authorize in Live**, then open the workspace. Request GenLayer review and authorize only supported jobs. Registration grants no execution permit. There is no MCP authorization tool.
+6. Follow **Review & authorize in Live**, then open the workspace. Request GenLayer review and authorize only supported jobs. **Track in Operations** opens this same source in Evidence Desk, with the next step and responsible role for each job. Registration grants no execution permit. The default MCP server cannot authorize. An explicitly delegated manager may expose `proofguard_authorize_job`; see [AGENT_OPERATIONS.md](AGENT_OPERATIONS.md).
 7. The agent calls `proofguard_get_request_status` with the original envelope. It returns the registered jobs' individual review, permission and output states. A conflicting workflow ID or changed source fails closed.
 8. The registered executor uses the existing Live workspace/CLI, or an explicitly enabled MCP executor. Retrieve the checked artifact using `proofguard_get_output`.
 
@@ -75,7 +75,7 @@ A submit error without a usable hash returns `SUBMISSION_OUTCOME_UNKNOWN` and bl
 
 The request binds chain, contract code, source ID/revision/hash, owner, executor and every job definition. Its checksum detects changed content; it **does not authenticate the sender**. The reviewer decides whether the exact contents are acceptable.
 
-Protected tools create reports and purchase-order drafts inside the contract. They do not place orders, transfer funds or protect unrelated external API calls. Such effects require a separate adapter and credential boundary. Owner and executor may be the same account for testing; separate roles are preferable in a real integration. No independent adoption is claimed.
+Protected tools create reports and purchase-order drafts inside the contract. They do not place orders, transfer funds or protect unrelated external API calls. The optional [report vault](REPORT_VAULT.md) adds a separate service boundary for verified report import and download. Other external effects still require their own adapter and credential boundary. Owner and executor may be the same account for testing; separate roles are preferable in a real integration. No independent adoption is claimed.
 
 ## Validation
 

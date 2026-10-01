@@ -11,3 +11,5 @@ work/
 __pycache__/
 .DS_Store
 execution-state/
+manager-state/
+report-vault-data/
