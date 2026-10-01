@@ -31,6 +31,8 @@ ProofGuard gives each job an exact condition, tool, target and payload. A shared
 
 ## Run locally
 
+**Evidence Desk:** the `feature/evidence-desk` branch adds a wallet-free inspector for both Studionet and Studio Next, per-job evidence and history, checked artifact downloads, and a browser read check using the same validation core as the MCP connector. See the [Evidence Desk guide](docs/EVIDENCE_DESK.md). This is a read-only observation tool; existing signing and execution safeguards still apply.
+
 Requirements: Node.js **22.13+** and npm. Python **3.10+** is needed for the contract unit tests. The frontend does not require a backend, API key or private key.
 
 ```sh
@@ -71,7 +73,7 @@ npm run verify:live
 
 See [live evidence](docs/LIVE_EVIDENCE.md) for the inspection result and its limits. To create your own instance, use **Live → Need a new contract?** and inspect the contract source before signing deployment. The [walkthrough](docs/WALKTHROUGH.md) explains the remaining steps.
 
-The additional correction regression runs on **Studio Next, chain 61997**, at [`0x8a93A27747D0a007cfD525D5456B1017ca5bF50e`](https://explorer-studio-dev.genlayer.com/address/0x8a93A27747D0a007cfD525D5456B1017ca5bF50e). It uses the exact same v2 contract and separate owner/executor accounts. The existing browser app remains on Studionet; use the [reviewer guide](docs/REVIEWER_GUIDE.md) and read-only verification command for the Next record.
+The additional correction regression runs on **Studio Next, chain 61997**, at [`0x8a93A27747D0a007cfD525D5456B1017ca5bF50e`](https://explorer-studio-dev.genlayer.com/address/0x8a93A27747D0a007cfD525D5456B1017ca5bF50e). It uses the exact same v2 contract and separate owner/executor accounts. The signing workspace remains on Studionet; Evidence Desk can inspect either network. The [reviewer guide](docs/REVIEWER_GUIDE.md) also provides a read-only verification command for the Next record.
 
 ## Protected outputs
 
@@ -94,15 +96,18 @@ For an instance you operate, supply `GENLAYER_EXECUTOR_KEY` through your local e
 
 The reusable consumer is [public/proofguard-change-network-consumer.mjs](public/proofguard-change-network-consumer.mjs).
 
-## Agent connector (experimental)
+## Agent operations (experimental)
 
-An MCP-compatible agent can inspect finalized workflow decisions and retrieve existing integrity-checked artifacts without operating the website. The [read-only connector](docs/AGENT_CONNECTOR.md) exposes workflow listing, per-job inspection and artifact retrieval. It pins the chain and contract source, detects stale expected revisions, and reports RPC failures as unknown rather than approval. No wallet or signing key is required.
+An MCP-compatible agent can inspect finalized workflow decisions and retrieve existing integrity-checked artifacts without operating the website. The [MCP connector](docs/AGENT_CONNECTOR.md) exposes source/workflow inspection, artifact retrieval, unsigned workflow preparation and request status. The [Agent requests](docs/AGENT_REQUESTS.md) screen lets the named owner verify and register exact jobs. An explicitly enabled local executor can consume existing owner permits; it cannot grant its own approval. It pins the chain and contract source, detects stale expected revisions, and reports RPC failures as unknown rather than approval. Default reads and request preparation need no wallet or signing key.
 
 ```sh
 npm run verify:agent
+npm run verify:agent:requests
 ```
 
-This command launches a standard MCP client/server pair and checks the existing Studio Next record. It submits no transactions. The connector does not enforce external API calls or turn a read result into execution permission. The [pilot criteria](docs/PILOT.md) describe the independent-use and enforcement milestones still needed.
+This command launches a standard MCP client/server pair and checks the existing Studio Next record. It submits no transactions. Optional [delegated management](docs/AGENT_OPERATIONS.md) adds explicitly selected source, workflow, review and owner-authorization operations. A separate [HTTP report vault](docs/REPORT_VAULT.md) enforces current-output checks on its own artifact imports and downloads; it does not guard arbitrary external APIs. The [private server runtime](docs/SERVER_RUNTIME.md) packages the vault with persistent storage and an on-demand MCP connection, retaining wallet approval in Live. The [pilot criteria](docs/PILOT.md) describe the independent-use milestone still needed. Default read mode, delegated management, execution and report delivery are separate capabilities; do not give an executor owner authority when personal approval is required.
+
+Evidence Desk includes an Operations queue with attention, ready-to-run and current-output filters, job search, responsible roles and exact copyable next actions. It never treats copying a tool call as execution.
 
 ## Audit archives — powered by AR.IO
 

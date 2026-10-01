@@ -1,0 +1,87 @@
+{
+  "schema": "proofguard-server-validation/1.0",
+  "applicationCommit": "f710c48022bb8b3f066a85cff2868f959ee1d3ea",
+  "imageId": "sha256:5c67199ab392f4fbd364d9b6b51a793b32e6d2d48620b9907b9d49034df9c184",
+  "runtimeArchiveSha256": "da8709177527fc9542d5fe23f8a31144802f8717fed7db5877232fcc748249ad",
+  "nodeVersion": "24.18.0",
+  "contractCodeSha256": "beca7648cac048399221260c92f55bdc053301fe7eaa4611c3e6eecfc3c8e060",
+  "firstDelivery": {
+    "checkedAt": "2026-10-01T19:57:13.659Z",
+    "mode": "DEPLOYED_SERVER_MCP_HTTP",
+    "network": "studionet",
+    "contract": "0x91883d4829E5b5bD7BED6eBd0EceF927A71942d6",
+    "sourceId": "COPILOT-BUSINESS-01",
+    "workflowId": "COPILOT-REVIEW-01",
+    "jobId": "NO-TRAINING",
+    "revision": 1,
+    "deliveryId": "386e08616b3119635b466e07895aaa367209d4324f7b27460fef5ba447cd2993",
+    "outputSha256": "3aaba81cc6d8c4804dfae0a10c1ea760d0f43880aa71730c315753b7b19aa283",
+    "exactBytesVerified": true,
+    "repeatDeduplicated": true,
+    "alreadyStored": false,
+    "unauthenticatedRejected": true,
+    "heldJobRejected": "OUTPUT_NOT_CREATED",
+    "tools": [
+      "proofguard_list_workflows",
+      "proofguard_inspect_workflow",
+      "proofguard_get_output",
+      "proofguard_get_source",
+      "proofguard_prepare_workflow",
+      "proofguard_get_request_status",
+      "proofguard_deliver_report"
+    ],
+    "transactionsSubmitted": 0,
+    "limitation": "Operator-controlled server using an existing finalized artifact. Not an independent developer pilot or signed MCP lifecycle."
+  },
+  "afterContainerRestart": {
+    "checkedAt": "2026-10-01T19:58:04.586Z",
+    "mode": "DEPLOYED_SERVER_MCP_HTTP",
+    "network": "studionet",
+    "contract": "0x91883d4829E5b5bD7BED6eBd0EceF927A71942d6",
+    "sourceId": "COPILOT-BUSINESS-01",
+    "workflowId": "COPILOT-REVIEW-01",
+    "jobId": "NO-TRAINING",
+    "revision": 1,
+    "deliveryId": "386e08616b3119635b466e07895aaa367209d4324f7b27460fef5ba447cd2993",
+    "outputSha256": "3aaba81cc6d8c4804dfae0a10c1ea760d0f43880aa71730c315753b7b19aa283",
+    "exactBytesVerified": true,
+    "repeatDeduplicated": true,
+    "alreadyStored": true,
+    "unauthenticatedRejected": true,
+    "heldJobRejected": "OUTPUT_NOT_CREATED",
+    "tools": [
+      "proofguard_list_workflows",
+      "proofguard_inspect_workflow",
+      "proofguard_get_output",
+      "proofguard_get_source",
+      "proofguard_prepare_workflow",
+      "proofguard_get_request_status",
+      "proofguard_deliver_report"
+    ],
+    "transactionsSubmitted": 0,
+    "limitation": "Operator-controlled server using an existing finalized artifact. Not an independent developer pilot or signed MCP lifecycle."
+  },
+  "isolation": {
+    "vaultUid": 10001,
+    "mcpUid": 10002,
+    "directReportReadDenied": true,
+    "directReportWriteDenied": true,
+    "configurationWriteDenied": true,
+    "readOnlyRootFilesystem": true,
+    "publishedHostPorts": 0,
+    "walletSigningKeysInstalled": false
+  },
+  "operations": {
+    "containerHealthyAfterRestart": true,
+    "persistenceAcrossContainerRestart": true,
+    "restartPolicy": "unless-stopped",
+    "otherApplicationContainersUnchanged": true
+  },
+  "limitations": [
+    "Operator-run deployment observation, not a cryptographic chain proof or independent developer pilot.",
+    "Private stdio MCP transport; no public HTTPS MCP endpoint or automatic ChatGPT registration.",
+    "Reads the configured workspace; delivery allows only COPILOT-REVIEW-01.",
+    "No new chain transaction, payment or public Arweave upload was performed.",
+    "A build orchestration timeout was reported after the image was produced. The final tagged image, runtime file hashes, health, MCP behavior and restart persistence were separately verified."
+  ]
+}

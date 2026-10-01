@@ -236,6 +236,7 @@ html:has(.pg-site) { scroll-behavior: smooth; }
 .nw-live-next p { color: #b3c6ae; font-size: .9375rem; }
 .nw-live-wallet { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 0 1.5rem; border-bottom: 1px solid #3b4d43; margin-bottom: 1.5rem; }
 .nw-live-wallet span { font-size: .9375rem; color: #b0c1b0; }
+.nw-wallet-actions { display:flex; flex-wrap:wrap; align-items:center; gap:.75rem 1.5rem; margin:0 0 1.25rem; }
 .nw-live-source-record { padding: 1.25rem; margin-bottom: 1.5rem; background: #101b15; border: 1px solid #485d3c; border-radius: .4rem; }
 .nw-live-source-record strong { color: #d0fa85; font-size: 1rem; }
 .nw-live-source-record p { margin: .7rem 0; }

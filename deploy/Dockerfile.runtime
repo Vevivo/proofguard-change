@@ -1,0 +1,15 @@
+ARG NODE_BASE=node:24-bookworm-slim
+FROM ${NODE_BASE}
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev --ignore-scripts --no-audit --no-fund && npm cache clean --force
+COPY agents ./agents
+COPY genlayer ./genlayer
+COPY contracts ./contracts
+COPY services ./services
+COPY public/*.mjs ./public/
+COPY deploy ./deploy
+ENV NODE_ENV=production
+USER 10001:10003
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 CMD ["node", "deploy/runtime-launch.mjs", "health"]
+CMD ["node", "deploy/runtime-launch.mjs", "vault"]

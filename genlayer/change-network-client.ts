@@ -1,3 +1,6 @@
+import { addWalletNetwork, ensureWalletNetwork, requestWalletAccount } from "./wallet-network.mjs";
+import { getAddress } from "viem";
+import { requestWallet } from "./wallet-connection";
 import { createClient } from "genlayer-studionet";
 import { studionet } from "genlayer-studionet/chains";
 import { TransactionHashVariant } from "genlayer-studionet/types";
@@ -23,6 +26,7 @@ export type JobInput = { id: string; label: string; condition: string; tool: "pr
 export function networkReader() { return createClient({ chain: studionet }); }
 async function inspectNetworkContract(address: string) {
   if (!validAddress(address)) throw new Error("Enter a valid Change Network contract address.");
+  address = getAddress(address.toLowerCase());
   const client = networkReader();
   const [code, policy] = await deadline(Promise.all([
     client.getContractCode(address as `0x${string}`),
@@ -34,6 +38,7 @@ async function inspectNetworkContract(address: string) {
 export async function verifyNetworkContract(address: string) { return (await inspectNetworkContract(address)).client; }
 export async function readSourceBundle(address: string, id: string): Promise<SourceBundle> {
   const { client, reviewEngine } = await inspectNetworkContract(address);
+  address = getAddress(address.toLowerCase());
   const raw = await deadline(client.readContract({ address: address as `0x${string}`, functionName: "get_source_bundle", args: [id], transactionHashVariant: TransactionHashVariant.LATEST_FINAL }));
   if (typeof raw !== "string") throw new Error("Unexpected source response.");
   const record = JSON.parse(raw) as SourceBundle;
@@ -50,24 +55,32 @@ export async function readSourceBundle(address: string, id: string): Promise<Sou
   return { ...record, reviewEngine };
 }
 export async function connectNetworkWallet() {
-  if (!window.ethereum) throw new Error("Open this page in a browser with MetaMask or a compatible Ethereum wallet.");
-  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" }) as string[];
-  if (!accounts[0]) throw new Error("No wallet account was selected.");
-  const client = createClient({ chain: studionet, account: accounts[0] as `0x${string}`, provider: window.ethereum as never });
-  await client.connect("studionet");
-  return { client, account: accounts[0].toLowerCase() };
+  const provider = await requestWallet();
+  const account = await requestWalletAccount(provider);
+  const client = createClient({ chain: studionet, account: account as `0x${string}`, provider: provider as never });
+  await ensureWalletNetwork(provider, studionet);
+  const confirmed = await provider.request({ method: "eth_accounts" }) as string[];
+  if (confirmed[0]?.toLowerCase() !== account) throw new Error("The selected wallet changed during connection. Connect again before continuing.");
+  return { client, account };
+}
+export async function addNetworkToWallet() {
+  const provider = await requestWallet();
+  await addWalletNetwork(provider, studionet);
+  return connectNetworkWallet();
 }
 export async function resumeNetworkTransaction(hash: string, onProgress: (p: NetworkProgress) => void) {
   const client = networkReader();
   return trackSubmittedTransaction({ hash, onProgress, read: (h: string) => client.getTransaction({ hash: h as Parameters<typeof client.getTransaction>[0]["hash"] }) });
 }
-export async function writeNetwork(address: string, method: string, args: (string | bigint)[], onProgress: (p: NetworkProgress) => void) {
+export async function writeNetwork(address: string, method: string, args: (string | bigint)[], onProgress: (p: NetworkProgress) => void, options: { expectedAccount?: string } = {}) {
   const progress = (p: NetworkProgress) => onProgress({ ...p, contract: address, caseId: String(args[0]), method });
   progress({ label: "Checking the contract before requesting wallet approval." });
   const inspection = await inspectNetworkContract(address);
+  address = getAddress(address.toLowerCase());
   if (inspection.reviewEngine === "legacy-quotes") throw new Error("This contract uses the earlier review engine. Open its source and reuse the setup in an updated contract before sending more transactions. Existing records remain readable.");
   progress({ label: "Confirm your wallet connection if requested." });
-  const { client } = await connectNetworkWallet();
+  const { client, account } = await connectNetworkWallet();
+  if (options.expectedAccount && account !== options.expectedAccount.toLowerCase()) throw new Error("The connected wallet does not match the owner named in this request. Select the expected owner and reconnect.");
   progress({ label: "Preparing the transaction. Confirm the request in your wallet when it opens." });
   const hash = await client.writeContract({ address: address as `0x${string}`, functionName: method, args, value: 0n });
   await resumeNetworkTransaction(String(hash), progress);

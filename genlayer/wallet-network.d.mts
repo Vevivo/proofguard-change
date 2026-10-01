@@ -1,0 +1,4 @@
+export function ensureWalletNetwork(provider: { request(args: { method: string; params?: unknown[] }): Promise<unknown> }, chain: { id: number; name: string; rpcUrls: { default: { http: readonly string[] } }; nativeCurrency: { name: string; symbol: string; decimals: number }; blockExplorers?: { default: { url: string } } }): Promise<void>;
+export function requestWalletAccount(provider: { request(args: { method: string; params?: unknown[] }): Promise<unknown> }): Promise<string>;
+export function walletErrorMessage(message: string): string;
+export function addWalletNetwork(provider: Parameters<typeof ensureWalletNetwork>[0], chain: Parameters<typeof ensureWalletNetwork>[1]): Promise<void>;
