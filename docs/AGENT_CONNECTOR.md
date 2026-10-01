@@ -4,6 +4,20 @@ The connector lets an MCP-compatible agent inspect a configured workspace, prepa
 
 The default configuration does not create sources, judge evidence, issue permissions or execute jobs. Owners register requests, request GenLayer review and authorize supported jobs in the website. See [the request and execution guide](AGENT_REQUESTS.md) for that handoff and the opt-in local executor. An operator can additionally enable named [management capabilities](AGENT_OPERATIONS.md), including owner authorization when explicitly delegated, and [report delivery](REPORT_VAULT.md). The report vault protects its own intake and download routes; this is not a general external-action firewall.
 
+## Guided setup and connection check
+
+Open **Evidence Desk → Connect an agent** on the website. The three-step guide gives you installation commands, generates local MCP configuration from your actual checkout path, and prepares a first task for the selected record. The website cannot observe whether your agent client is connected.
+
+Run this read-only check from your checkout before adding the server to a client:
+
+```sh
+npm run agent:check -- --network studionet --contract 0x91883d4829E5b5bD7BED6eBd0EceF927A71942d6 --source COPILOT-BUSINESS-01
+```
+
+It launches the real stdio server, verifies the six default tools and reads the selected source through the MCP protocol. Success prints `MCP connection verified` with the observed chain, source and revision. It does not prove a connection inside another application. Failures identify the failed stage; no sample replaces a failed network read. It inherits only ordinary process and optional network/proxy settings, not signing keys or delivery credentials.
+
+Local stdio requires a desktop or developer MCP client. Web-only clients that require a remote HTTPS URL cannot use this configuration. Merge the new server entry without replacing your other servers. For the existing private server deployment, see [server runtime](SERVER_RUNTIME.md).
+
 ## Install and connect
 
 From a clone of this repository, with Node.js 22.13 or later:
@@ -60,7 +74,7 @@ An older output may still be retrieved as history. Its `outputRevision` and `isC
 ## Trust and failure behavior
 
 - Reads use `latest-final` on the selected chain. Wrong chain, contract source mismatch, malformed state, missing output or digest/binding mismatch produces an error.
-- An RPC error or timeout returns `isError: true` and `state: UNKNOWN`. It never becomes approval. Calls have a 20-second response deadline; already-started underlying SDK reads may finish later, but cannot produce a late successful tool response.
+- An RPC error or timeout returns `isError: true` and `state: UNKNOWN`. It never becomes approval. Calls have a 45-second response deadline; already-started underlying SDK reads may finish later, but cannot produce a late successful tool response.
 - The connector trusts the configured RPC to report chain state honestly. Code hashes and content checks are not a light-client proof of consensus or evidence that a publisher's real-world claims are true.
 - Registered source text, job conditions and review explanations are untrusted content. The connector does not fetch URLs found in them or execute their instructions. A connected model must also treat them as data.
 - The default configuration exposes no signing account or write method. The separately enabled executor can only consume existing permits, never issue them. The server uses local stdio, not a public HTTP port. Source content is returned to the connected client/model; configure that client's privacy settings accordingly.

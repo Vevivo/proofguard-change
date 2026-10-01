@@ -581,3 +581,8 @@
 @media (prefers-reduced-motion:reduce) {
   .nw-app .nw-archive-working,.nw-app .nw-archive-working .nw-spin { animation:none; }
 }
+
+/* Keep the first action visible and long-running demo controls within reach. */
+.pg-journey .pg-run-main{padding-top:1.25rem}.pg-journey .pg-run-console{position:sticky;top:12px;z-index:25;margin:0 0 1.5rem;padding:1rem 1.2rem}.pg-journey .pg-timeline{margin:1.6rem 0 1.4rem}.pg-journey .pg-timeline li{padding-top:.8rem;padding-bottom:.8rem}.pg-journey .pg-chapter-intro{min-height:0;margin-bottom:1.25rem}.pg-journey .pg-chapter-intro h1{margin:.5rem 0 .6rem}.pg-journey .pg-ready-note{padding:11px 15px;margin-bottom:15px;font-size:.8rem}.nw-app.nw-live-journey .nw-main{padding-top:1.25rem}.nw-live-journey .nw-hero{padding:.25rem 0 1rem}.nw-live-journey .nw-hero h1{font-size:clamp(1.9rem,3vw,2.6rem)}.nw-live-journey .nw-form-card{padding:1.5rem}.nw-live-journey .nw-form-title{margin-bottom:1rem}
+@media(min-width:1000px){.rf-hero{min-height:610px;padding-top:1.25rem;padding-bottom:1.25rem}.rf-hero-copy{padding-bottom:0}.rf-hero h1{font-size:clamp(3rem,5.15vw,5.25rem)}.rf-hero-right .rf-constellation{max-width:490px}.rf-hero-desc{margin-bottom:1.5rem!important}}
+@media(max-width:760px){.pg-journey .pg-run-console{top:8px;padding:.85rem 1rem;gap:.7rem}.pg-journey .pg-console-copy small{display:none}.pg-journey .pg-playback{width:100%;justify-content:space-between}.pg-journey .pg-timeline{margin:1.2rem 0}.pg-journey .pg-chapter-intro h1{font-size:1.8rem}.nw-live-journey .nw-form-card{padding:1.1rem}.nw-live-journey .nw-hero p{font-size:.9rem}.rf-hero-actions{gap:14px}}

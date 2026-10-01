@@ -21,6 +21,7 @@
     "verify:correction": "node scripts/verify-correction.mjs",
     "reproduce:correction": "node scripts/reproduce-correction.mjs",
     "agent:mcp": "node agents/mcp-server.mjs",
+    "agent:check": "node scripts/check-agent.mjs",
     "verify:agent": "node scripts/probe-agent-connector.mjs",
     "verify:agent:requests": "node scripts/probe-agent-requests.mjs",
     "verify:delivery": "node scripts/probe-report-vault.mjs",

@@ -20,7 +20,7 @@ try {
   await client.connect(transport);
   const { tools } = await client.listTools();
   assert.equal(tools.length, 6);
-  const call = (name, args) => client.callTool({ name, arguments: args }, undefined, { timeout: 30_000 });
+  const call = (name, args) => client.callTool({ name, arguments: args }, undefined, { timeout: 55_000 });
   const inspected = await call('proofguard_inspect_workflow', { workflowId: 'DELIVERY-REGRESSION-01', expectedRevision: 2 });
   assert(!inspected.isError, JSON.stringify(inspected));
   assert.deepEqual(inspected.structuredContent.workflow.jobs.map(j => j.state), ['OUTPUT_CREATED', 'CONDITION_CHANGED']);

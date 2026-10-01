@@ -8,6 +8,7 @@ import { createBrowserInspector, inspectionError, type EvidenceSnapshot } from "
 import type { NetworkJob } from "@/genlayer/change-network-client";
 import { DownloadLink } from "./download-link";
 import { jobOperation } from "@/genlayer/job-operations.mjs";
+import { AgentSetup } from "./agent-setup";
 import { PUBLIC_APP_URL } from "@/config/public-site";
 
 const phaseLabels = ["Network", "Contract code", "Finalized record", "Integrity"];
@@ -37,14 +38,16 @@ export function EvidenceDesk() {
   const [selected, setSelected] = useState("");
   const [jobFilter, setJobFilter] = useState("all");
   const [jobQuery, setJobQuery] = useState("");
-  const [section, setSection] = useState<"decisions" | "history" | "connect">("decisions");
+  const [section, setSection] = useState<"decisions" | "history" | "connect">(() => new URLSearchParams(window.location.search).get("view") === "connect" ? "connect" : "decisions");
   const [toast, setToast] = useState("");
   const [copyFallback, setCopyFallback] = useState<{ text: string; label: string } | null>(null);
   const [tool, setTool] = useState("proofguard_inspect_workflow");
   const [expectedRevision, setExpectedRevision] = useState(1);
   const [testResult, setTestResult] = useState<{ ok: boolean; data: unknown; message: string } | null>(null);
   const [testing, setTesting] = useState(false);
-  const [checkoutPath, setCheckoutPath] = useState("/absolute/path/proofguard-change");
+  const [elapsed, setElapsed] = useState(0);
+  const [cancelled, setCancelled] = useState(false);
+  const readController = useRef<AbortController | null>(null);
   const sequence = useRef(0);
   const items = snapshot?.bundle.workflows.flatMap(w => w.actions.map(a => ({ w, a, key: `${w.id}/${a.id}` }))) || [];
   const operations = items.map(item => ({ ...item, next: jobOperation(item.w, item.a, snapshot?.source.revision || 0) }));
@@ -60,30 +63,42 @@ export function EvidenceDesk() {
   const counts = { output: items.filter(x => x.a.execution).length, held: items.filter(x => ["MATERIAL_CHANGE", "INSUFFICIENT_EVIDENCE"].includes(x.a.gate)).length, review: items.filter(x => x.a.gate === "AWAITING_REVIEW").length };
 
   async function load(next = connection) {
+    readController.current?.abort();
+    const controller = new AbortController(); readController.current = controller;
     const request = ++sequence.current;
+    setCancelled(false); setElapsed(0); setPhase("");
     setConnection(next); setSnapshot(null); setLoadedConnection(null); setFailure(null); setTestResult(null); setToast(""); setBusy(true);
     try {
-      const inspector = await createBrowserInspector(next, message => { if (request === sequence.current) setPhase(message); });
+      const inspector = await createBrowserInspector(next, message => { if (request === sequence.current) setPhase(message); }, controller.signal);
       const result = await inspector.inspectSource() as EvidenceSnapshot;
       if (request !== sequence.current) return;
       setSnapshot(result); setSourceExpanded(false); setLoadedConnection({ ...next }); setExpectedRevision(result.source.revision);
       const all = result.bundle.workflows.flatMap(w => w.actions.map(a => ({ w, a })));
       const chosen = all.find(x => !x.a.execution) || all[0];
       setSelected(previous => all.some(x => `${x.w.id}/${x.a.id}` === previous) ? previous : chosen ? `${chosen.w.id}/${chosen.a.id}` : "");
-      window.history.replaceState(null, "", evidenceUrl(next));
+      window.history.replaceState(null, "", evidenceUrl(next) + (section === "connect" ? "&view=connect" : ""));
     } catch (error) { if (request === sequence.current) setFailure(inspectionError(error)); }
     finally { if (request === sequence.current) setBusy(false); }
   }
   useEffect(() => {
     const initial = initialConnection();
     if (initial.contract && initial.sourceId) void load(initial);
-    return () => { sequence.current++; };
+    return () => { sequence.current++; readController.current?.abort(); };
     // URL is the initial connection, never a signing request.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    if (!busy) return;
+    const start = Date.now();
+    const timer = setInterval(() => setElapsed(Math.floor((Date.now() - start) / 1000)), 1000);
+    return () => clearInterval(timer);
+  }, [busy]);
+  function cancelRead() {
+    sequence.current++; readController.current?.abort(); setBusy(false); setCancelled(true); setFailure(null);
+  }
   useEffect(() => { if (!toast) return; const timer = setTimeout(() => setToast(""), 5000); return () => clearTimeout(timer); }, [toast]);
   function edit(update: Partial<EvidenceConnection>) {
-    sequence.current++; setBusy(false); setSnapshot(null); setLoadedConnection(null); setFailure(null); setTestResult(null); setConnection(c => ({ ...c, ...update }));
+    sequence.current++; readController.current?.abort(); setCancelled(false); setBusy(false); setSnapshot(null); setLoadedConnection(null); setFailure(null); setTestResult(null); setConnection(c => ({ ...c, ...update }));
   }
   async function copy(text: string, label: string) {
     setCopyFallback(null);
@@ -91,7 +106,6 @@ export function EvidenceDesk() {
     catch { setToast(""); setCopyFallback({ text, label }); }
   }
   function submit(e: FormEvent) { e.preventDefault(); void load(); }
-  const mcpConfig = loadedConnection ? JSON.stringify({ mcpServers: { proofguard: { command: "node", args: [`${checkoutPath.replace(/[\\/]+$/, "")}/agents/mcp-server.mjs`, "--network", loadedConnection.network, "--contract", loadedConnection.contract, "--source", loadedConnection.sourceId] } } }, null, 2) : "";
   const toolArguments = tool === "proofguard_list_workflows" ? {} : { workflowId: focus?.w.id, ...(tool === "proofguard_get_output" ? { jobId: focus?.a.id } : {}), expectedRevision };
   async function testRead() {
     if (!loadedConnection || (tool !== "proofguard_list_workflows" && !focus) || testing) return;
@@ -119,8 +133,9 @@ export function EvidenceDesk() {
         <form onSubmit={submit}><label>Network<select value={connection.network} disabled={busy || testing} onChange={e => edit({ network: e.target.value as EvidenceNetwork })}><option value="studionet">Studionet · 61999</option><option value="studio-next">Studio Next · 61997</option></select></label><label>ProofGuard v2 contract<input required pattern="0x[a-fA-F0-9]{40}" title="0x followed by 40 hexadecimal characters" value={connection.contract} placeholder="0x…" disabled={busy || testing} onChange={e => edit({ contract: e.target.value })} spellCheck={false} /></label><label>Source ID<input required pattern="[A-Za-z0-9_.\-]{2,80}" title="2–80 letters, numbers, dots, underscores or hyphens" value={connection.sourceId} placeholder="Your registered Source ID" disabled={busy || testing} onChange={e => edit({ sourceId: e.target.value })} spellCheck={false} /></label><button className="ed-button ed-dark" disabled={busy || testing}>{busy ? <LoaderCircle className="ed-spin" size={17} /> : <Search size={17} />}{busy ? "Checking…" : "Inspect record"}</button></form>
         <div className="ed-reference-row"><span>Try a real test record</span>{EVIDENCE_REFERENCES.map(r => <button disabled={busy || testing} key={r.id} onClick={() => { setSection("decisions"); void load({ ...r }); }}>{r.id === "correction" ? "Source correction" : "Policy distinction"}<ArrowUpRight size={13} /></button>)}</div></div>
       </section>
-      {busy && <section className="ed-verification ed-working" role="status" aria-live="polite"><div><LoaderCircle className="ed-spin" size={21} /><strong>{phase || "Opening the reader"}</strong><span>Reading {network.name}. No wallet request will appear.</span></div><ol>{phaseLabels.map((label, i) => <li key={label} className={i <= phaseIndex(phase) ? "active" : ""}>{i < phaseIndex(phase) ? <Check size={14} /> : <span>{i + 1}</span>}{label}</li>)}</ol></section>}
-      {failure && <section className="ed-error" role="alert"><LockKeyhole size={24} /><div><h2>We could not establish a current result.</h2><p>{failure.message}</p><code>{failure.code}</code></div><button className="ed-button" onClick={() => void load()}>Try again <RefreshCw size={15} /></button></section>}
+      {busy && <section className="ed-verification ed-working" aria-label="Record verification progress"><div><LoaderCircle className="ed-spin" size={21} /><strong role="status">{phase || "Opening the reader"}</strong><span>{network.name} · {elapsed}s / 45s</span><button onClick={cancelRead}>Cancel read</button></div><p className="ed-read-hint" role="status">{elapsed >= 12 ? "The test network is taking longer to respond. You can cancel and choose another record." : "Reading the selected network. No wallet request will appear."}</p><ol>{phaseLabels.map((label, i) => <li key={label} className={i <= phaseIndex(phase) ? "active" : ""}>{i < phaseIndex(phase) ? <Check size={14} /> : <span>{i + 1}</span>}{label}</li>)}</ol></section>}
+      {cancelled && <p className="ed-cancelled" role="status">Read cancelled. Choose a record or try again when you are ready.</p>}
+      {failure && <section className="ed-error" role="alert"><LockKeyhole size={24} /><div><h2>We could not establish a current result.</h2><p>{failure.message}</p><code>{failure.code}</code></div><div className="ed-recovery-actions"><button className="ed-button" onClick={() => void load()}>Try again <RefreshCw size={15} /></button>{EVIDENCE_REFERENCES.filter(r => r.contract.toLowerCase() !== connection.contract.toLowerCase()).map(r => <button key={r.id} className="ed-button" onClick={() => void load({ ...r })}>Open {r.id === "policy" ? "Studionet policy" : "Studio Next correction"} record <ArrowRight size={15} /></button>)}</div></section>}
       {!busy && !snapshot && !failure && <section className="ed-empty"><Fingerprint size={35} /><h2>Start with evidence you can inspect.</h2><p>Choose a test record above, or enter your own deployed ProofGuard v2 contract and Source ID. Every result is read from the selected network and checked in your browser.</p><div className="ed-empty-steps"><span>01 · Code match</span><span>02 · Finalized state</span><span>03 · Evidence & output checks</span></div></section>}
       {snapshot && loadedConnection && loadedNetwork && <>
         <section className="ed-verification ed-verified"><div><CheckCheck size={22} /><strong>Record read. Integrity checks passed.</strong><span>{loadedNetwork.name} · source v{revision} · read {new Date(snapshot.observedAt).toLocaleTimeString()}</span><button disabled={testing} onClick={() => void load(loadedConnection)} aria-label="Refresh finalized record"><RefreshCw size={17} /></button></div><details><summary>What was checked?</summary><p>Network ID, exact contract code, finalized source history, intent hashes, current permit bindings and existing output contents. This trusts the selected RPC; it is not a light-client proof or verification of the publisher’s real-world claims.</p><code>Contract SHA-256 · {snapshot.contractCodeSha256}</code><span>Observed {new Date(snapshot.observedAt).toISOString()}. Refresh before relying on newer state.</span></details></section>
@@ -136,8 +151,8 @@ export function EvidenceDesk() {
           {!focus && <section className="ed-panel ed-queue-empty"><Search size={25} /><h3>{items.length ? "No matching jobs" : "Ready for your first workflow"}</h3><p>{items.length ? "Choose another filter or search term." : "Prepare exact jobs in Agent requests, then register them with an approved owner wallet."}</p>{items.length ? <button className="ed-button" onClick={() => { setJobFilter("all"); setJobQuery(""); }}>Show all jobs</button> : <a className="ed-button" href="./?mode=request">Prepare a request <ArrowRight size={15} /></a>}</section>}
         </div></>}
         {section === "history" && <div className="ed-history"><section className="ed-panel"><span className="ed-eyebrow">VERSIONED EVIDENCE</span><h3>What changed, and when it mattered.</h3>{snapshot.bundle.source.versions.map(v => <details className="ed-version" key={v.revision} open={v.revision === revision}><summary><b>v{v.revision}</b>{v.revision === revision ? "Current source" : "Earlier source"}<span>{v.revision === revision ? "Current" : "History"}</span></summary><p>{v.text}</p><code>SHA-256 · {v.sha256}</code></details>)}</section><section className="ed-panel"><span className="ed-eyebrow">CONTRACT ATTEMPTS</span><h3>Permission has a trace.</h3><p className="ed-muted">These are recorded authorization and execution checks, not a count of all network transactions.</p><div className="ed-attempts">{attempts.length ? attempts.map((a, i) => <div key={`${a.workflow}-${i}`}><span className={`ed-attempt-dot ${a.allowed ? "allowed" : "denied"}`} /><div><strong>{a.code.replaceAll("_", " ").toLowerCase()}</strong><small>{a.workflow} / {a.action_id} · {a.operation}</small><small>Requested v{a.requested_revision} · current v{a.current_revision}</small></div><span>{a.allowed ? "Allowed" : "Rejected"}</span></div>) : <p>No authorization or execution attempts are recorded.</p>}</div></section></div>}
-        {section === "connect" && <div className="ed-integration"><section className="ed-panel"><span className="ed-eyebrow">01 / CONNECT YOUR CLIENT</span><h3>Give your agent a record it can inspect.</h3><p className="ed-muted">The MCP connector reads this source and prepares unsigned job requests. Its default configuration has no signing key. An operator can enable named management permissions, a separate executor, and delivery to a report vault that verifies each artifact.</p><ol className="ed-install"><li>Clone the repository, check out <code>feature/evidence-desk</code>, and run <code>npm ci</code> with Node.js 22.13+.</li><li>Set your checkout path below, then add the configuration to an MCP client.</li><li>Ask it to inspect a job, or prepare a Studionet workflow request for its owner to review.</li></ol><label className="ed-path">Local repository path<input value={checkoutPath} onChange={e => setCheckoutPath(e.target.value)} placeholder="/absolute/path/proofguard-change" /></label><div className="ed-code-head"><span>mcpServers · reads & unsigned requests</span><button onClick={() => void copy(mcpConfig, "MCP configuration")}><Copy size={14} />Copy</button></div><pre>{mcpConfig}</pre><div className="ed-record-links"><a href={PROOFGUARD_REPOSITORY} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={14} /></a><a href={`${PROOFGUARD_REPOSITORY}/blob/feature/evidence-desk/docs/EVIDENCE_DESK.md`} target="_blank" rel="noreferrer">Integration guide <ArrowUpRight size={14} /></a><a href={`${PROOFGUARD_REPOSITORY}/blob/feature/evidence-desk/docs/AGENT_OPERATIONS.md`} target="_blank" rel="noreferrer">Management setup <ArrowUpRight size={14} /></a><a href={`${PROOFGUARD_REPOSITORY}/blob/feature/evidence-desk/docs/REPORT_VAULT.md`} target="_blank" rel="noreferrer">Report vault <ArrowUpRight size={14} /></a><a href="./?mode=request">Review an agent request <ArrowRight size={14} /></a></div></section>
-          <section className="ed-panel ed-read-lab"><span className="ed-eyebrow">02 / TRY THE READ CONTRACT</span><h3>Check what your agent would receive.</h3><p className="ed-muted">This browser calls the same read-only inspector as the MCP connector, directly over RPC. It does not run an AI agent or an MCP session.</p><label>Read operation<select value={tool} disabled={testing} onChange={e => { setTool(e.target.value); setTestResult(null); }}><option value="proofguard_inspect_workflow">Inspect workflow</option><option value="proofguard_list_workflows">List workflows</option><option value="proofguard_get_output">Retrieve output</option></select></label>{items.length > 0 && <label>Job<select value={focus?.key || ""} disabled={testing} onChange={e => { setSelected(e.target.value); setTestResult(null); }}>{operations.map(x => <option key={x.key} value={x.key}>{x.a.label}</option>)}</select></label>}{tool !== "proofguard_list_workflows" && <label>Expected source revision<input type="number" min={1} max={16} required value={expectedRevision} disabled={testing} onChange={e => { setExpectedRevision(Number(e.target.value)); setTestResult(null); }} /><small>Try an earlier revision to see the stale-source check reject it.</small></label>}<pre>{JSON.stringify({ tool, arguments: toolArguments }, null, 2)}</pre><button className="ed-button ed-dark" disabled={testing || (tool !== "proofguard_list_workflows" && (!focus || !Number.isInteger(expectedRevision) || expectedRevision < 1 || expectedRevision > 16))} onClick={() => void testRead()}>{testing ? <LoaderCircle size={16} className="ed-spin" /> : <Terminal size={16} />}{testing ? "Reading finalized state…" : "Run read-only check"}</button>{testResult && <section className={`ed-test-result ${testResult.ok ? "success" : "failure"}`} role="status"><strong>{testResult.ok ? "Read completed" : "No usable result returned"}</strong><p>{testResult.message}</p><details open={!testResult.ok}><summary>Response JSON</summary><pre>{JSON.stringify(testResult.data, null, 2)}</pre></details></section>}</section></div>}
+        {section === "connect" && <div className="ed-onboarding"><AgentSetup connection={loadedConnection} snapshot={snapshot} copy={copy} />
+          <details className="ed-read-tools"><summary>Advanced · test a browser read</summary>          <section className="ed-panel ed-read-lab"><span className="ed-eyebrow">02 / TRY THE READ CONTRACT</span><h3>Check what your agent would receive.</h3><p className="ed-muted">This browser calls the same read-only inspector as the MCP connector, directly over RPC. It does not run an AI agent or an MCP session.</p><label>Read operation<select value={tool} disabled={testing} onChange={e => { setTool(e.target.value); setTestResult(null); }}><option value="proofguard_inspect_workflow">Inspect workflow</option><option value="proofguard_list_workflows">List workflows</option><option value="proofguard_get_output">Retrieve output</option></select></label>{items.length > 0 && <label>Job<select value={focus?.key || ""} disabled={testing} onChange={e => { setSelected(e.target.value); setTestResult(null); }}>{operations.map(x => <option key={x.key} value={x.key}>{x.a.label}</option>)}</select></label>}{tool !== "proofguard_list_workflows" && <label>Expected source revision<input type="number" min={1} max={16} required value={expectedRevision} disabled={testing} onChange={e => { setExpectedRevision(Number(e.target.value)); setTestResult(null); }} /><small>A revision different from the current source is rejected.</small></label>}<pre>{JSON.stringify({ tool, arguments: toolArguments }, null, 2)}</pre><button className="ed-button ed-dark" disabled={testing || (tool !== "proofguard_list_workflows" && (!focus || !Number.isInteger(expectedRevision) || expectedRevision < 1 || expectedRevision > 16))} onClick={() => void testRead()}>{testing ? <LoaderCircle size={16} className="ed-spin" /> : <Terminal size={16} />}{testing ? "Reading finalized state…" : "Run read-only check"}</button>{testResult && <section className={`ed-test-result ${testResult.ok ? "success" : "failure"}`} role="status"><strong>{testResult.ok ? "Read completed" : "No usable result returned"}</strong><p>{testResult.message}</p><details open={!testResult.ok}><summary>Response JSON</summary><pre>{JSON.stringify(testResult.data, null, 2)}</pre></details></section>}</section></details></div>}
         <footer className="ed-trust"><ShieldCheck size={17} /><p>Reads establish what the contract reports at the displayed time. Execution must recheck its current state. External tools need their own enforcement.</p><a href={`${PROOFGUARD_REPOSITORY}/blob/feature/evidence-desk/docs/ARCHITECTURE.md`} target="_blank" rel="noreferrer">Trust boundaries <ArrowUpRight size={13} /></a></footer>
       </>}
       <footer className="ed-footer"><span>ProofGuard / Change</span><a href={PROOFGUARD_REPOSITORY} target="_blank" rel="noreferrer"><Code2 size={14} />Open source</a><span>GenLayer decisions · inspectable consequences</span></footer>

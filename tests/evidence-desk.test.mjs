@@ -47,3 +47,34 @@ test('malformed history and non-JSON intents cannot receive a verified display',
   action.intent_json = 'not json'; action.intent_hash = sha256(action.intent_json);
   await assert.rejects(t.browser.inspectSource(), /INVALID_INTENT/);
 });
+
+test('deadline prevents late progress and additional RPC calls after a slow response', async () => {
+  const s = setup(); let finish, codeReads = 0;
+  s.client.request = () => new Promise(resolve => { finish = resolve; });
+  s.client.getContractCode = async () => { codeReads++; return 'pinned source'; };
+  const phases = [];
+  const reader = createInspectorCore({ ...s.args, sha256, timeoutMs: 10, onProgress: phase => phases.push(phase) });
+  await assert.rejects(reader.inspectSource(), /READ_TIMEOUT/);
+  finish('0xf22d');
+  await new Promise(resolve => setTimeout(resolve, 5));
+  assert.equal(codeReads, 0); assert.deepEqual(phases, ['Checking the network']);
+});
+
+test('cancelling a read rejects it and cannot replace a later result', async () => {
+  const s = setup(), controller = new AbortController(); let finish;
+  s.client.getContractCode = () => new Promise(resolve => { finish = resolve; });
+  const reader = createInspectorCore({ ...s.args, sha256, signal: controller.signal });
+  const pending = reader.inspectSource();
+  await new Promise(resolve => setTimeout(resolve, 0));
+  controller.abort();
+  await assert.rejects(pending, /READ_CANCELLED/);
+  finish('pinned source');
+  await new Promise(resolve => setTimeout(resolve, 0));
+  assert(!s.calls.some(call => call.functionName === 'get_source_bundle'));
+});
+
+test('contract-only inspection is bounded and verifies code before listing sources', async () => {
+  const s = setup(); s.client.getContractCode = async () => 'wrong code';
+  await assert.rejects(s.browser.inspectContract(), /CONTRACT_CODE_MISMATCH/);
+  assert(!s.calls.some(call => call.functionName === 'list_sources'));
+});
