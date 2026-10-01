@@ -134,3 +134,29 @@
 .nw-read-only-entry{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 20px;padding-bottom:14px;border-bottom:1px solid var(--rf-line,#c8cdb6);font-size:14px}.nw-read-only-entry a{display:inline-flex;align-items:center;gap:6px;color:#285a32;text-decoration:underline;text-underline-offset:4px}
 
 .ed-output-actions{grid-column:2;display:flex;gap:8px;flex-wrap:wrap}
+
+/* Keep the verified result in view instead of repeating the connection form. */
+.ed-source-summary{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.ed-source-summary>div{display:grid;gap:5px;min-width:0}
+.ed-source-summary strong{overflow-wrap:anywhere;font-size:.88rem}
+.ed-source-summary small{color:var(--pg-muted,#666b5d)}
+.ed-source-summary:has(+div:not([hidden])){margin-bottom:20px}
+.ed-jobs .ed-mobile-jobs{display:none}
+.ed-output-actions a{text-decoration:none}
+.ed-app [hidden]{display:none!important}
+@media(max-width:760px){
+ .ed-source-summary{align-items:flex-start}
+ .ed-source-summary .ed-button{flex-shrink:0;font-size:.76rem;min-height:44px}
+ .ed-desktop-jobs{display:none}
+ .ed-jobs .ed-mobile-jobs{display:grid;gap:8px;font-size:.8rem;font-weight:600}
+ .ed-mobile-jobs select{width:100%;min-width:0;min-height:48px;border:1px solid #bdc5ac;border-radius:12px;background:#fffdf6;padding:10px;color:#20271b;font-size:16px}
+ .ed-connect input,.ed-connect select,.ed-read-lab input,.ed-read-lab select,.ed-path input{font-size:16px}
+ .ed-tabs{width:100%}
+ .ed-tabs button{min-height:48px}
+ .ed-record-links a,.ed-record-links button{min-height:44px;display:inline-flex;align-items:center}
+ .ed-output{grid-template-columns:1fr}
+ .ed-output>svg{display:none}
+ .ed-output-actions{grid-column:1}
+ .ed-output-actions .ed-button{min-height:44px}
+ .ed-intro{margin-bottom:20px}
+}

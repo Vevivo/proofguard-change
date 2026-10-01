@@ -30,3 +30,13 @@ The cloud-browser download event timed out, so successful file delivery is not c
 Build warnings remain for existing large optional wallet/archive dependencies. Evidence Desk and each network SDK load separately from the homepage. The reader checks an exact known contract code hash and trusts the selected RPC; it is not a generic GenLayer contract explorer or a light-client proof.
 
 No deployed contract code changed. Static frontend publication is a separate step from saving this source branch.
+
+## Compact layout follow-up — 1 October 2026
+
+- Successful inspection collapses connection fields into a source summary; Change source restores the fields. Editing still clears the previous result.
+- At widths up to 760px, a native job selector replaces the desktop job cards. Form text is 16px, and primary touch controls are at least 44px high.
+- Artifact and snapshot exports use persistent native download links with lifecycle-managed Blob URLs, rather than synthetic button clicks. Existing artifact preview remains available.
+- TypeScript validation and production build passed. All 91 JavaScript and 37 Python tests passed.
+- Cloud browser read the real Studio Next correction record; contract integrity checks passed. Desktop source settings opened and closed correctly. In a 390px-wide same-origin viewport, keyboard selection changed from EXPRESS to STANDARD and displayed the corresponding verified output.
+- Limitation: neither the original synthetic button nor the native link produced a download event in the cloud browser within eight seconds. Saved-file delivery remains unverified. On the HTTP preview origin, clipboard access was unavailable and the UI correctly displayed its fallback message. This is not a verified production clipboard test.
+- No wallet transaction, source modification, ArNS deployment, or physical-device test was performed in this follow-up.
