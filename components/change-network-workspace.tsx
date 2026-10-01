@@ -9,6 +9,7 @@ import { NetworkArchive } from "./change-network-archive";
 import { useDepthSurface } from "./use-depth-surface";
 import walkthrough from "@/config/change-network-walkthrough.json";
 import { currentWallet, observeWallet, disconnectWallet } from "@/genlayer/wallet-connection";
+import { walletErrorMessage } from "@/genlayer/wallet-network.mjs";
 import { PUBLIC_APP_URL } from "@/config/public-site";
 import { reusableNetworkSetup } from "@/genlayer/change-network-reuse.mjs";
 import { connectNetworkWallet, deployNetwork, downloadFile, networkAudit, NETWORK_CHAIN, NETWORK_SOURCE, readSourceBundle, resumeNetworkTransaction, validAddress, verifyNetworkContract, writeNetwork, type JobInput, type NetworkJob, type NetworkProgress, type NetworkWorkflow, type SourceBundle } from "@/genlayer/change-network-client";
@@ -55,7 +56,8 @@ export function ChangeNetworkWorkspace({ embedded = false, demoStage, initialTab
   const [account, setAccount] = useState("");
   const [busy, setBusy] = useState(false);
   const lock = useRef(false);
-  const [error, setError] = useState("");
+  const [rawError, setError] = useState("");
+  const error = walletErrorMessage(rawError);
   const [errorDetails, setErrorDetails] = useState("");
   const [notice, setNotice] = useState("");
   const [progress, setProgress] = useState<NetworkProgress | null>(null);
@@ -112,9 +114,13 @@ export function ChangeNetworkWorkspace({ embedded = false, demoStage, initialTab
   }, []);
   useEffect(() => {
     if (!live) return;
-    const changed = () => { setAccount(""); setNotice("Wallet changed. Connect again to confirm the current account and network."); };
-    return observeWallet(changed);
-  }, [live]);
+    return observeWallet(({ event, value }) => {
+      if (event === "chainChanged" && Number(value) === NETWORK_CHAIN.id) return;
+      if (event === "accountsChanged" && Array.isArray(value) && value[0]?.toLowerCase() === account) return;
+      setAccount("");
+      if (account) setNotice(event === "disconnect" ? "Wallet disconnected. Reconnect before sending another transaction." : "Wallet changed. Connect again to confirm the current account and network.");
+    });
+  }, [live, account]);
   useEffect(() => {
     if (!busy) return;
     const preventExit = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ""; };
@@ -168,6 +174,7 @@ export function ChangeNetworkWorkspace({ embedded = false, demoStage, initialTab
     if (!live) throw new Error("Wallet connections are available in Live mode only.");
     setOperation("Connect in your browser wallet, or scan the MetaMask QR code with your phone.");
     const value = await connectNetworkWallet(); setAccount(value.account); if (!executor) setExecutor(value.account);
+    setNotice("Wallet connected to GenLayer Studionet.");
   }
   function switchMode(nextLive: boolean) {
     if (lock.current || pending || nextLive === live) return;
@@ -270,7 +277,7 @@ export function ChangeNetworkWorkspace({ embedded = false, demoStage, initialTab
       {(embedded || liveStep === 3) && <div className="nw-toolbar"><nav aria-label="Workspace sections">{([['impact','Impact map',GitBranch],['audit','Audit trail',Fingerprint]] as const).map(([id,label,Icon]) => <button key={id} aria-current={tab === id ? "page" : undefined} onClick={() => setTab(id)}><Icon size={16} />{label}</button>)}</nav><button className="nw-text-button" onClick={() => void run(copyLink)}><Copy size={14} />Share workspace</button></div>}
       {!live && <section className="nw-walkthrough" aria-label="Simulated walkthrough controls"><div className="nw-demo-label"><span>DEMO SCENARIO</span><strong>Simulated · no transactions sent</strong></div><label className="nw-scenario"><span className="nw-sr">Choose scenario</span><select value={scenario} onChange={e => { setScenario(e.target.value as Scenario); setStep(2); }}>{Object.entries(walkthrough).map(([id,s]) => <option key={id} value={id}>{s.title}</option>)}</select></label><div className="nw-steps">{stepLabels.map((label,i) => <button key={label} onClick={() => { setStep(i); setTab("impact"); }} aria-current={step === i ? "step" : undefined}><span>{i + 1}</span>{label}</button>)}</div></section>}
       {share && <div className="nw-notice"><span>Workspace link</span><input aria-label="Shareable workspace link" readOnly value={share} onFocus={e => e.target.select()} /><button onClick={() => setShare("")} aria-label="Dismiss share link"><X size={16} /></button></div>}
-      {error && <div className="nw-message error" role="alert"><strong>Could not complete this step.</strong><p>{error}</p>{errorDetails && <details className="nw-details"><summary>Technical details</summary><p>{errorDetails}</p></details>}</div>}
+      {error && <div className="nw-message error" role="alert"><strong>Could not complete this step.</strong><p>{error}</p>{(errorDetails || rawError !== error) && <details className="nw-details"><summary>Technical details</summary><p>{errorDetails || rawError}</p></details>}</div>}
       {notice && !(live && progress?.finalized && !activityDismissed) && <div className="nw-message" role="status">{notice}</div>}
       {live && record?.reviewEngine === "legacy-quotes" && <div className="nw-message" role="status"><strong>An updated review engine is available.</strong><p>This contract uses the earlier quotation format. Existing records remain readable. Create a new contract to use reviews that select exact source excerpts.</p><div className="nw-actions">{reusableSetup ? <Button className="nw-button primary" disabled={disabled} onClick={reuseSetup}>Reuse source and job definitions <ArrowRight size={15} /></Button> : !account ? <Button className="nw-button primary" disabled={disabled} onClick={() => void run(connect)}>Connect wallet to reuse setup</Button> : <span>Automatic reuse is available for a single, unreviewed workflow at source v1 owned by your wallet. Preserve the audit before preparing a new workspace.</span>}<Button className="nw-button" variant="outline" disabled={disabled} onClick={() => void run(() => exportAudit())}>Download existing record <Download size={14} /></Button></div></div>}
 

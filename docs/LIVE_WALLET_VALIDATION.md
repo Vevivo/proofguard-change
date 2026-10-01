@@ -16,10 +16,21 @@ Date: 1 October 2026
 - Existing suite: 91 JavaScript and 37 Python tests passed.
 - Four additional network tests cover an already correct network, user rejection without retries, adding an unknown declared network, and rejecting a wallet that remains on the wrong network.
 - The browser without an injected wallet reached MetaMask's mobile QR pairing panel.
+- A mobile wallet paired successfully and the selected account and Studionet chain were confirmed in the Live workspace.
+- An existing Studionet contract passed the code/policy check through the Live UI.
+- Repeated `eth_requestAccounts` calls were removed for already granted accounts. Duplicate account/network events no longer clear an unchanged connected account, and successful connection clears the stale change warning.
+- Five additional account/error tests passed, covering account reuse, initial permission, rejection, malformed account responses, and an unknown outcome after a relay failure.
+
+## Mobile submission findings
+
+- Deployment reached `eth_sendTransaction`, then MetaMask Connect reported `RPCErr53: Failed to publish message after all retries`. No transaction hash was returned to the application.
+- A separate, smaller `publish_source` request against the verified existing contract reached the wallet request stage, then reported `RPCErr53: Transport request timed out`. No transaction hash was returned. This does not establish that the request was rejected or that no transaction could have been submitted; check wallet activity before retrying.
+- Neither request was automatically resent. Existing source/workflow records were not edited.
+- Relay failures now show a short recovery instruction with the raw SDK error under Technical details. Connection and signing are tracked as separate validation outcomes.
 
 ## Outstanding before release
 
-- No mobile wallet has paired with this build yet. No owner transaction, review, permit, output or Turbo signature has been exercised through the mobile provider.
+- Mobile pairing passed, but no owner transaction, review, permit, output or Turbo signature has completed through the mobile provider. Resolve the submission timeout before treating mobile Live support as accepted.
 - The SDK panel displayed untranslated keys for some controls in a Turkish browser locale. Resolve or verify that UI before calling mobile onboarding complete.
 - Run the full Live lifecycle with wallet approvals and verify account switching, cancellation and reconnect behavior. QR availability alone is not an end-to-end pass.
 

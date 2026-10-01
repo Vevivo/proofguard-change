@@ -1,3 +1,20 @@
+/** A relay timeout is not a confirmed rejection or a confirmed chain failure. */
+export function walletErrorMessage(message) {
+  if (/RPCErr53|Failed to publish message after all retries|Transport request timed out/.test(message)) {
+    return "MetaMask did not answer the request. Open MetaMask on your phone and check pending requests and wallet activity before trying again. ProofGuard has not received a transaction confirmation and will not resend automatically.";
+  }
+  return message;
+}
+
+/** Reuse granted accounts; permission requests are only needed when none exist. */
+export async function requestWalletAccount(provider) {
+  let accounts = await provider.request({ method: "eth_accounts" });
+  if (!Array.isArray(accounts) || !accounts.length) accounts = await provider.request({ method: "eth_requestAccounts" });
+  const account = Array.isArray(accounts) ? accounts[0] : undefined;
+  if (typeof account !== "string" || !/^0x[a-fA-F0-9]{40}$/.test(account)) throw new Error("No wallet account was selected.");
+  return account.toLowerCase();
+}
+
 /** Switch only the chosen provider; rejection must never trigger another request. */
 export async function ensureWalletNetwork(provider, chain) {
   const chainId = `0x${chain.id.toString(16)}`;

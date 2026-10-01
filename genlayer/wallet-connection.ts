@@ -5,17 +5,23 @@ type MobileClient = Awaited<ReturnType<typeof import("@metamask/connect-evm")["c
 let active: WalletProvider | undefined;
 let mobile: MobileClient | undefined;
 let initializing: Promise<MobileClient> | undefined;
-const subscribers = new Set<() => void>();
-const changed = () => { subscribers.forEach(listener => listener()); };
+type WalletChange = { event: "accountsChanged" | "chainChanged" | "disconnect"; value?: unknown };
+const subscribers = new Set<(change: WalletChange) => void>();
+const changed = (change: WalletChange) => { subscribers.forEach(listener => listener(change)); };
+const handlers = {
+  accountsChanged: (value: unknown) => changed({ event: "accountsChanged", value }),
+  chainChanged: (value: unknown) => changed({ event: "chainChanged", value }),
+  disconnect: () => changed({ event: "disconnect" }),
+};
 
 function useProvider(provider: WalletProvider) {
   if (provider === active) return;
-  for (const event of ["accountsChanged", "chainChanged", "disconnect"]) active?.removeListener?.(event, changed);
+  for (const [event, handler] of Object.entries(handlers)) active?.removeListener?.(event, handler);
   active = provider;
-  for (const event of ["accountsChanged", "chainChanged", "disconnect"]) active.on?.(event, changed);
+  for (const [event, handler] of Object.entries(handlers)) active.on?.(event, handler);
 }
 export function currentWallet() { return active; }
-export function observeWallet(listener: () => void) {
+export function observeWallet(listener: (change: WalletChange) => void) {
   subscribers.add(listener);
   return () => { subscribers.delete(listener); };
 }
@@ -40,8 +46,8 @@ export async function requestWallet(): Promise<WalletProvider> {
 export async function disconnectWallet() {
   const provider = active;
   active = undefined;
-  for (const event of ["accountsChanged", "chainChanged", "disconnect"]) provider?.removeListener?.(event, changed);
-  changed();
+  for (const [event, handler] of Object.entries(handlers)) provider?.removeListener?.(event, handler);
+  changed({ event: "disconnect" });
   // Injected extensions manage their own permissions; do not revoke unrelated access.
   if (mobile) await mobile.disconnect();
 }

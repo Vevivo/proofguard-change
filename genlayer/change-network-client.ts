@@ -1,4 +1,4 @@
-import { ensureWalletNetwork } from "./wallet-network.mjs";
+import { ensureWalletNetwork, requestWalletAccount } from "./wallet-network.mjs";
 import { requestWallet } from "./wallet-connection";
 import { createClient } from "genlayer-studionet";
 import { studionet } from "genlayer-studionet/chains";
@@ -53,13 +53,12 @@ export async function readSourceBundle(address: string, id: string): Promise<Sou
 }
 export async function connectNetworkWallet() {
   const provider = await requestWallet();
-  const accounts = await provider.request({ method: "eth_requestAccounts" }) as string[];
-  if (!accounts[0]) throw new Error("No wallet account was selected.");
-  const client = createClient({ chain: studionet, account: accounts[0] as `0x${string}`, provider: provider as never });
+  const account = await requestWalletAccount(provider);
+  const client = createClient({ chain: studionet, account: account as `0x${string}`, provider: provider as never });
   await ensureWalletNetwork(provider, studionet);
   const confirmed = await provider.request({ method: "eth_accounts" }) as string[];
-  if (confirmed[0]?.toLowerCase() !== accounts[0].toLowerCase()) throw new Error("The selected wallet changed during connection. Connect again before continuing.");
-  return { client, account: accounts[0].toLowerCase() };
+  if (confirmed[0]?.toLowerCase() !== account) throw new Error("The selected wallet changed during connection. Connect again before continuing.");
+  return { client, account };
 }
 export async function resumeNetworkTransaction(hash: string, onProgress: (p: NetworkProgress) => void) {
   const client = networkReader();
