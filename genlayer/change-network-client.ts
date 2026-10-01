@@ -1,3 +1,5 @@
+import { ensureWalletNetwork } from "./wallet-network.mjs";
+import { requestWallet } from "./wallet-connection";
 import { createClient } from "genlayer-studionet";
 import { studionet } from "genlayer-studionet/chains";
 import { TransactionHashVariant } from "genlayer-studionet/types";
@@ -50,11 +52,13 @@ export async function readSourceBundle(address: string, id: string): Promise<Sou
   return { ...record, reviewEngine };
 }
 export async function connectNetworkWallet() {
-  if (!window.ethereum) throw new Error("Open this page in a browser with MetaMask or a compatible Ethereum wallet.");
-  const accounts = await window.ethereum.request({ method: "eth_requestAccounts" }) as string[];
+  const provider = await requestWallet();
+  const accounts = await provider.request({ method: "eth_requestAccounts" }) as string[];
   if (!accounts[0]) throw new Error("No wallet account was selected.");
-  const client = createClient({ chain: studionet, account: accounts[0] as `0x${string}`, provider: window.ethereum as never });
-  await client.connect("studionet");
+  const client = createClient({ chain: studionet, account: accounts[0] as `0x${string}`, provider: provider as never });
+  await ensureWalletNetwork(provider, studionet);
+  const confirmed = await provider.request({ method: "eth_accounts" }) as string[];
+  if (confirmed[0]?.toLowerCase() !== accounts[0].toLowerCase()) throw new Error("The selected wallet changed during connection. Connect again before continuing.");
   return { client, account: accounts[0].toLowerCase() };
 }
 export async function resumeNetworkTransaction(hash: string, onProgress: (p: NetworkProgress) => void) {

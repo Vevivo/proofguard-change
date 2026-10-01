@@ -26,6 +26,7 @@
   "dependencies": {
     "@ardrive/turbo-sdk": "^1.42.0",
     "@dha-team/arbundles": "1.0.4",
+    "@metamask/connect-evm": "2.1.1",
     "@modelcontextprotocol/sdk": "1.31.0",
     "buffer": "6.0.3",
     "class-variance-authority": "0.7.1",
