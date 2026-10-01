@@ -39,6 +39,8 @@ The service binds to `127.0.0.1`. For a pilot on another host, an operator must 
 
 ## Connect an agent
 
+For an isolated Docker installation with persistent storage and an operator-managed stdio connection, see [Private server runtime](SERVER_RUNTIME.md). It keeps both the vault and its token off public ports and retains human wallet signing in Live.
+
 Give the separate MCP child process `PROOFGUARD_REPORT_ENDPOINT` (the service origin) and the same `PROOFGUARD_REPORT_TOKEN`, then add `--enable-delivery` to the normal MCP command. Plain HTTP is permitted only for numeric loopback; remote service origins must use HTTPS. Redirects are refused. The endpoint and token are never tool arguments.
 
 `proofguard_deliver_report` accepts:
