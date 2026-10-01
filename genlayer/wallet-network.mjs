@@ -1,9 +1,22 @@
 /** A relay timeout is not a confirmed rejection or a confirmed chain failure. */
 export function walletErrorMessage(message) {
+  if (/Invalid chain ID ["']?0xf22f|Unrecognized chain ID ["']?0xf22f/i.test(message)) {
+    return "GenLayer Studionet is missing from this wallet. Open the Connect step and choose Add GenLayer network. Approve the network request in MetaMask before trying the transaction again.";
+  }
   if (/RPCErr53|Failed to publish message after all retries|Transport request timed out/.test(message)) {
     return "MetaMask did not answer the request. Open MetaMask on your phone and check pending requests and wallet activity before trying again. ProofGuard has not received a transaction confirmation and will not resend automatically.";
   }
   return message;
+}
+
+function walletNetworkConfiguration(chain) {
+  return { chainId: `0x${chain.id.toString(16)}`, chainName: chain.name, rpcUrls: [...chain.rpcUrls.default.http], nativeCurrency: chain.nativeCurrency, ...(chain.blockExplorers?.default?.url ? { blockExplorerUrls: [chain.blockExplorers.default.url] } : {}) };
+}
+
+/** Explicit recovery for a removed mobile network, even if the SDK caches its ID. */
+export async function addWalletNetwork(provider, chain) {
+  await provider.request({ method: "wallet_addEthereumChain", params: [walletNetworkConfiguration(chain)] });
+  await ensureWalletNetwork(provider, chain);
 }
 
 /** Reuse granted accounts; permission requests are only needed when none exist. */
@@ -23,7 +36,7 @@ export async function ensureWalletNetwork(provider, chain) {
       await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId }] });
     } catch (error) {
       if (Number(error?.code) !== 4902) throw error;
-      await provider.request({ method: "wallet_addEthereumChain", params: [{ chainId, chainName: chain.name, rpcUrls: [...chain.rpcUrls.default.http], nativeCurrency: chain.nativeCurrency, ...(chain.blockExplorers?.default?.url ? { blockExplorerUrls: [chain.blockExplorers.default.url] } : {}) }] });
+      await provider.request({ method: "wallet_addEthereumChain", params: [walletNetworkConfiguration(chain)] });
       await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId }] });
     }
   }

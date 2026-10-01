@@ -20,6 +20,7 @@ Date: 1 October 2026
 - An existing Studionet contract passed the code/policy check through the Live UI.
 - Repeated `eth_requestAccounts` calls were removed for already granted accounts. Duplicate account/network events no longer clear an unchanged connected account, and successful connection clears the stale change warning.
 - Five additional account/error tests passed, covering account reuse, initial permission, rejection, malformed account responses, and an unknown outcome after a relay failure.
+- Explicit network recovery adds the configured Studionet network even when the mobile SDK reports a cached matching chain ID. Three additional tests cover this recovery, rejected network addition, and the targeted missing-network message (12 wallet/network tests total).
 
 ## Mobile submission findings
 
@@ -27,10 +28,12 @@ Date: 1 October 2026
 - A separate, smaller `publish_source` request against the verified existing contract reached the wallet request stage, then reported `RPCErr53: Transport request timed out`. No transaction hash was returned. This does not establish that the request was rejected or that no transaction could have been submitted; check wallet activity before retrying.
 - Neither request was automatically resent. Existing source/workflow records were not edited.
 - Relay failures now show a short recovery instruction with the raw SDK error under Technical details. Connection and signing are tracked as separate validation outcomes.
+- A later source request returned `Invalid chain ID "0xf22f"`. Explicit Add GenLayer network recovery completed through MetaMask and the Live UI confirmed the network addition. The configured chain ID is 61999 (`0xf22f`).
+- After recovery, publishing controlled source `MOBILE-QA-20261001-1057` returned transaction `0x048f18ae90ee0cda13ece81b773f73869f64572a16079d74f55e17a35a4ce6a5`. The Live UI reached "Source published", read revision 1 back from finalized contract state and enabled progression to protected jobs.
 
 ## Outstanding before release
 
-- Mobile pairing passed, but no owner transaction, review, permit, output or Turbo signature has completed through the mobile provider. Resolve the submission timeout before treating mobile Live support as accepted.
+- Mobile pairing, explicit network recovery and the source publication owner transaction passed. Workflow registration, review, permit, output and Turbo signature remain to be checked through the mobile provider before treating the full lifecycle as accepted.
 - The SDK panel displayed untranslated keys for some controls in a Turkish browser locale. Resolve or verify that UI before calling mobile onboarding complete.
 - Run the full Live lifecycle with wallet approvals and verify account switching, cancellation and reconnect behavior. QR availability alone is not an end-to-end pass.
 

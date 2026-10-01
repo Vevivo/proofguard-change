@@ -1,4 +1,4 @@
-import { ensureWalletNetwork, requestWalletAccount } from "./wallet-network.mjs";
+import { addWalletNetwork, ensureWalletNetwork, requestWalletAccount } from "./wallet-network.mjs";
 import { requestWallet } from "./wallet-connection";
 import { createClient } from "genlayer-studionet";
 import { studionet } from "genlayer-studionet/chains";
@@ -59,6 +59,11 @@ export async function connectNetworkWallet() {
   const confirmed = await provider.request({ method: "eth_accounts" }) as string[];
   if (confirmed[0]?.toLowerCase() !== account) throw new Error("The selected wallet changed during connection. Connect again before continuing.");
   return { client, account };
+}
+export async function addNetworkToWallet() {
+  const provider = await requestWallet();
+  await addWalletNetwork(provider, studionet);
+  return connectNetworkWallet();
 }
 export async function resumeNetworkTransaction(hash: string, onProgress: (p: NetworkProgress) => void) {
   const client = networkReader();

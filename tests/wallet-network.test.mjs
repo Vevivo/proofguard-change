@@ -1,8 +1,24 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {ensureWalletNetwork, requestWalletAccount, walletErrorMessage} from '../genlayer/wallet-network.mjs';
+import {addWalletNetwork, ensureWalletNetwork, requestWalletAccount, walletErrorMessage} from '../genlayer/wallet-network.mjs';
 const chain={id:61999,name:'GenLayer Studionet',rpcUrls:{default:{http:['https://studio.genlayer.com/api']}},nativeCurrency:{name:'GEN Token',symbol:'GEN',decimals:18},blockExplorers:{default:{url:'https://explorer-studio.genlayer.com'}}};
 const account='0x1111111111111111111111111111111111111111';
+test('explicit network recovery reaches the wallet even when the cached chain ID matches',async()=>{
+ const calls=[];
+ await addWalletNetwork({request:async r=>{calls.push(r);return r.method==='eth_chainId'?'0xf22f':null;}},chain);
+ assert.equal(calls[0].method,'wallet_addEthereumChain');
+ assert.deepEqual(calls[0].params,[{chainId:'0xf22f',chainName:chain.name,rpcUrls:['https://studio.genlayer.com/api'],nativeCurrency:chain.nativeCurrency,blockExplorerUrls:['https://explorer-studio.genlayer.com']}]);
+ assert.deepEqual(calls.map(r=>r.method),['wallet_addEthereumChain','eth_chainId','eth_chainId']);
+});
+test('rejected network recovery never switches or submits a transaction',async()=>{
+ const calls=[];
+ await assert.rejects(addWalletNetwork({request:async r=>{calls.push(r.method);throw Object.assign(new Error('Rejected'),{code:4001});}},chain),/Rejected/);
+ assert.deepEqual(calls,['wallet_addEthereumChain']);
+});
+test('a removed Studionet network has a targeted recovery message',()=>{
+ assert.match(walletErrorMessage('Invalid chain ID "0xf22f"'),/Add GenLayer network/);
+ assert.equal(walletErrorMessage('Invalid chain ID "0x1"'),'Invalid chain ID "0x1"');
+});
 test('relay failures preserve an unknown transaction outcome and never promise no submission',()=>{
  for(const detail of ['RPCErr53: Transport request timed out','Failed to publish message after all retries']){
   const message=walletErrorMessage(detail);
