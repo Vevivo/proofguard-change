@@ -68,3 +68,7 @@ The second command deploys a **new** instance, estimates fees and runs the seque
 The guarded effect is a contract artifact: a price report or purchase-order draft. It is not an external order or payment. A publisher can submit false information; the review evaluates support within the registered source. These network tests do not establish the safety of arbitrary prompts or third-party tool integrations. Previously generated outputs remain historical records when evidence changes.
 
 Local tests deliberately mock GenVM and review responses. The live regression uses the actual deployed GenVM and validator review. Neither should be described as independent user adoption or a third-party security audit.
+
+## Related contract research
+
+[Contract review index](CONTRACT_REVIEW_INDEX.md) lists InvoiceMatch, DeliveryAcceptance and SourceQuorum with pinned source, tests and deployment records. These are separate prototypes in this repository, not features integrated into the browser application. Their evidence is supplementary to the ProofGuard product review.
