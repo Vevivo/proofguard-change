@@ -1,0 +1,20 @@
+{
+  "observedAt": "2026-10-01T18:53:44.296Z",
+  "mode": "LIVE_MCP_HTTP_SERVICE_FINALIZED_RPC",
+  "chainId": 61999,
+  "contract": "0x91883d4829E5b5bD7BED6eBd0EceF927A71942d6",
+  "sourceId": "MOBILE-QA-20261001-1057",
+  "workflowId": "MOBILE-QA-WF-20261001",
+  "jobId": "weekday-price",
+  "sourceRevision": 1,
+  "outputSha256": "dfb6061524e4b13e4bacb1a964956053bc18ecd04735c77e9d7035f718be6d2a",
+  "deliveryId": "759b324a2ce512adf51574808af399c1f3e42d78fe88b7342c9806d46e5003a2",
+  "independentServiceRead": true,
+  "storedReports": 1,
+  "repeatedRequestDeduplicated": true,
+  "downloadedBytesMatch": true,
+  "unauthenticatedRejected": true,
+  "heldJobRejected": "OUTPUT_NOT_CREATED",
+  "transactionsSubmitted": 0,
+  "limitation": "Developer-run local HTTP service, using an existing live artifact. Not a hosted production integration, new signed management lifecycle, or independent developer pilot."
+}

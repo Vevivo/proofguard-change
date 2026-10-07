@@ -7,6 +7,10 @@ export default defineConfig({
   root: "arns",
   base: "./",
   publicDir: "../public",
+  server: {
+    host: "0.0.0.0",
+    allowedHosts: ["terminal.local"],
+  },
   plugins: [react(), turboBrowserPolyfills()],
   resolve: {
     alias: {
