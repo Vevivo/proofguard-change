@@ -18,6 +18,8 @@ A source correction blocks imports and downloads of the previous revision, inclu
 
 ## Run locally
 
+The vault now also scans stored reports and exposes expiring validity observations and durable event history. See [Continuous report monitoring](REPORT_MONITOR.md) for the new feature, three MCP tools and its reproducible validation.
+
 Use Node.js 22.13+ and `npm ci`. The service requires no signing key.
 
 Supply these environment variables through the operator's environment or secret manager:

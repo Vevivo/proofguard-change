@@ -33,7 +33,7 @@ test('real MCP call stores verified bytes through HTTP and deduplicates concurre
     assert(results.every(r => !r.isError && r.structuredContent.state === 'REPORT_STORED'));
     const id = results[0].structuredContent.deliveryId;
     assert.equal(results[1].structuredContent.deliveryId, id);
-    assert.equal((await fs.readdir(s.directory)).length, 1);
+    assert.equal((await fs.readdir(s.directory)).filter(name => /^[a-f0-9]{64}\.json$/.test(name)).length, 1);
     const downloaded = await fetch(`${s.endpoint}/v1/reports/${id}/content`, { headers: { authorization: `Bearer ${token}` } });
     assert.equal(downloaded.status, 200); assert.equal(sha256(await downloaded.text()), s.input.expectedOutputSha256);
     assert.equal((await client.listTools()).tools.find(t => t.name === 'proofguard_deliver_report').annotations.readOnlyHint, false);

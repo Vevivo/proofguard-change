@@ -7,6 +7,7 @@ import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { z } from 'zod';
 import { sha256 } from '../agents/inspector.mjs';
 import { canonical, requestId } from '../genlayer/agent-request.mjs';
+import { createReportMonitor } from './report-monitor.mjs';
 
 export const deliveryInput = {
   workflowId: requestId, jobId: requestId, expectedRevision: z.number().int().min(1).max(16),
@@ -19,7 +20,7 @@ const requireThat = (value, code) => { if (!value) throw Error(code); };
  * identifiers, never report bytes, RPC URLs, paths or a claimed approval.
  * Admission is an RPC observation, not an atomic lock across two systems.
  */
-export function createReportVault({ inspector, directory, token, allowedWorkflows, maxConcurrent = 4 }) {
+export function createReportVault({ inspector, directory, token, allowedWorkflows, maxConcurrent = 4, monitorIntervalMs = 60_000, freshnessMs = 120_000, now = Date.now }) {
   requireThat(validServiceToken(token), 'VAULT_TOKEN_REQUIRED');
   requireThat(Array.isArray(allowedWorkflows) && allowedWorkflows.length > 0 && allowedWorkflows.every(w => requestId.safeParse(w).success), 'VAULT_WORKFLOW_ALLOWLIST_REQUIRED');
   requireThat(typeof directory === 'string' && directory.length > 0, 'VAULT_DIRECTORY_REQUIRED');
@@ -30,17 +31,42 @@ export function createReportVault({ inspector, directory, token, allowedWorkflow
   };
   async function verify(input) {
     requireThat(allowed.has(input.workflowId), 'WORKFLOW_NOT_ALLOWED');
+    const vaultCheckStartedAt = now();
     const output = await inspector.getOutput({ workflowId: input.workflowId, jobId: input.jobId, expectedRevision: input.expectedRevision });
     requireThat(output.isCurrentRevision && output.outputRevision === input.expectedRevision, 'HISTORICAL_OUTPUT_BLOCKED');
     requireThat(output.sha256 === input.expectedOutputSha256 && sha256(output.outputJson) === output.sha256, 'OUTPUT_DIGEST_MISMATCH');
     requireThat(['prepare_price_report', 'prepare_purchase_order'].includes(output.output.tool), 'UNSUPPORTED_OUTPUT');
+    return { ...output, vaultCheckStartedAt };
+  }
+  async function loadRecord(id) {
+    let record;
+    try { record = JSON.parse(await fs.readFile(path.join(directory, `${id}.json`), 'utf8')); }
+    catch (error) {
+      if (error.code === 'ENOENT') throw Error('REPORT_NOT_FOUND');
+      throw Error(error instanceof SyntaxError ? 'STORED_RECORD_MISMATCH' : 'REPORT_STORAGE_UNAVAILABLE');
+    }
+    try {
+      const input = z.object(deliveryInput).strict().parse(record.input);
+      requireThat(allowed.has(input.workflowId), 'WORKFLOW_NOT_ALLOWED');
+      requireThat(record.schema === 'proofguard-delivery/1.0' && record.id === id && typeof record.contract === 'string'
+        && record.outputSha256 === input.expectedOutputSha256 && sha256(record.outputJson) === record.outputSha256
+        && id === sha256(canonical({ chainId: record.chainId, contract: record.contract.toLowerCase(), sourceId: record.sourceId,
+          workflowId: input.workflowId, jobId: input.jobId, outputSha256: record.outputSha256 })), 'STORED_RECORD_MISMATCH');
+    } catch (error) { throw Error(error.message === 'WORKFLOW_NOT_ALLOWED' ? error.message : 'STORED_RECORD_MISMATCH'); }
+    return record;
+  }
+  async function verifyRecord(record) {
+    const output = await verify(record.input);
+    requireThat(record.chainId === output.chainId && record.contract.toLowerCase() === output.contract.toLowerCase()
+      && record.sourceId === output.source.id && record.outputSha256 === output.sha256 && record.outputJson === output.outputJson, 'STORED_RECORD_MISMATCH');
     return output;
   }
+  const monitor = createReportMonitor({ directory, loadRecord, verifyRecord, intervalMs: monitorIntervalMs, freshnessMs, now });
   const response = (res, status, data) => {
     res.writeHead(status, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' });
     res.end(JSON.stringify(data));
   };
-  return http.createServer({ requestTimeout: 15000, headersTimeout: 10000 }, async (req, res) => {
+  const server = http.createServer({ requestTimeout: 15000, headersTimeout: 10000 }, async (req, res) => {
     if (req.method === 'GET' && req.url === '/health') return response(res, 200, { service: 'proofguard-report-vault', status: 'listening', chainVerified: false });
     if (!authenticate(req.headers.authorization)) return response(res, 401, { error: 'UNAUTHORIZED' });
     // No browser sessions or cross-origin writes. Use the configured MCP adapter.
@@ -74,17 +100,39 @@ export function createReportVault({ inspector, directory, token, allowedWorkflow
         } finally { await fs.rm(temporary, { force: true }); }
         const stored = JSON.parse(await fs.readFile(target, 'utf8'));
         requireThat(stored.id === id && stored.outputSha256 === output.sha256 && stored.outputJson === output.outputJson && canonical(stored.input) === canonical(input), 'STORED_RECORD_MISMATCH');
+        const monitoring = await monitor.admitted(id, output.vaultCheckStartedAt);
+        requireThat(monitoring.state === 'CURRENT', monitoring.reason);
         return response(res, reused ? 200 : 201, { state: 'REPORT_STORED', id, reused, outputSha256: output.sha256,
           admittedAt: stored.admittedAt, verifiedAt: output.observedAt, contentPath: `/v1/reports/${id}/content`,
           boundary: 'Stored after an independent finalized RPC read. No purchase, payment or atomic cross-system lock. Downloads recheck the current source.' });
       }
+      const monitoringRoute = /^\/v1\/reports\/([a-f0-9]{64})\/(status|recheck|events)(?:\?(.*))?$/.exec(req.url || '');
+      if (monitoringRoute) {
+        const [, id, operation, query] = monitoringRoute;
+        if (operation === 'status' && req.method === 'GET') {
+          requireThat(query === undefined, 'INVALID_MONITOR_QUERY');
+          return response(res, 200, await monitor.status(id));
+        }
+        if (operation === 'recheck' && req.method === 'POST') {
+          requireThat(query === undefined, 'INVALID_MONITOR_QUERY');
+          for await (const chunk of req) requireThat(chunk.length === 0, 'INVALID_RECHECK_INPUT');
+          return response(res, 200, await monitor.recheck(id));
+        }
+        if (operation === 'events' && req.method === 'GET') {
+          const params = new URLSearchParams(query || '');
+          requireThat([...params.keys()].every(key => ['after', 'limit'].includes(key))
+            && params.getAll('after').length <= 1 && params.getAll('limit').length <= 1, 'INVALID_EVENT_QUERY');
+          const integer = (key, fallback) => {
+            const value = params.get(key);
+            requireThat(value === null || /^(0|[1-9][0-9]*)$/.test(value), 'INVALID_EVENT_QUERY');
+            return value === null ? fallback : Number(value);
+          };
+          return response(res, 200, await monitor.events(id, { after: integer('after', 0), limit: integer('limit', 50) }));
+        }
+      }
       const match = /^\/v1\/reports\/([a-f0-9]{64})(\/content)?$/.exec(req.url || '');
       if (req.method === 'GET' && match) {
-        let record;
-        try { record = JSON.parse(await fs.readFile(path.join(directory, `${match[1]}.json`), 'utf8')); }
-        catch (error) { if (error.code === 'ENOENT') return response(res, 404, { error: 'REPORT_NOT_FOUND' }); throw error; }
-        const input = z.object(deliveryInput).strict().parse(record.input), output = await verify(input);
-        requireThat(record.id === match[1] && record.chainId === output.chainId && record.contract.toLowerCase() === output.contract.toLowerCase() && record.sourceId === output.source.id && record.outputJson === output.outputJson, 'STORED_RECORD_MISMATCH');
+        const { record, output } = await monitor.verifyCurrent(match[1]);
         if (match[2]) {
           res.writeHead(200, { 'content-type': 'application/json; charset=utf-8', 'content-disposition': `attachment; filename="${match[1]}.json"`, 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' });
           return res.end(output.outputJson);
@@ -94,9 +142,18 @@ export function createReportVault({ inspector, directory, token, allowedWorkflow
       response(res, 404, { error: 'NOT_FOUND' });
     } catch (error) {
       const code = /^[A-Z_]+$/.test(error?.message) ? error.message : 'VAULT_OPERATION_FAILED';
-      response(res, 409, { state: 'DELIVERY_BLOCKED', error: code });
+      response(res, code === 'REPORT_NOT_FOUND' ? 404 : 409, { state: 'DELIVERY_BLOCKED', error: code });
     } finally { inFlight--; }
   });
+  server.reportMonitor = monitor;
+  server.on('listening', () => monitor.start());
+  server.on('close', () => { void monitor.stop(); });
+  const close = server.close.bind(server);
+  server.close = callback => {
+    const finished = monitor.stop();
+    return close(error => { void finished.then(() => callback?.(error)); });
+  };
+  return server;
 }
 
 async function main() {
@@ -110,7 +167,9 @@ async function main() {
       const port = Number(process.env.PROOFGUARD_REPORT_PORT || 8788);
       requireThat(Number.isInteger(port) && port > 0 && port <= 65535, 'INVALID_PORT');
       const server = createReportVault({ inspector, token: process.env.PROOFGUARD_REPORT_TOKEN,
-        directory: process.env.PROOFGUARD_REPORT_DIR, allowedWorkflows: (process.env.PROOFGUARD_REPORT_WORKFLOWS || '').split(',').filter(Boolean) });
+        directory: process.env.PROOFGUARD_REPORT_DIR, allowedWorkflows: (process.env.PROOFGUARD_REPORT_WORKFLOWS || '').split(',').filter(Boolean),
+        monitorIntervalMs: Number(process.env.PROOFGUARD_REPORT_MONITOR_INTERVAL_MS || 60_000),
+        freshnessMs: Number(process.env.PROOFGUARD_REPORT_FRESHNESS_MS || 120_000) });
       server.on('error', () => { console.error('Report vault could not listen.'); process.exitCode = 1; });
       server.listen(port, '127.0.0.1', () => console.error(`ProofGuard report vault listening on 127.0.0.1:${port}`));
     } catch { console.error('Report vault configuration is invalid. Run with --help.'); process.exitCode = 1; }

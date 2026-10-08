@@ -1,0 +1,3 @@
+# Contract code is compared byte-for-byte with deployed code. Preserve LF even
+# when a Windows checkout enables core.autocrlf; never weaken the digest check.
+contracts/**/*.py text eol=lf
