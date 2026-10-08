@@ -1,0 +1,90 @@
+{
+  "schema": "proofguard-server-monitor-validation/1.0",
+  "recordedAt": "2026-10-08T13:32:57.215Z",
+  "deployedCodeCommit": "78b7abd5dad5ee9d66bef6e0738e44b827e4083c",
+  "implementationPullRequest": "https://github.com/Vevivo/proofguard-change/pull/3",
+  "runtime": {
+    "dependencyImage": "proofguard-runtime@sha256:15e39f68e434a210f2893b31fee35645872873eb3249dd82c7251216d6a028e0",
+    "dependencySourceCommit": "4ce8c52924a101438b146586f5e4e575ab52891f",
+    "codeSource": "Root-owned release directories mounted read-only at /app; node_modules inherited from pinned dependency image.",
+    "productionDependencyDeclarationsUnchanged": true,
+    "sourceMounts": [
+      "agents",
+      "genlayer",
+      "contracts",
+      "services",
+      "public",
+      "deploy",
+      "package.json",
+      "package-lock.json"
+    ],
+    "preservedVolumes": [
+      "proofguard-config-v1",
+      "proofguard-reports-v1"
+    ],
+    "hostPortsPublished": false,
+    "rootFilesystemReadOnly": true,
+    "serviceUid": 10001,
+    "mcpUid": 10002,
+    "groupId": 10003,
+    "capabilitiesDropped": "ALL",
+    "noNewPrivileges": true,
+    "memoryMiB": 384,
+    "cpuLimit": 0.5,
+    "previousContainerRetained": true,
+    "privateVolumeBackupsCreated": true
+  },
+  "initialProductionProbe": {
+    "checkedAt": "2026-10-08T13:32:57.215Z",
+    "mode": "DEPLOYED_SERVER_MCP_HTTP",
+    "network": "studionet",
+    "contract": "0x91883d4829E5b5bD7BED6eBd0EceF927A71942d6",
+    "sourceId": "COPILOT-BUSINESS-01",
+    "workflowId": "COPILOT-REVIEW-01",
+    "jobId": "NO-TRAINING",
+    "revision": 1,
+    "deliveryId": "386e08616b3119635b466e07895aaa367209d4324f7b27460fef5ba447cd2993",
+    "outputSha256": "3aaba81cc6d8c4804dfae0a10c1ea760d0f43880aa71730c315753b7b19aa283",
+    "exactBytesVerified": true,
+    "repeatDeduplicated": true,
+    "alreadyStored": true,
+    "unauthenticatedRejected": true,
+    "heldJobRejected": "OUTPUT_NOT_CREATED",
+    "monitorStatus": {
+      "deliveryId": "386e08616b3119635b466e07895aaa367209d4324f7b27460fef5ba447cd2993",
+      "state": "CURRENT",
+      "reason": "VERIFIED_CURRENT",
+      "checkedAt": "2026-10-08T13:32:20.472Z",
+      "validUntil": "2026-10-08T13:34:20.472Z",
+      "lastEventSequence": 2,
+      "guidance": "This is a bounded-time vault observation, not an execution permit. Downloads independently recheck finalized state. Previously downloaded copies cannot be recalled."
+    },
+    "explicitRecheckState": "CURRENT",
+    "monitorHistoryRead": true,
+    "monitorCursorRead": true,
+    "tools": [
+      "proofguard_list_workflows",
+      "proofguard_inspect_workflow",
+      "proofguard_get_output",
+      "proofguard_get_source",
+      "proofguard_prepare_workflow",
+      "proofguard_get_request_status",
+      "proofguard_deliver_report",
+      "proofguard_get_report_status",
+      "proofguard_recheck_report",
+      "proofguard_get_report_events"
+    ],
+    "transactionsSubmitted": 0,
+    "limitation": "Operator-controlled server using an existing finalized artifact. Not an independent developer pilot or signed MCP lifecycle."
+  },
+  "automaticScanAndRestartFollowUp": {
+    "status": "NOT_CONFIRMED",
+    "reason": "A follow-up probe was launched, but the SentinelX connection changed and the host became inactive under the one-active-host plan. Its final result was not available when this record was written. No success claim is made for that follow-up."
+  },
+  "limitations": [
+    "Operator-managed instance; no independent adopter is claimed.",
+    "Source-change and outage transitions are covered by controlled tests, not mutations of this live source.",
+    "The initial probe does not establish the service's future availability.",
+    "No frontend deployment or blockchain transaction was performed."
+  ]
+}
