@@ -6,7 +6,7 @@ The [1 October 2026 deployment record](../deployments/server-runtime-validation-
 
 ## Deployment boundary
 
-The runtime exposes the six default read/request MCP tools plus `proofguard_deliver_report`. It does not enable delegated management or transaction execution and contains no wallet signing key. An agent can prepare a workflow for human approval, inspect its state, obtain an existing output, and ask the vault to store it.
+This source version exposes the six default read/request MCP tools, `proofguard_deliver_report`, and three [report monitoring tools](REPORT_MONITOR.md). It does not enable delegated management or transaction execution and contains no wallet signing key. An agent can prepare a workflow for human approval, inspect its state, obtain an existing output, ask the vault to store it, and read or refresh the report's validity observation and history. The recorded 1 October deployment predates monitoring; these source changes do not establish a new server deployment.
 
 The vault independently verifies finalized chain state for every import and download. Its source and workflow allowlist are operator configuration, not agent input. This is a private installation for a selected workspace, not a public multi-tenant endpoint or an integration that automatically enrolls every website visitor.
 

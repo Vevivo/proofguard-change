@@ -1,0 +1,45 @@
+{
+  "observedAt": "2026-10-08T12:32:43.034Z",
+  "mode": "LIVE_MCP_HTTP_REPORT_MONITOR",
+  "chainId": 61999,
+  "contract": "0x91883d4829E5b5bD7BED6eBd0EceF927A71942d6",
+  "sourceId": "MOBILE-QA-20261001-1057",
+  "workflowId": "MOBILE-QA-WF-20261001",
+  "jobId": "weekday-price",
+  "sourceRevision": 1,
+  "outputSha256": "dfb6061524e4b13e4bacb1a964956053bc18ecd04735c77e9d7035f718be6d2a",
+  "deliveryId": "759b324a2ce512adf51574808af399c1f3e42d78fe88b7342c9806d46e5003a2",
+  "automaticScanVerified": true,
+  "firstCheckedAt": "2026-10-08T12:32:25.140Z",
+  "automaticCheckedAt": "2026-10-08T12:32:31.569Z",
+  "explicitRecheckState": "CURRENT",
+  "durableEventsRead": [
+    {
+      "sequence": 1,
+      "at": "2026-10-08T12:32:28.526Z",
+      "state": "CURRENT",
+      "reason": "VERIFIED_CURRENT",
+      "checkedAt": "2026-10-08T12:32:25.140Z",
+      "validUntil": "2026-10-08T12:34:25.140Z"
+    }
+  ],
+  "cursorReadVerified": true,
+  "repeatedDeliveryDeduplicated": true,
+  "repeatedCurrentEventDeduplicated": true,
+  "downloadedBytesMatch": true,
+  "unauthenticatedStatusRejected": true,
+  "tools": [
+    "proofguard_list_workflows",
+    "proofguard_inspect_workflow",
+    "proofguard_get_output",
+    "proofguard_get_source",
+    "proofguard_prepare_workflow",
+    "proofguard_get_request_status",
+    "proofguard_deliver_report",
+    "proofguard_get_report_status",
+    "proofguard_recheck_report",
+    "proofguard_get_report_events"
+  ],
+  "transactionsSubmitted": 0,
+  "limitation": "Developer-run local HTTP service and real MCP using existing finalized chain data. Source invalidation, outages, restart and expiry are tested with controlled fixtures, not induced on this public record. No production deployment or independent-user pilot is claimed."
+}

@@ -25,6 +25,7 @@
     "verify:agent": "node scripts/probe-agent-connector.mjs",
     "verify:agent:requests": "node scripts/probe-agent-requests.mjs",
     "verify:delivery": "node scripts/probe-report-vault.mjs",
+    "verify:monitor": "node scripts/probe-report-monitor.mjs",
     "service:reports": "node services/report-vault.mjs"
   },
   "dependencies": {
