@@ -4,9 +4,11 @@ The ArNS website is the browser interface. It does not run Node.js processes. Th
 
 The [1 October 2026 deployment record](../deployments/server-runtime-validation-20261001.json) records a real operator-managed server test on Studionet: an existing Copilot report was imported, downloaded with the same digest, and recovered after a container restart. Authentication, held-job rejection and separate filesystem permissions were checked. This is not an independent developer pilot.
 
+The [8 October 2026 monitoring deployment record](../deployments/server-monitor-validation-20261008.json) records the updated private runtime at source commit `78b7abd5dad5ee9d66bef6e0738e44b827e4083c`. The initial live probe at `2026-10-08T13:32:57.215Z` called all three monitoring tools through real MCP and checked authenticated HTTP delivery/download against the existing Copilot report. No frontend redeployment or blockchain transaction was performed.
+
 ## Deployment boundary
 
-This source version exposes the six default read/request MCP tools, `proofguard_deliver_report`, and three [report monitoring tools](REPORT_MONITOR.md). It does not enable delegated management or transaction execution and contains no wallet signing key. An agent can prepare a workflow for human approval, inspect its state, obtain an existing output, ask the vault to store it, and read or refresh the report's validity observation and history. The recorded 1 October deployment predates monitoring; these source changes do not establish a new server deployment.
+The deployed runtime exposes the six default read/request MCP tools, `proofguard_deliver_report`, and three [report monitoring tools](REPORT_MONITOR.md). It does not enable delegated management or transaction execution and contains no wallet signing key. An agent can prepare a workflow for human approval, inspect its state, obtain an existing output, ask the vault to store it, and read or refresh the report's validity observation and history.
 
 The vault independently verifies finalized chain state for every import and download. Its source and workflow allowlist are operator configuration, not agent input. This is a private installation for a selected workspace, not a public multi-tenant endpoint or an integration that automatically enrolls every website visitor.
 
@@ -18,11 +20,19 @@ The vault independently verifies finalized chain state for every import and down
 | Report storage | Persistent named volume | Vault UID 10001 only |
 | Runtime configuration | Separate named volume | Read-only to vault and connector |
 
-The MCP process runs as UID 10002 and cannot directly read or write the vault's report directory. The application root filesystem is read-only; capabilities are dropped. No host directory, Docker socket or host port is mounted or published. Node dependencies are installed from `package-lock.json` with install scripts disabled.
+The MCP process runs as UID 10002 and cannot directly read or write the vault's report directory. The application root filesystem is read-only; capabilities are dropped. The current release mounts only the reviewed source paths described below from the host, read-only. No sensitive host directory or Docker socket is mounted, and no host port is published.
+
+## Current release
+
+The 8 October rollout uses the existing pinned image `proofguard-runtime@sha256:15e39f68e434a210f2893b31fee35645872873eb3249dd82c7251216d6a028e0`, whose runtime dependencies came from source `4ce8c52`. Its existing `node_modules` is retained; no dependency versions were upgraded for this milestone. The image's dependency installation used the lockfile with install scripts disabled.
+
+The root-owned host release directory `/opt/proofguard/releases/78b7abd5dad5ee9d66bef6e0738e44b827e4083c` supplies `agents`, `genlayer`, `contracts`, `services`, `public`, `deploy`, `package.json` and `package-lock.json`, each mounted read-only to its corresponding `/app` path. This identifies the running source separately from the inherited image; it is not a newly built image containing that source.
+
+The existing report and configuration volumes were preserved, together with the same memory/CPU limits and isolation settings. A private root-only backup is retained at `/var/backups/proofguard-20261008-78b7abd`, and the prior container is retained as `proofguard-report-vault-backup-20261008-4ce8c52` for operator rollback. Configuration backups contain the service credential and must remain private.
 
 ## Build and initialize
 
-Use a reviewed official Node image digest with Node 22.13 or newer. The image build is independent of the frontend build:
+For a fresh full-image installation, use a reviewed official Node image digest with Node 22.13 or newer. These build instructions are separate from the current release-source mounts described above. The image build is independent of the frontend build:
 
 ```sh
 docker build -f deploy/Dockerfile.runtime \
@@ -92,7 +102,7 @@ docker exec --user 10002:10003 proofguard-report-vault node deploy/runtime-probe
 docker logs --tail 30 proofguard-report-vault
 ```
 
-The probe requires an existing current output in the first configured workflow. It uses actual MCP and HTTP, verifies report bytes, retries delivery to check deduplication, and checks unauthenticated and held-job rejection. It creates no blockchain transaction. Its first delivery creates one real private report record; subsequent identical deliveries reuse it.
+The probe requires an existing current output in the first configured workflow. It uses actual MCP and HTTP, verifies report bytes, retries delivery to check deduplication, and checks unauthenticated and held-job rejection. It also calls status, explicit recheck and paginated event history and validates a current observation's expiry. It creates no blockchain transaction. Its first delivery creates one real private report record; subsequent identical deliveries reuse it.
 
 To check persistence, restart only `proofguard-report-vault` and repeat the probe. The delivery ID should match and `alreadyStored` should be true. Back up both named volumes through the operator's private backup process; keep the configuration backup confidential. No off-host backup is provided by this runtime.
 
